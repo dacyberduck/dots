@@ -1,0 +1,5 @@
+[Added Associations]
+application/pdf=firefox-bin.desktop;
+
+[Default Applications]
+application/pdf=librewolf-bin.desktop;

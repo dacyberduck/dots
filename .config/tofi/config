@@ -1,0 +1,127 @@
+# font
+font = "Dina NF"
+font-size = 12
+# font-features = "smcp, c2sc" (all small caps)
+# font-features = "liga 0" (disable ligatures)
+font-features = ""
+# font-variations = "wght 900" (Extra bold)
+# font-variations = "wdth 25, slnt -10" (Narrow and slanted)
+font-variations = ""
+hint-font = true
+
+# All text defaults to this color if not otherwise specified.
+text-color = #FFFFFF
+
+# Prompt text theme
+prompt-color = #fb4934
+# prompt-background = #ffffff
+prompt-background-padding = 0
+prompt-background-corner-radius = 0
+
+# Placeholder text theme
+placeholder-color = #a89984
+placeholder-background = #00000000
+placeholder-background-padding = 0
+placeholder-background-corner-radius = 0
+
+# Input text theme
+input-color = #8ec07c
+input-background = #1c1c1c
+input-background-padding = 0
+input-background-corner-radius = 0
+
+# Default result text theme
+default-result-color = #ebdbb2
+default-result-background = #00000000
+default-result-background-padding = 0
+default-result-background-corner-radius = 0
+
+# alternate-result-color = #FFFFFF
+# alternate-result-background = #00000000
+# alternate-result-background-padding = 0
+# alternate-result-background-corner-radius = 0
+
+# Selection text
+selection-color = #fabd2f
+selection-background = #4c4c4c
+selection-background-padding = 4
+selection-background-corner-radius = 0
+
+# Matching portion of selection text
+selection-match-color = #00000000
+
+# Supported values: bar, block, underscore
+text-cursor-style = bar
+
+# Color of the text cursor
+# If unspecified, defaults to the same as input-color
+# text-cursor-color = #FFFFFF
+
+# Color of text behind the text cursor when text-cursor-style = block
+# If unspecified, defaults to the same as background-color
+# text-cursor-background = #000000
+# Corner radius of the text cursor
+text-cursor-corner-radius = 0
+
+### Text layout
+# Prompt to display.
+prompt-text = "run: "
+
+# Extra horizontal padding between prompt and input.
+prompt-padding = 0
+
+# Placeholder input text.
+placeholder-text = ""
+
+# Maximum number of results to display.
+# If 0, tofi will draw as many results as it can fit in the window.
+num-results = 0
+
+# Spacing between results in pixels. Can be negative.
+result-spacing = 16
+
+# Minimum width of input in horizontal mode.
+min-input-width = 0
+
+### Window theming
+# Window background color
+background-color = #1c1c1ce0
+
+# Width of the border outlines in pixels.
+outline-width = 0
+
+# Border outline color
+outline-color = #ebdee2
+
+# Width of the border in pixels.
+border-width = 0
+
+# Border color
+border-color = #83a598
+
+# Radius of window corners in pixels.
+corner-radius = 0
+
+# Padding between borders and text. Can be pixels or a percentage.
+padding-top = 2
+padding-bottom = 2
+padding-left = 4
+padding-right = 4
+
+# Whether to clip text drawing to be within the specified padding. This
+# is mostly important for allowing text to be inset from the border,
+# while still allowing text backgrounds to reach right to the edge.
+clip-to-padding = true
+
+# Whether to scale the window by the output's scale factor.
+scale = true
+
+### Behaviour
+# Hide the mouse cursor.
+hide-cursor = false
+
+# Show a text cursor in the input field.
+text-cursor = false
+
+# Sort results by number of usages in run and drun modes.
+history = true
