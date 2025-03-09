@@ -1,0 +1,168 @@
+{
+    "layer": "top",
+    "position": "top",
+    "height": 20,
+    "spacing": 0,
+    "padding": 0,
+    "margin": 0,
+    "modules-left": ["sway/workspaces", "sway/scratchpad", "sway/mode", "custom/separator2", "privacy"],
+    "modules-center": ["sway/window"],
+    "modules-right": [ "mpris", "custom/separator2", "group/misc", "custom/separator", "network", "custom/separator", "wireplumber", "custom/separator", "backlight", "custom/separator", "battery", "custom/separator", "clock", "tray"],
+    "sway/mode": {
+        "format": "[{}]"
+    },
+    "sway/window": {
+        "format": "{title}",
+        "max-length": 50
+    },
+    "sway/scratchpad": {
+        "format": "{count}",
+        "show-empty": false,
+        "tooltip": true,
+        "tooltip-format": "{app}: {title}",
+        "on-click": "swaymsg 'scratchpad show'",
+        "on-click-right": "swaymsg 'move scratchpad'"
+    },
+    "mpris": {
+        "player": "mpv",
+        "format": "{player_icon} {title}",
+        "player-icons": {
+            "default": "󰎆"
+        },
+        "format-paused": "{status_icon} {title}",
+        "status-icons": {
+            "playing": "󰎆",
+            "paused": "󰫔"
+        },
+        "dynamic-order": ["title", "artist", "album"],
+        "title-len": 20,
+        "on-click-right": "playerctl --all-players play-pause"
+    },
+    "idle_inhibitor": {
+        "format": "{icon}",
+        "format-icons": {
+            "activated": "",
+            "deactivated": ""
+        },
+        "tooltip": true,
+        "tooltip-format-activated": "Idle: {status}",
+        "tooltip-format-deactivated": "Idle: {status}"
+    },
+    "network": {
+        "format-wifi": "",
+        "format-ethernet": "󰈀",
+        "format-linked": "󰖟",
+        "format-disconnected": "󰪎",
+        "format-disabled": "",
+        "tooltip-format": "{ifname}: {essid} [{ipaddr}/{cidr}] ({signalStrength}%) ({bandwidthDownBytes}↓↑{bandwidthUpBytes})",
+        "on-click-right": "wpa_cli select_network 1",
+        "on-click-middle": "wpa_cli select_network 0"
+    },
+    "battery": {
+        "interval": 60,
+        "states": {
+            "warning": 25,
+            "critical": 5
+        },
+        "format": "{icon}",
+        "format-icons": ["󰂎", "󰁺", "󰁻", "󰁼", "󰁽","󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"],
+        "format-charging": "",
+        "tooltip-format": "Battery: {capacity}% {timeTo}"
+    },
+    "power-profiles-daemon": {
+        "format": "{icon}",
+        "tooltip-format": "Profile: {profile}\nDrivers: {driver}",
+        "tooltip": true,
+        "format-icons": {
+            "default": "",
+            "performance": "",
+            "balanced": "",
+            "power-saver": ""
+        }
+    },
+    "backlight": {
+        "device": "intel_backlight",
+        "format": "󰃝",
+        "tooltip": true,
+        "tooltip-format": "Brightness: {percent}%",
+        "scroll-step": 1.0
+    },
+    "wireplumber": {
+        "format": "󰕾",
+        "format-muted": "󰖁",
+        "scroll-step": 1,
+        "on-click": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
+        "on-click-right": "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle",
+        "tooltip-format": "Volume: {volume}%, Device: {node_name}",
+        "scroll-step": 1.0
+    },
+    "clock": {
+        "format": "{:%H:%M}",
+        "tooltip-format": "{:%a %d %b %Y %I:%M %p %Z}"
+    },
+    "privacy": {
+        "icon-spacing": 4,
+        "icon-size": 18,
+        "transition-duration": 250,
+        "modules": [
+            {
+                "type": "screenshare",
+                "tooltip": true,
+                "tooltip-icon-size": 24
+            },
+            {
+                "type": "audio-in",
+                "tooltip": true,
+                "tooltip-icon-size": 24
+            }
+        ]
+    },
+    "tray": {
+        "spacing": 4
+    },
+    "custom/notification": {
+        "tooltip": false,
+        "format": "{icon}",
+        "format-icons": {
+            "notification": "",
+            "none": "",
+            "dnd-notification": "",
+            "dnd-none": "",
+            "inhibited-notification": "<span foreground='red'><sup></sup></span>",
+            "inhibited-none": "<span foreground='red'><sup></sup></span>",
+            "dnd-inhibited-notification": "<span foreground='red'><sup></sup></span>",
+            "dnd-inhibited-none": "<span foreground='red'><sup></sup></span>"
+        },
+        "return-type": "json",
+        "exec-if": "which swaync-client",
+        "exec": "swaync-client -swb",
+        "on-click": "swaync-client -t -sw",
+        "on-click-right": "swaync-client -d -sw",
+        "escape": true
+    },
+    "group/misc": {
+        "orientation": "inherit",
+        "drawer": {
+            "transition-duration": 500,
+            "transition-left-to-right": false
+        },
+        "modules": [
+            "custom/notification",
+            "custom/separator",
+            "power-profiles-daemon",
+            "custom/separator",
+            "idle_inhibitor",
+            "custom/separator"
+        ]
+    },
+    "custom/separator": {
+        "format": " ╱ ",
+        "tooltip": false
+    },
+    "custom/separator2": {
+        "format": " ",
+        "tooltip": false
+    }
+}
+
+// vim: set filetype=json et sts=4 sw=4:
