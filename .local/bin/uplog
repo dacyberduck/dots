@@ -1,0 +1,59 @@
+#!/bin/bash
+
+function help() {
+    cat <<EOF
+
+    Simple script to upload logs from commandline.
+    Should work with text files and images as well.
+
+    USAGE: genefientry <path to log file>
+
+           <log file>                 path to file
+           --stdin,-i                 get input from stdin; can't use with <log file>
+           --expiry-time,-t           hours after link expires (default: 24)
+           -h,--help                  print help menu
+
+EOF
+}
+
+[[ $# == 0 ]] && help && exit 1
+
+
+_time=24
+_file=
+while [[ $# -gt 0 ]]; do
+    case "${1}" in
+        --stdin|-i)
+            if ! test -z ${_file}; then
+                printf "\033[0;31m [Error]: can not use --stdin when file is given. see --help\033[0m\n"
+                exit 1
+            fi
+            _file=/dev/stdin
+            ;;
+        --expiry-time|-t)
+            _time="${2}"
+            shift
+            ;;
+        --help|-h)
+            help
+            exit 0
+            ;;
+        *)
+            if [[ "x${_file}x" == "x/dev/stdinx" ]]; then
+                printf "\033[0;31m [Error]: can not use --stdin when file is given. see --help\033[0m\n"
+                exit 1
+            elif test -f "${1}"; then
+                _file=${1}
+            else
+                printf "\033[0;31m [Error]: invalid or missing file\033[0m\n"
+                exit 1
+            fi
+            ;;
+    esac
+    shift
+done
+
+# TODO: remote urls
+curl -F"file=@${_file}" -F"expires=${_time}" https://0x0.st
+
+# vim: set et sts=4 sw=4:
