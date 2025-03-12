@@ -1,0 +1,17 @@
+; vim: et sts=3 sw=3:
+(deflisten __bkl 'xbacklight -subscribe')
+
+(defwidget _backlight []
+   (eventbox
+      :class "backlight"
+      :onscroll "[[ {} == up ]] && xbacklight -inc 1 || xbacklight -dec 1"
+      (circular-progress
+         :value {round(__bkl, 0)}
+         :thickness 4
+         :start-at 75
+         :clockwise true
+         :tooltip "󰃝 intel_backlight, ${round(__bkl, 0)}"
+         ""
+      )
+   )
+)

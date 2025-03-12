@@ -1,0 +1,21 @@
+; vim: set et sts=3 sw=3:
+(defpoll __battery_info :interval "999999s" 'acpi')
+(defpoll __threshold_on :interval "999999s" '/home/duck/.config/eww/scripts/charging_threshold -get')
+
+(defwidget _battery []
+   (eventbox
+      :class "battery"
+      :onhover "${EWW_CMD} poll __battery_info"
+      :onrightclick "doas /home/duck/.config/eww/scripts/charging_threshold -toggle; ${EWW_CMD} poll __threshold_on"
+      (circular-progress
+         :class {EWW_BATTERY.BAT0.capacity < 10 ? "Critical" : EWW_BATTERY.BAT0.status == "Not charging" ? "Unplugged" : EWW_BATTERY.BAT0.status}
+         :value "${EWW_BATTERY.BAT0.capacity}"
+         :thickness 4
+         :start-at 75
+         :clockwise true
+         :tooltip "${__battery_info}
+Charging Threshold: 60% [${__threshold_on == '1' ? 'ON' : 'OFF'}]"
+         ""
+      )
+   )
+)

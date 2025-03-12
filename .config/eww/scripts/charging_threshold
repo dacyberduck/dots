@@ -1,0 +1,71 @@
+#!/bin/bash
+
+FPATH="/sys/bus/platform/drivers/ideapad_acpi/VPC2004:00/conservation_mode"
+MODE=0
+
+if [[ ! -f "${FPATH}" ]]; then
+  echo "error: can not determine conservation mode!"
+  exit 1
+fi
+
+if [[ $# -lt 1 ]]; then
+  echo "error: insufficient argument. try '-help'"
+  exit 1
+elif [[ $# -gt 1 ]]; then
+  echo "error: unrecognized argument. try '-help"
+  exit 1
+fi
+
+function check_permission() {
+  if [[ $(whoami) != "root" ]]; then
+    echo "error: not enough permission for this action!"
+    exit 1
+  fi
+}
+
+function get_conserv_mode() {
+  MODE=$(cat "${FPATH}")
+}
+
+function set_conserv_mode() {
+  echo "${1}" > "${FPATH}"
+}
+
+case "${1}" in
+  -d|-disable)
+    check_permission
+    get_conserv_mode
+    [[ ${MODE} == 1 ]] && set_conserv_mode 0
+    ;;
+  -e|-enable)
+    check_permission
+    get_conserv_mode
+    [[ ${MODE} == 0 ]] && set_conserv_mode 1
+    ;;
+  -t|-toggle)
+    check_permission
+    get_conserv_mode
+    if [[ ${MODE} == 0 ]]; then
+      set_conserv_mode 1
+    else
+      set_conserv_mode 0
+    fi
+    ;;
+  -g|-get)
+    get_conserv_mode
+    echo ${MODE}
+    ;;
+  -h|-help)
+    echo "$0 [-deght]"
+    echo
+    echo "  -d, -disable            disable conservation mode"
+    echo "  -e, -enable             enable conservation mode"
+    echo "  -t, -toggle             toggle conservation mode"
+    echo "  -g, -get                get current conservation mode"
+    echo "  -h, -help               print this menu"
+    echo
+    exit 0
+    ;;
+esac
+
+# vim: set et sts=2 sw=2:

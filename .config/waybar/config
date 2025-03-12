@@ -149,6 +149,8 @@
         "modules": [
             "custom/notification",
             "custom/separator",
+            "bluetooth",
+            "custom/separator",
             "power-profiles-daemon",
             "custom/separator",
             "idle_inhibitor",

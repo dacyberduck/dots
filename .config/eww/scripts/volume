@@ -1,0 +1,30 @@
+#!/bin/bash
+
+SINK="@DEFAULT_AUDIO_SINK@"
+SOURCE="@DEFAULT_AUDIO_SOURCE@"
+
+function print_volume_info() {
+  local sink_name sink_volume source_name source_volume temp
+  local sink_mute='false'
+  local source_mute='false'
+
+  sink_name=$(wpctl inspect ${SINK} | grep "node.description" | awk -F '= ' '{print $2}')
+  temp="$(wpctl get-volume ${SINK})"
+  sink_volume=$(awk '{print $2}' <<< ${temp})
+  [[ $(wc -w <<< ${temp}) > 2 ]] && sink_mute='true'
+
+  source_name=$(wpctl inspect ${SOURCE} | grep "node.description" | awk -F '= ' '{print $2}')
+  temp="$(wpctl get-volume ${SOURCE})"
+  source_volume=$(awk '{print $2}' <<< ${temp})
+  [[ $(wc -w <<< ${temp}) > 2 ]] && source_mute='true'
+
+  echo "{\"sink\":{\"name\": ${sink_name}, \"vol\": "${sink_volume}", \"mute\": "${sink_mute}"}, \"source\":{\"name\": ${source_name}, \"vol\": ${source_volume}, \"mute\": ${source_mute}}}"
+}
+
+print_volume_info
+pactl subscribe | grep --line-buffered -E ' sink | source ' |
+  while read -r event; do
+    print_volume_info
+  done
+
+# vim: et sts=2 sw=2 nofoldenable:

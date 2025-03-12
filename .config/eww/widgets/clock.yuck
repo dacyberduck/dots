@@ -1,0 +1,8 @@
+; vim: set et sts=3 sw=3:
+(defwidget _clock []
+   (box
+      :class "clock"
+      :tooltip "${formattime(EWW_TIME, "%a, %d %b %Y %I:%M:%S %p", 'Asia/Kolkata')}"
+      "${formattime(EWW_TIME, '%H:%M')}"
+   )
+)
