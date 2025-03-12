@@ -6,16 +6,23 @@
    (eventbox
       :class "battery"
       :onhover "${EWW_CMD} poll __battery_info"
-      :onrightclick "doas /home/duck/.config/eww/scripts/charging_threshold -toggle; ${EWW_CMD} poll __threshold_on"
       (circular-progress
          :class {EWW_BATTERY.BAT0.capacity < 10 ? "Critical" : EWW_BATTERY.BAT0.status == "Not charging" ? "Unplugged" : EWW_BATTERY.BAT0.status}
          :value "${EWW_BATTERY.BAT0.capacity}"
          :thickness 4
          :start-at 75
          :clockwise true
-         :tooltip "${__battery_info}
-Charging Threshold: 60% [${__threshold_on == '1' ? 'ON' : 'OFF'}]"
+         :tooltip "${__battery_info}"
          ""
       )
+   )
+)
+
+(defwidget _charging_threshold []
+   (button
+      :onclick "doas /home/duck/.config/eww/scripts/charging_threshold -toggle; ${EWW_CMD} poll __threshold_on"
+      :class {__threshold_on == '1' ? 'enabled' : 'disabled'}
+      :tooltip "Charging Threshold: 60% [${__threshold_on == '1' ? 'ON' : 'OFF'}]"
+      '󱈑'
    )
 )

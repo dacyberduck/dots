@@ -1,0 +1,54 @@
+#!/bin/bash
+
+function print_network_info() {
+  local dev ip wip ssid
+  local powered='false'
+  local connected='false'
+  local icon="󰪎"
+  local wicon='󰤭'
+
+
+  function get_wlan0_ssid() {
+    ssid=$(iwctl station wlan0 show | awk -F "Connected network" '/Connected network/{print $2}' | xargs)
+  }
+
+  function get_wlan0() {
+    if [[ $(iwctl station wlan0 show | awk '/State/{print $NF}' | xargs) == connected ]]; then
+      connected='true'
+      wicon='󰤨'
+      wip=$(iwctl station wlan0 show | awk -F "IPv4 address" '/IPv4 address/{print $2}' | xargs)
+      get_wlan0_ssid
+    fi
+  }
+
+  dev="$(ip route | awk 'NR==1{print $3" "$5}')"
+  ip="$(awk '{print $1}' <<< ${dev})"
+  dev="$(awk '{print $2}' <<< ${dev})"
+  if [[ ${dev} =~ wl ]]; then
+    icon=""
+    wicon="󰤨"
+    powered='true'
+    connected='true'
+    wip="${ip}"
+    get_wlan0_ssid
+  else
+    if [[ ${dev} =~ enp ]]; then
+      icon="󰈀"
+    fi
+    if [[ $(iwctl device wlan0 show | awk '/Powered/{print $NF}' | xargs) == on ]]; then
+      powered='true'
+      wicon='󰤯'
+      get_wlan0
+    fi
+  fi
+  echo "{\"dev\":\"${dev}\",\"ip\":\"${ip}\",\"icon\":\"${icon}\",\"wlan\":{\"powered\":${powered},\"connected\":${connected},\"ip\":\"${wip}\",\"ssid\":\"${ssid}\",\"icon\":\"${wicon}\"}}"
+}
+
+print_network_info
+ip monitor link |
+  while read -r event; do
+    sleep 1
+    print_network_info
+  done
+
+# vim: et sts=2 sw=2 nofoldenable:

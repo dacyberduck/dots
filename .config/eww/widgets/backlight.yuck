@@ -1,5 +1,6 @@
 ; vim: et sts=3 sw=3:
 (deflisten __bkl 'xbacklight -subscribe')
+(defpoll   __gamma_on :interval "999999s" "pgrep wlsunset >/dev/null && echo 1 || echo 0")
 
 (defwidget _backlight []
    (eventbox
@@ -12,6 +13,17 @@
          :clockwise true
          :tooltip "󰃝 intel_backlight, ${round(__bkl, 0)}"
          ""
+      )
+   )
+)
+
+(defwidget _gamma []
+   (button
+      :class {__gamma_on == '1' ? 'enabled' : 'disabled'}
+      :onclick '(pgrep wlsunset >/dev/null 2>&1) && (pkill -9 wlsunset) || (wlsunset >/dev/null 2>&1 &); ${EWW_CMD} poll __gamma_on'
+      :tooltip "Night Light: ${__gamma_on == '1' ? 'ON' : 'OFF'}"
+      (label
+         :text {__gamma_on == '1' ? '󰈈' : '󰈉'}
       )
    )
 )

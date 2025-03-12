@@ -1,0 +1,12 @@
+; vim: et sts=3 sw=3:
+
+(defwidget _tray []
+   (systray
+      :class "tray"
+      :orientation "h"
+      :spacing 2
+      :space-evenly false
+      :icon-size 15
+      :prepend-new false
+   )
+)

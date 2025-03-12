@@ -1,6 +1,9 @@
+(include './widgets/sway.yuck')
+(include './widgets/tray.yuck')
 (include './widgets/clock.yuck')
 (include './widgets/volume.yuck')
 (include './widgets/battery.yuck')
+(include './widgets/network.yuck')
 (include './widgets/backlight.yuck')
 
 
@@ -14,6 +17,8 @@
          :space-evenly false
          :halign "start"
          :spacing 6
+         (_swayWorkspaces)
+         (_swayMode)
       )
       (box
          :class "center"
@@ -28,10 +33,15 @@
          :space-evenly false
          :halign "end"
          :spacing 6
+         (_wlan)
+         (_network)
+         (_gamma)
+         (_charging_threshold)
          (_volume)
          (_backlight)
          (_battery)
          (_clock)
+         (_tray)
       )
    )
 )

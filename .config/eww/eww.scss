@@ -31,11 +31,13 @@
     button {
       background: #1c1c1c;
     }
+    .enabled,
     button.enabled {
       label {
         color: #8ec07c;
       }
     }
+    .disabled,
     button.disabled {
       label {
         color: #6c6c6c;
@@ -49,44 +51,7 @@
   }
 }
 
-.clock {
-  padding: 0 4px 0 0;
-}
-
-.battery {
-  .Critical {
-    color: #fb4934;
-  }
-  .Charging {
-    color: #b8bb26;
-  }
-  .Discharging {
-    color: #fabd2f;
-  }
-  .Unplugged, .Full {
-    color: #8ec07c;
-  }
-}
-
-.backlight {
-  color: #83a598;
-}
-
-.volume {
-  color: #d3869b;
-  .mute {
-    color: #6c6c6c;
-  }
-}
-
-.network {
-  padding: 0px 2px;
-}
-
-.workspaces {
-  .mode {
-    padding: 0px 4px 0px 4px;
-  }
+.sway_workspaces {
   button {
     padding: 0px 6px;
     background-color: transparent;
@@ -129,6 +94,39 @@
     border: none;
   }
 }
+.sway_mode {
+  padding: 0px 4px 0px 4px;
+}
+
+.clock {
+  padding: 0 0 0 2px;
+}
+
+.battery {
+  .Critical {
+    color: #fb4934;
+  }
+  .Charging {
+    color: #b8bb26;
+  }
+  .Discharging {
+    color: #fabd2f;
+  }
+  .Unplugged, .Full {
+    color: #8ec07c;
+  }
+}
+
+.backlight {
+  color: #83a598;
+}
+
+.volume {
+  color: #d3869b;
+  .mute {
+    color: #6c6c6c;
+  }
+}
 
 .tray {
   background-color: #1c1c1c;
@@ -140,4 +138,9 @@
     box-shadow: none;
     margin: 0;
   }
+}
+
+
+.network {
+  padding: 0px 2px;
 }
