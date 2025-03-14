@@ -1,14 +1,17 @@
 ; vim: set et sts=3 sw=3:
 
+(defvar    __rev_network false)
+(deflisten __bt  "./scripts/bluetooth")
 (deflisten __net "./scripts/network")
 
-(defwidget _network []
+(defwidget _connectivity []
    (box
       :class "${__net.dev == '' ? 'disabled' : 'enabled'}"
       :tooltip {__net.dev == '' ? 'No Network' : "${__net.dev}: [${__net.ip}]"}
       "${__net.icon}"
    )
 )
+
 (defwidget _wlan []
    (button
       :onclick '(pgrep iwgtk >/dev/null 2>&1) && (pkill -9 iwgtk) || (iwgtk >/dev/null 2>&1 &)'
@@ -16,5 +19,37 @@
       :class "${__net.wlan.powered ? 'enabled' : 'disabled'}"
       :tooltip {__net.wlan.connected ? "${__net.wlan.ssid}: [${__net.wlan.ip}]" : __net.wlan.powered ? 'Wifi: Not Connected' : 'Wifi: OFF'}
       "${__net.wlan.icon}"
+   )
+)
+
+(defwidget _bluetooth []
+   (button
+      :onclick '(pgrep blueman-manager >/dev/null 2>&1) && (pkill -9 blueman-manager) || (blueman-manager >/dev/null 2>&1 &)'
+      :class "${__bt.powered ? 'enabled' : 'disabled'}"
+      :tooltip "${__bt.connected ? 'Connected: ${__bt.device}' : __bt.powered ? 'Bluetooth: ON' : 'Bluetooth: OFF'}"
+      "${__bt.connected ? '󰂰' : __bt.powered ? '󰂯' : '󰂲' }"
+   )
+)
+
+(defwidget _network []
+   (eventbox
+      :onhover "${EWW_CMD} update __rev_network=true"
+      :onhoverlost "${EWW_CMD} update __rev_network=false"
+      (box
+         :class "network"
+         :space-evenly false
+         :halign "end"
+         :hexpand false
+         (revealer
+            :reveal __rev_network
+            :transition "slideleft"
+            (box
+               (_bluetooth)
+               (_wlan)
+               ">"
+            )
+         )
+         (_connectivity)
+      )
    )
 )

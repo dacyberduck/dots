@@ -1,0 +1,15 @@
+#!/bin/bash
+
+if [[ ${1} != "change" && -z ${1} ]]; then
+	echo "Error: insufficient arguments"
+	exit 1
+fi
+
+profile=$(powerprofilesctl get)
+if [[ ${profile} == performance ]]; then
+	powerprofilesctl set 'balanced'
+elif [[ ${profile} == balanced ]]; then
+	powerprofilesctl set 'power-saver'
+else
+	powerprofilesctl set 'performance'
+fi

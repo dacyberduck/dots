@@ -1,17 +1,19 @@
 ; vim: et sts=3 sw=3:
-(deflisten __bkl 'xbacklight -subscribe')
+(defvar    __idle false)
+(defvar    __rev_backlight false)
+(deflisten __brt 'xbacklight -subscribe')
 (defpoll   __gamma_on :interval "999999s" "pgrep wlsunset >/dev/null && echo 1 || echo 0")
 
-(defwidget _backlight []
+(defwidget _brightness []
    (eventbox
-      :class "backlight"
+      :class "brightness"
       :onscroll "[[ {} == up ]] && xbacklight -inc 1 || xbacklight -dec 1"
       (circular-progress
-         :value {round(__bkl, 0)}
+         :value {round(__brt, 0)}
          :thickness 4
          :start-at 75
          :clockwise true
-         :tooltip "󰃝 intel_backlight, ${round(__bkl, 0)}"
+         :tooltip "󰃝 intel_backlight, ${round(__brt, 0)}"
          ""
       )
    )
@@ -21,9 +23,41 @@
    (button
       :class {__gamma_on == '1' ? 'enabled' : 'disabled'}
       :onclick '(pgrep wlsunset >/dev/null 2>&1) && (pkill -9 wlsunset) || (wlsunset >/dev/null 2>&1 &); ${EWW_CMD} poll __gamma_on'
+      :onrightclick '(pgrep wlsunset >/dev/null 2>&1) && (pkill -9 wlsunset) || (wlsunset -l 17.38 -L 78.46 >/dev/null 2>&1 &); ${EWW_CMD} poll __gamma_on'
       :tooltip "Night Light: ${__gamma_on == '1' ? 'ON' : 'OFF'}"
       (label
-         :text {__gamma_on == '1' ? '󰈈' : '󰈉'}
+         :text "󰖔"
+      )
+   )
+)
+
+(defwidget _idle_inhibitor []
+   (button
+      :class {__idle ? 'enabled' : 'disabled'}
+      :tooltip "Idle Inhibitor: ${__idle ? 'ON' : 'OFF'}"
+      :onclick "swaymsg inhibit_idle ${__idle ? 'none' : 'open'}; ${EWW_CMD} update __idle=${__idle ? 'false' : 'true'}"
+      "󰈈"
+   )
+)
+
+(defwidget _backlight []
+   (eventbox
+      :onhover "${EWW_CMD} update __rev_backlight=true"
+      :onhoverlost "${EWW_CMD} update __rev_backlight=false"
+      (box
+         :class "backlight"
+         :space-evenly false
+         :halign "end"
+         :hexpand false
+         (revealer
+            :reveal __rev_backlight
+            :transition "slideleft"
+            (box
+               (_idle_inhibitor)
+               (_gamma)
+            )
+         )
+         (_brightness)
       )
    )
 )

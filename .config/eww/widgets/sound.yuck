@@ -1,0 +1,60 @@
+; vim: set et sts=3 sw=3:
+(defvar    __rev_sound false)
+(deflisten __vol './scripts/volume')
+(deflisten __plr './scripts/player')
+
+(defwidget _volume []
+   (eventbox
+      :class "volume"
+      :onscroll "[[ {} == up ]] && wpctl set-volume @DEFAULT_AUDIO_SINK@ 1%+ || wpctl set-volume @DEFAULT_AUDIO_SINK@ 1%-"
+      :onclick "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
+      :onrightclick "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
+      (circular-progress
+         :class {__vol.sink.mute ? "mute" : "volume"}
+         :value {round(__vol.sink.vol * 100, 0)}
+         :thickness 4
+         :start-at 75
+         :clockwise true
+         :tooltip "󰓃 ${__vol.sink.name}, ${round(__vol.sink.vol * 100, 0)}%${__vol.sink.mute ? ' [MUTE]' : ''}
+ ${__vol.source.name}, ${round(__vol.source.vol * 100, 0)}%${__vol.source.mute ? ' [MUTE]' : ''}"
+         ""
+      )
+   )
+)
+
+(defwidget _playerctl []
+   (button
+      :onclick 'playerctl --player=mpv play-pause'
+      :onrightclick 'playerctl --player=mpv stop'
+      :class {__plr.status}
+      :tooltip "Player: ${__plr.player} [${__plr.status}]
+Title:  ${__plr.title}
+Artist: ${__plr.artist}
+Album:  ${__plr.album}"
+      (label
+         :show-truncated true
+         :markup {(__plr.status == 'playing' ? '󰎆 ' : __plr.status == 'paused' ? '󰫔 ' : '󰽳') + replace(replace(__plr.title, '[\\s_][\\[\\{\\(|-].*', ''), '\\.[mfwo][plak][34avu][cs]?$', '')}
+      )
+   )
+)
+
+(defwidget _sound []
+   (eventbox
+      :onhover "${EWW_CMD} update __rev_sound=true"
+      :onhoverlost "${EWW_CMD} update __rev_sound=false"
+      (box
+         :class "sound"
+         :space-evenly false
+         :halign "end"
+         :hexpand false
+         (revealer
+            :reveal __rev_sound
+            :transition "slideleft"
+            (box
+               (_playerctl)
+            )
+         )
+         (_volume)
+      )
+   )
+)

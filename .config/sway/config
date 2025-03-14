@@ -42,6 +42,7 @@ for_window [class = "(?i)pinentry"] floating enable
 for_window [app_id="mpv"] floating enable
 for_window [app_id="qalculate-gtk"] floating enable
 for_window [app_id="^blueman-*"] floating enable
+for_window [app_id="org.twosheds.iwgtk"] floating enable
 for_window [app_id="LibreWolf" title="Library"] floating enable
 for_window [title="Picture-in-Picture"] floating enable, border none, sticky enable
 for_window [title = "Administrator privileges required"] floating enable
@@ -184,6 +185,9 @@ bindsym --locked XF86AudioRaiseVolume exec wpctl set-volume @DEFAULT_AUDIO_SINK@
 bindsym --locked XF86AudioMicMute exec wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle
 bindsym --locked XF86MonBrightnessDown exec xbacklight -dec 5
 bindsym --locked XF86MonBrightnessUp exec xbacklight -inc 5
+bindsym --locked XF86AudioPlay exec playerctl play-pause
+bindsym --locked XF86AudioNext exec playerctl next
+bindsym --locked XF86AudioPrev exec playerctl previous
 bindsym --no-repeat Print exec grim -g "$(slurp)" - | swayimg --position "0,0" -
 
 ### startup applications

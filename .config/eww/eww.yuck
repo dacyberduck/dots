@@ -1,11 +1,15 @@
+; vim: set et sts=3 sw=3:
+
 (include './widgets/sway.yuck')
 (include './widgets/tray.yuck')
 (include './widgets/clock.yuck')
-(include './widgets/volume.yuck')
-(include './widgets/battery.yuck')
+(include './widgets/power.yuck')
+(include './widgets/sound.yuck')
 (include './widgets/network.yuck')
 (include './widgets/backlight.yuck')
+(include './widgets/notification.yuck')
 
+(defvar __rev1 false)
 
 (defwidget statusbar []
    (centerbox
@@ -33,13 +37,11 @@
          :space-evenly false
          :halign "end"
          :spacing 6
-         (_wlan)
+         (_notification)
          (_network)
-         (_gamma)
-         (_charging_threshold)
-         (_volume)
+         (_sound)
          (_backlight)
-         (_battery)
+         (_power)
          (_clock)
          (_tray)
       )
@@ -61,5 +63,3 @@
    :namespace "statusbar"
    (statusbar)
 )
-
-; vim: set et sts=3 sw=3:

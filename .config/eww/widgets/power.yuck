@@ -1,0 +1,66 @@
+; vim: set et sts=3 sw=3:
+(defvar  __rev_power false)
+(defpoll __profile      :interval "999999s" 'powerprofilesctl get')
+(defpoll __battery_info :interval "999999s" 'acpi')
+(defpoll __threshold_on :interval "999999s" '/home/duck/.config/eww/scripts/charging_threshold -get')
+
+(defwidget _battery []
+   (eventbox
+      :class "battery"
+      :onhover "${EWW_CMD} poll __battery_info"
+      (circular-progress
+         :class {EWW_BATTERY.BAT0.capacity < 10 ? "Critical" : EWW_BATTERY.BAT0.status == "Not charging" ? "Unplugged" : EWW_BATTERY.BAT0.status}
+         :value "${EWW_BATTERY.BAT0.capacity}"
+         :thickness 4
+         :start-at 75
+         :clockwise true
+         :tooltip "${__battery_info}"
+         ""
+      )
+   )
+)
+
+(defwidget _charging_threshold []
+   (button
+      :onclick "doas /home/duck/.config/eww/scripts/charging_threshold -toggle; ${EWW_CMD} poll __threshold_on"
+      :class {__threshold_on == '1' ? 'enabled' : 'disabled'}
+      :tooltip "Charging Threshold: 60% [${__threshold_on == '1' ? 'ON' : 'OFF'}]"
+      '󱈑'
+   )
+)
+
+(defwidget _power-profile []
+   (eventbox
+      :class "profile"
+      :onhoverlost "${EWW_CMD} poll __profile"
+      (button
+         :class "${__profile}"
+         :onclick "powerprofilesctl set ${__profile == 'performance' ? 'balanced' : __profile == 'balanced' ? 'power-saver' : 'performance'}; ${EWW_CMD} poll __profile"
+         :onrightclick "${EWW_CMD} poll __profile;"
+         :tooltip "Profile: ${__profile}"
+         "${__profile == 'performance' ? '󱠇' : __profile == 'balanced' ? '󱤅' : '󰥱' }"
+      )
+   )
+)
+
+(defwidget _power []
+   (eventbox
+      :onhover "${EWW_CMD} update __rev_power=true"
+      :onhoverlost "${EWW_CMD} update __rev_power=false"
+      (box
+         :class "power"
+         :space-evenly false
+         :halign "end"
+         :hexpand false
+         (revealer
+            :reveal __rev_power
+            :transition "slideleft"
+            (box
+               (_power-profile)
+               (_charging_threshold)
+            )
+         )
+         (_battery)
+      )
+   )
+)
