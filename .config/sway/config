@@ -17,45 +17,46 @@ output eDP-1 bg #3c3c3c solid_color
 
 ### Compositor configuration
 focus_follows_mouse yes
-default_border pixel 1
+default_border normal 2
 default_floating_border normal 2
 smart_borders off
 gaps inner 4
 gaps outer 0
 smart_gaps off
+show_marks yes
 
 ### Window rules
 assign [app_id = "soffice"] 2
-for_window [app_id = "xdg-desktop-portal-gtk"] floating enable
-for_window [title="(?:Open|Save) (?:File|Folder|As)"] floating enable, resize set 800 600
-for_window [window_type = "menu"] floating enable
-for_window [window_role = "pop-up"] floating enable
-for_window [window_role = "bubble"] floating enable
-for_window [window_role = "dialog"] floating enable
-for_window [window_role = "About"] floating enable
-for_window [window_role = "task_dialog"] floating enable
-for_window [window_role = "__scratchpad__"] floating enable
-for_window [window_role="Preferences"] floating enable
-for_window [app_id = "floating"] floating enable
-for_window [app_id = "floating_update"] floating enable, resize set width 1000 height 600
-for_window [class = "(?i)pinentry"] floating enable
-for_window [app_id="mpv"] floating enable
-for_window [app_id="qalculate-gtk"] floating enable
-for_window [app_id="^blueman-*"] floating enable
-for_window [app_id="org.twosheds.iwgtk"] floating enable
-for_window [app_id="LibreWolf" title="Library"] floating enable
-for_window [title="Picture-in-Picture"] floating enable, border none, sticky enable
-for_window [title = "Administrator privileges required"] floating enable
-for_window [class="^Steam$" title="^Friends$"] floating enable
-for_window [class="^Steam$" title="Steam - News"] floating enable
-for_window [class="^Steam$" title=".* - Chat"] floating enable
-for_window [class="^Steam$" title="^Settings$"] floating enable
-for_window [class="^Steam$" title=".* - event started"] floating enable
-for_window [class="^Steam$" title=".* CD key"] floating enable
-for_window [class="^Steam$" title="^Steam - Self Updater$"] floating enable
-for_window [class="^Steam$" title="^Screenshot Uploader$"] floating enable
-for_window [class="^Steam$" title="^Steam Guard - Computer Authorization Required$"] floating enable
-for_window [title="^Steam Keyboard$"] floating enable
+for_window [app_id = "xdg-desktop-portal-gtk"] floating on
+for_window [title="(?:Open|Save) (?:File|Folder|As)"] floating on, resize set 800 600
+for_window [window_type = "menu"] floating on
+for_window [window_role = "pop-up"] floating on
+for_window [window_role = "bubble"] floating on
+for_window [window_role = "dialog"] floating on
+for_window [window_role = "About"] floating on
+for_window [window_role = "task_dialog"] floating on
+for_window [window_role = "__scratchpad__"] floating on
+for_window [window_role="Preferences"] floating on
+for_window [app_id = "floating"] floating on
+for_window [app_id = "floating_update"] floating on, resize set width 1000 height 600
+for_window [class = "(?i)pinentry"] floating on
+for_window [app_id="mpv"] floating on
+for_window [app_id="qalculate-gtk"] floating on
+for_window [app_id="^blueman-*"] floating on
+for_window [app_id="org.twosheds.iwgtk"] floating on
+for_window [app_id="LibreWolf" title="Library"] floating on
+for_window [title="Picture-in-Picture"] floating on, border none, sticky enable
+for_window [title = "Administrator privileges required"] floating on
+for_window [class="^Steam$" title="^Friends$"] floating on
+for_window [class="^Steam$" title="Steam - News"] floating on
+for_window [class="^Steam$" title=".* - Chat"] floating on
+for_window [class="^Steam$" title="^Settings$"] floating on
+for_window [class="^Steam$" title=".* - event started"] floating on
+for_window [class="^Steam$" title=".* CD key"] floating on
+for_window [class="^Steam$" title="^Steam - Self Updater$"] floating on
+for_window [class="^Steam$" title="^Screenshot Uploader$"] floating on
+for_window [class="^Steam$" title="^Steam Guard - Computer Authorization Required$"] floating on
+for_window [title="^Steam Keyboard$"] floating on
 
 ### Variables
 # Logo key. Use Mod1 for Alt.
@@ -128,6 +129,12 @@ bindsym $mod+Shift+6 move container to workspace number 6
 bindsym $mod+Shift+7 move container to workspace number 7
 bindsym $mod+Shift+8 move container to workspace number 8
 bindsym $mod+Shift+9 move container to workspace number 9
+
+# workspace back forth
+bindsym Mod1+tab workspace back_and_forth
+
+# mark/unmark
+bindsym $mod+m exec swaymsg "mark --toggle $(: | tofi --require-match=false --horizontal=true --height=20 --anchor=top --width=100% --prompt-text='mark: ')"
 
 # Switch the split direction of the current container
 bindsym $mod+b splith

@@ -149,15 +149,15 @@
   }
 }
 
-.sound {
-  .volume {
-    color: #d3869b;
-    .mute {
-      color: #6c6c6c;
-    }
+.volume {
+  color: #d3869b;
+  .mute {
+    color: #6c6c6c;
   }
+}
+
+.playerctl {
   button.stopped {
-    padding: 0px 3px;
     background-color: transparent;
     box-shadow: inherit;
     text-shadow: inherit;
@@ -167,14 +167,12 @@
   }
   button.playing {
     color: #fabd2f;
-    padding: 0px 4px 0 2px;
     label {
       color: #fabd2f;
     }
   }
   button.paused {
     color: #ebdbb2;
-    padding: 0px 4px 0 2px;
     label {
       color: #ebdbb2;
     }

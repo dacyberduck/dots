@@ -25,7 +25,7 @@ function print_network_info() {
   ip="$(awk '{print $1}' <<< ${dev})"
   dev="$(awk '{print $2}' <<< ${dev})"
   if [[ ${dev} =~ wl ]]; then
-    icon=""
+    icon="󰖩"
     wicon="󰤨"
     powered='true'
     connected='true'

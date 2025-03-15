@@ -10,7 +10,7 @@
       :onclick "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
       :onrightclick "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
       (circular-progress
-         :class {__vol.sink.mute ? "mute" : "volume"}
+         :class {__vol.sink.mute ? "mute" : "normal"}
          :value {round(__vol.sink.vol * 100, 0)}
          :thickness 4
          :start-at 75
@@ -23,38 +23,24 @@
 )
 
 (defwidget _playerctl []
-   (button
-      :onclick 'playerctl --player=mpv play-pause'
-      :onrightclick 'playerctl --player=mpv stop'
-      :class {__plr.status}
-      :tooltip "Player: ${__plr.player} [${__plr.status}]
+   (box
+      :orientation "h"
+      :space-evenly false
+      :halign "end"
+      :hexpand false
+      :class "playerctl"
+      (button
+         :onclick 'playerctl --player=mpv play-pause'
+         :onrightclick 'playerctl --player=mpv stop'
+         :class {__plr.status}
+         :tooltip "Player: ${__plr.player} [${__plr.status}]
 Title:  ${__plr.title}
 Artist: ${__plr.artist}
 Album:  ${__plr.album}"
-      (label
-         :show-truncated true
-         :markup {(__plr.status == 'playing' ? '󰎆 ' : __plr.status == 'paused' ? '󰫔 ' : '󰽳') + replace(replace(__plr.title, '[\\s_][\\[\\{\\(|-].*', ''), '\\.[mfwo][plak][34avu][cs]?$', '')}
-      )
-   )
-)
-
-(defwidget _sound []
-   (eventbox
-      :onhover "${EWW_CMD} update __rev_sound=true"
-      :onhoverlost "${EWW_CMD} update __rev_sound=false"
-      (box
-         :class "sound"
-         :space-evenly false
-         :halign "end"
-         :hexpand false
-         (revealer
-            :reveal __rev_sound
-            :transition "slideleft"
-            (box
-               (_playerctl)
-            )
+         (label
+            :show-truncated true
+            :markup {(__plr.status == 'playing' ? '󰎆 ' : __plr.status == 'paused' ? '󰫔 ' : '') + replace(replace(__plr.title, '[\\s_][\\[\\{\\(|-].*', ''), '\\.[mfwo][plak][34avu][cs]?$', '')}
          )
-         (_volume)
       )
    )
 )
