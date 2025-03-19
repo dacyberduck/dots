@@ -8,7 +8,7 @@
       (button
          :class {__notif.count > 0 ? 'enabled' : 'disabled'}
          :onclick 'swaync-client -t'
-         "${__notif.count > 0 ? '󱅫' : ''}"
+         "${__notif.count > 0 ? '󱅫' : '󰂜'}"
       )
    )
 )
