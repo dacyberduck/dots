@@ -48,8 +48,8 @@ export HISTSIZE=1000
 export HISTCONTROL='ignoreboth:erasedups'
 
 ### Default applications
-export TERMCMD="tym"
-export TERMINAL="tym"
+export TERMCMD="footclient"
+export TERMINAL="footclient"
 export EDITOR="vim"
 export BROWSER="librewolf-bin"
 export PAGER="less"

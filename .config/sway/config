@@ -16,6 +16,7 @@ output eDP-1 resolution 1366x768@60Hz adaptive_sync on
 output eDP-1 bg #3c3c3c solid_color
 
 ### Compositor configuration
+font Dina NFM 12
 focus_follows_mouse yes
 default_border normal 2
 default_floating_border normal 2
@@ -65,7 +66,7 @@ set $left h
 set $down j
 set $up k
 set $right l
-set $term tym
+set $term footclient
 set $menu tofi-drun --horizontal true --anchor top --width 1366 --height 20 | xargs swaymsg exec --
 
 ### Idle configuration
@@ -198,7 +199,7 @@ bindsym --locked XF86AudioPrev exec playerctl previous
 bindsym --no-repeat Print exec grim -g "$(slurp)" - | swayimg --position "0,0" -
 
 ### startup applications
-exec --no-startup-id tym --daemon
+exec --no-startup-id foot --server
 exec --no-startup-id swaync
 exec --no-startup-id sway-audio-idle-inhibit
 exec --no-startup-id wlsunset -l 17.38 -L 78.46
