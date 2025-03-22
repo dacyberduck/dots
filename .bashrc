@@ -14,7 +14,6 @@ if [[ $- != *i* ]] ; then
 	return
 fi
 
-
 # Put your fun stuff here.
 shopt -s autocd
 complete -cf doas
@@ -29,5 +28,5 @@ alias ..='cd $OLDPWD'
 alias cp='cp -ri'
 alias mv='mv -i'
 alias rm='rm -ri'
-alias vi='vi -p'
-
+alias vi='vim -p'
+alias vio='vim -O'
