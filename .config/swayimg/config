@@ -36,7 +36,7 @@ app_id = swayimg
 ################################################################################
 [viewer]
 # Window background color (RGBA)
-window = #00000066
+window = #1c1c1c88
 # Background for transparent images (grid/RGBA)
 transparency = grid
 # Default image scale (optimal/fit/width/height/fill/real)
@@ -105,7 +105,7 @@ name = monospace
 # Font size (pt)
 size = 14
 # Font color (RGBA)
-color = #ccccccff
+color = #ffffffff
 # Shadow color (RGBA)
 shadow = #000000d0
 # Background color (RGBA)
@@ -180,8 +180,7 @@ Shift+a = antialiasing prev
 r = reload
 i = info
 Shift+Delete = exec rm -f "%"; skip_file
-Ctrl+c = export /tmp/swayimg-export.png; exec wl-copy < /tmp/swayimg-export.png && rm -f /tmp/swayimg-export.png
-Ctrl+s = export /tmp/swayimg-export.png; exec /home/duck/.config/swayimg/handler -ssr /tmp/swayimg-export.png
+Ctrl+s = exec /home/duck/.config/swayimg/handler -save "%"
 Escape = exit
 q = exit
 # Mouse related

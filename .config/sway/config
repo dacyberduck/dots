@@ -196,7 +196,7 @@ bindsym --locked XF86MonBrightnessUp exec xbacklight -inc 5
 bindsym --locked XF86AudioPlay exec playerctl play-pause
 bindsym --locked XF86AudioNext exec playerctl next
 bindsym --locked XF86AudioPrev exec playerctl previous
-bindsym --no-repeat Print exec grim -g "$(slurp)" - | swayimg --position "0,0" -
+bindsym --no-repeat Print exec pgrep slurp && pkill slurp || (grim -g "$(slurp)" /tmp/screenshot.png && wl-copy -t image/png < /tmp/screenshot.png && swayimg /tmp/screenshot.png)
 
 ### startup applications
 exec --no-startup-id foot --server
