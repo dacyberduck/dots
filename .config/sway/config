@@ -18,7 +18,7 @@ output eDP-1 bg #3c3c3c solid_color
 ### Compositor configuration
 font Dina NFM 12
 focus_follows_mouse yes
-default_border normal 2
+default_border pixel 2
 default_floating_border normal 2
 smart_borders off
 gaps inner 4
@@ -27,7 +27,7 @@ smart_gaps off
 show_marks yes
 
 ### Window rules
-assign [app_id = "soffice"] 2
+for_window [shell = "xwayland"] floating on
 for_window [app_id = "xdg-desktop-portal-gtk"] floating on
 for_window [title="(?:Open|Save) (?:File|Folder|As)"] floating on, resize set 800 600
 for_window [window_type = "menu"] floating on
@@ -46,7 +46,7 @@ for_window [app_id="qalculate-gtk"] floating on
 for_window [app_id="^blueman-*"] floating on
 for_window [app_id="org.twosheds.iwgtk"] floating on
 for_window [app_id="LibreWolf" title="Library"] floating on
-for_window [title="Picture-in-Picture"] floating on, border none, sticky enable
+for_window [title="Picture-in-Picture"] floating on, border none, sticky on
 for_window [title = "Administrator privileges required"] floating on
 for_window [class="^Steam$" title="^Friends$"] floating on
 for_window [class="^Steam$" title="Steam - News"] floating on
