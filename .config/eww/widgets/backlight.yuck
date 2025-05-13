@@ -35,7 +35,7 @@
    (button
       :class {__idle ? 'enabled' : 'disabled'}
       :tooltip "Idle Inhibitor: ${__idle ? 'ON' : 'OFF'}"
-      :onclick `swaymsg 'inhibit_idle ${__idle ? "none'" : "open'"}; ${EWW_CMD} update __idle=${__idle ? 'false' : 'true'}`
+      :onclick 'swaymsg inhibit_idle ${__idle ? "none" : "open"}; ${EWW_CMD} update __idle=${__idle ? "false" : "true"}'
       "󰈈"
    )
 )

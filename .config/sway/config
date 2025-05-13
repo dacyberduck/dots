@@ -15,6 +15,40 @@ input "type:touchpad" {
 output eDP-1 resolution 1366x768@60Hz adaptive_sync on
 output eDP-1 bg #3c3c3c solid_color
 
+### Window rule
+for_window [shell = "xwayland"] floating enable, border normal 2
+for_window [app_id = "xdg-desktop-portal-gtk"] floating enable, border normal 2
+for_window [title="(?:Open|Save) (?:File|Folder|As)"] floating enable, border normal 2, resize set 800 600
+for_window [window_type = "menu"] floating enable, border normal 2
+for_window [window_role = "pop-up"] floating enable, border normal 2
+for_window [window_role = "bubble"] floating enable, border normal 2
+for_window [window_role = "dialog"] floating enable, border normal 2
+for_window [window_role = "About"] floating enable, border normal 2
+for_window [window_role = "task_dialog"] floating enable, border normal 2
+for_window [window_role = "__scratchpad__"] border normal 2
+for_window [window_role="Preferences"] floating enable, border normal 2
+for_window [app_id = "floating"] floating enable, border normal 2
+for_window [app_id = "floating_update"] floating enable, border normal 2, resize set width 1000 height 600
+for_window [class = "(?i)pinentry"] floating enable, border normal 2
+for_window [app_id="mpv"] floating enable, border normal 2
+for_window [app_id="qalculate-gtk"] floating enable, border normal 2
+for_window [app_id="^blueman-*"] floating enable, border normal 2
+for_window [app_id="org.twosheds.iwgtk"] floating enable, border normal 2
+for_window [app_id="LibreWolf" title="Library"] floating enable, border normal 2
+for_window [title="Picture-in-Picture"] floating enable, border normal 2, border none, sticky on
+for_window [title = "Administrator privileges required"] floating enable, border normal 2
+for_window [class="^steam$"] floating enable, border normal 2, move container to workspace number 9
+for_window [class="et" instance="et"] floating disable, border pixel 2
+for_window [class="wpp" instance="wpp"] floating disable, border pixel 2
+for_window [class="wps" instance="wps"] floating disable, border pixel 2
+for_window [class="pdf" instance="pdf"] floating disable, border pixel 2
+for_window [class="prometheus" instance="prometheus"] floating disable, border pixel 2
+for_window [class="et" instance="et" title="et"] floating enable, border normal 2
+for_window [class="wpp" instance="wpp" title="wpp"] floating enable, border normal 2
+for_window [class="wps" instance="wps" title="wps"] floating enable, border normal 2
+for_window [class="pdf" instance="pdf" title="pdf"] floating enable, border normal 2
+for_window [class="prometheus" instance="prometheus" title="prometheus"] floating enable, border normal 2
+
 ### Compositor configuration
 font Dina NFM 12
 focus_follows_mouse yes
@@ -26,39 +60,6 @@ gaps outer 0
 smart_gaps off
 show_marks yes
 
-### Window rules
-for_window [shell = "xwayland"] floating on
-for_window [app_id = "xdg-desktop-portal-gtk"] floating on
-for_window [title="(?:Open|Save) (?:File|Folder|As)"] floating on, resize set 800 600
-for_window [window_type = "menu"] floating on
-for_window [window_role = "pop-up"] floating on
-for_window [window_role = "bubble"] floating on
-for_window [window_role = "dialog"] floating on
-for_window [window_role = "About"] floating on
-for_window [window_role = "task_dialog"] floating on
-for_window [window_role = "__scratchpad__"] floating on
-for_window [window_role="Preferences"] floating on
-for_window [app_id = "floating"] floating on
-for_window [app_id = "floating_update"] floating on, resize set width 1000 height 600
-for_window [class = "(?i)pinentry"] floating on
-for_window [app_id="mpv"] floating on
-for_window [app_id="qalculate-gtk"] floating on
-for_window [app_id="^blueman-*"] floating on
-for_window [app_id="org.twosheds.iwgtk"] floating on
-for_window [app_id="LibreWolf" title="Library"] floating on
-for_window [title="Picture-in-Picture"] floating on, border none, sticky on
-for_window [title = "Administrator privileges required"] floating on
-for_window [class="^Steam$" title="^Friends$"] floating on
-for_window [class="^Steam$" title="Steam - News"] floating on
-for_window [class="^Steam$" title=".* - Chat"] floating on
-for_window [class="^Steam$" title="^Settings$"] floating on
-for_window [class="^Steam$" title=".* - event started"] floating on
-for_window [class="^Steam$" title=".* CD key"] floating on
-for_window [class="^Steam$" title="^Steam - Self Updater$"] floating on
-for_window [class="^Steam$" title="^Screenshot Uploader$"] floating on
-for_window [class="^Steam$" title="^Steam Guard - Computer Authorization Required$"] floating on
-for_window [title="^Steam Keyboard$"] floating on
-
 ### Variables
 # Logo key. Use Mod1 for Alt.
 set $mod Mod4
@@ -67,7 +68,8 @@ set $down j
 set $up k
 set $right l
 set $term footclient
-set $menu tofi-drun --horizontal true --anchor top --width 1366 --height 20 | xargs swaymsg exec --
+#set $menu tofi-drun --horizontal true --anchor top --width 1366 --height 20 | xargs swaymsg exec --
+set $menu tofi-drun --horizontal true --anchor top --width 1366 --height 20 --drun-launch true
 
 ### Idle configuration
 exec swayidle -w \

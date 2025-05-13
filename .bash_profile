@@ -39,8 +39,8 @@ export XAUTHORITY="${XDG_CACHE_HOME}/Xauthority"
 
 ### others
 export XKB_DEFAULT_LAYOUT=us
-export WINEPREFIX="${HOME}/Games/wine"
-export WINEDLLOVERRIDES="winemenubuilder.exe=d"
+export WINEPREFIX="${HOME}/Wine/default"
+#export WINEDLLOVERRIDES="winemenubuilder.exe=d"
 export DXVK_FRAME_RATE=30
 export MOZ_ENABLE_WAYLAND=1
 export HISTFILE="${HOME}/.bash_history"
