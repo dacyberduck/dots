@@ -1,9 +1,14 @@
 #!/bin/bash
 
 function print_bluetooth_info() {
-  local powered="$(busctl get-property org.bluez /org/bluez/hci0 org.bluez.Adapter1 Powered 2>/dev/null | awk '{print $2}')"
-  local connected="$(busctl get-property org.bluez /org/bluez/hci0/dev_A4_05_6E_59_43_04 org.bluez.Device1 Connected 2>/dev/null | awk '{print $2}')"
-  echo "{\"powered\": ${powered}, \"device\": \"realme buds wireless 2\", \"connected\": ${connected}}"
+  local powered connected device
+  powered="$(busctl get-property org.bluez /org/bluez/hci0 org.bluez.Adapter1 Powered 2>/dev/null | awk '{print $2}')"
+  connected='false'
+  device="$(bluetoothctl info | grep Name | awk -F 'Name: ' '{print $2}'| xargs)"
+  if [[ x${device}x != xx ]]; then
+    connected='true'
+  fi
+  echo "{\"powered\": ${powered}, \"device\": \"${device}\", \"connected\": ${connected}}"
 }
 
 print_bluetooth_info

@@ -14,8 +14,8 @@
 
 (defwidget _wlan []
    (button
-      :onclick '(pgrep iwgtk >/dev/null 2>&1) && (pkill -9 iwgtk) || (iwgtk >/dev/null 2>&1 &)'
       :onrightclick {__net.wlan.powered ? "iwctl station wlan0 scan" : ""}
+      :onclick '(pgrep iwgtk >/dev/null 2>&1) && (pkill -9 iwgtk) || (iwgtk >/dev/null 2>&1 &)'
       :class "${__net.wlan.powered ? 'enabled' : 'disabled'}"
       :tooltip {__net.wlan.connected ? "${__net.wlan.ssid}: [${__net.wlan.ip}]" : __net.wlan.powered ? 'Wifi: Not Connected' : 'Wifi: OFF'}
       "${__net.wlan.icon}"
