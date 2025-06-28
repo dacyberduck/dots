@@ -1,7 +1,6 @@
 ; vim: et sts=3 sw=3:
 (deflisten __swsp  :initial "${[1]}" "./scripts/sway_workspaces")
 (deflisten __smode "swaymsg -t subscribe '[\"mode\"]' --monitor")
-; (deflisten __swin  "swaymsg -t subscribe '[\"window\"]' --monitor")
 
 (defwidget _swayWorkspaces []
    (box
@@ -30,14 +29,3 @@
       (label :text {__smode.change == "default" ? "" : "[${__smode.change}]"})
    )
 )
-
-; (defwidget _swayWindow []
-;    (box
-;       :class "sway_window"
-;       :orientation "h"
-;       :space-evenly false
-;       (label
-;          :text {(__swin.change == "focus" || __swin.change == "title") ? "${__swin.container.app_id} :: ${__swin.container.name}" : ''}
-;       )
-;    )
-; )
