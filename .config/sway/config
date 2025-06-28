@@ -16,44 +16,51 @@ output eDP-1 resolution 1366x768@60Hz adaptive_sync on
 output eDP-1 bg #3c3c3c solid_color
 
 ### Window rule
-for_window [shell = "xwayland"] floating enable, border normal 2
-for_window [app_id = "xdg-desktop-portal-gtk"] floating enable, border normal 2
-for_window [title="(?:Open|Save) (?:File|Folder|As)"] floating enable, border normal 2, resize set 800 600
-for_window [window_type = "menu"] floating enable, border normal 2
-for_window [window_role = "pop-up"] floating enable, border normal 2
-for_window [window_role = "bubble"] floating enable, border normal 2
-for_window [window_role = "dialog"] floating enable, border normal 2
-for_window [window_role = "About"] floating enable, border normal 2
-for_window [window_role = "task_dialog"] floating enable, border normal 2
-for_window [window_role = "__scratchpad__"] border normal 2
-for_window [window_role="Preferences"] floating enable, border normal 2
-for_window [app_id = "floating"] floating enable, border normal 2
-for_window [app_id = "floating_update"] floating enable, border normal 2, resize set width 1000 height 600
-for_window [class = "(?i)pinentry"] floating enable, border normal 2
-for_window [app_id="mpv"] floating enable, border normal 2
-for_window [app_id="qalculate-gtk"] floating enable, border normal 2
-for_window [app_id="^blueman-*"] floating enable, border normal 2
-for_window [app_id="org.twosheds.iwgtk"] floating enable, border normal 2
-for_window [app_id="LibreWolf" title="Library"] floating enable, border normal 2
-for_window [title="Picture-in-Picture"] floating enable, border normal 2, border none, sticky on
-for_window [title = "Administrator privileges required"] floating enable, border normal 2
-for_window [class="^steam$"] floating enable, border normal 2, move container to workspace number 9
-for_window [class="et" instance="et"] floating disable, border pixel 2
-for_window [class="wpp" instance="wpp"] floating disable, border pixel 2
-for_window [class="wps" instance="wps"] floating disable, border pixel 2
-for_window [class="pdf" instance="pdf"] floating disable, border pixel 2
-for_window [class="prometheus" instance="prometheus"] floating disable, border pixel 2
-for_window [class="et" instance="et" title="et"] floating enable, border normal 2
-for_window [class="wpp" instance="wpp" title="wpp"] floating enable, border normal 2
-for_window [class="wps" instance="wps" title="wps"] floating enable, border normal 2
-for_window [class="pdf" instance="pdf" title="pdf"] floating enable, border normal 2
-for_window [class="prometheus" instance="prometheus" title="prometheus"] floating enable, border normal 2
+# general rules
+for_window [shell = "xwayland"] floating enable
+for_window [app_id = "xdg-desktop-portal-gtk"] floating enable
+for_window [title="(?:Open|Save) (?:File|Folder|As)"] floating enable, resize set 800 600
+for_window [window_type = "menu"] floating enable
+for_window [window_role = "pop-up"] floating enable
+for_window [window_role = "bubble"] floating enable
+for_window [window_role = "dialog"] floating enable
+for_window [window_role = "About"] floating enable
+for_window [window_role = "task_dialog"] floating enable
+for_window [window_role = "__scratchpad__"] border normal 1
+for_window [window_role="Preferences"] floating enable
+for_window [app_id = "floating"] floating enable
+for_window [app_id = "floating_update"] floating enable, resize set width 1000 height 600
+for_window [class = "(?i)pinentry"] floating enable
+for_window [title="Picture-in-Picture"] floating enable, border none, sticky on
+for_window [title = "Administrator privileges required"] floating enable
+# Application Specific override
+# <<< wps-office
+for_window [class="et" instance="et"] floating disable
+for_window [class="wpp" instance="wpp"] floating disable
+for_window [class="wps" instance="wps"] floating disable
+for_window [class="pdf" instance="pdf"] floating disable
+for_window [class="prometheus" instance="prometheus"] floating disable
+for_window [class="et" instance="et" title="et"] floating enable
+for_window [class="wpp" instance="wpp" title="wpp"] floating enable
+for_window [class="wps" instance="wps" title="wps"] floating enable
+for_window [class="pdf" instance="pdf" title="pdf"] floating enable
+for_window [class="prometheus" instance="prometheus" title="prometheus"] floating enable
+# >>>
+for_window [app_id="mpv"] floating enable
+for_window [app_id="qalculate-gtk"] floating enable
+for_window [app_id="^blueman-*"] floating enable
+for_window [app_id="org.twosheds.iwgtk"] floating enable
+for_window [app_id="librewolf" title="Library"] floating enable
+for_window [class="^steam$"] floating enable, move container to workspace number 9
+for_window [title="^Krita$"] floating disable
+for_window [class="modorganizer.exe"] floating disable
+
 
 ### Compositor configuration
 font Dina NFM 12
 focus_follows_mouse yes
 default_border pixel 2
-default_floating_border normal 2
+default_floating_border normal 1
 smart_borders off
 gaps inner 4
 gaps outer 0
@@ -220,6 +227,8 @@ exec --no-startup-id gammastep -b 1.0:0.75 -l 22.56:88.33 -t 6500:3600
 exec_always --no-startup-id eww --restart open statusbar
 exec --no-startup-id dbus-update-activation-environment --systemd --all
 exec --no-startup-id /usr/libexec/polkit-gnome-authentication-agent-1
+# sway scripts
+exec --no-startup-id /home/duck/.config/sway/dynamic-titlebar.sh
 
 ### include other configs
 include /etc/sway/config.d/*
