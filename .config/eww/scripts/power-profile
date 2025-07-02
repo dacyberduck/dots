@@ -5,11 +5,14 @@ if [[ ${1} != "change" && -z ${1} ]]; then
 	exit 1
 fi
 
-profile=$(powerprofilesctl get)
+profile="$(powerprofilesctl get)"
 if [[ ${profile} == performance ]]; then
-	powerprofilesctl set 'balanced'
+	powerprofilesctl set balanced
 elif [[ ${profile} == balanced ]]; then
-	powerprofilesctl set 'power-saver'
+	powerprofilesctl set power-saver
 else
-	powerprofilesctl set 'performance'
+	powerprofilesctl set performance
 fi
+
+# update eww variable
+eww poll __profile

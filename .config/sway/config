@@ -53,7 +53,6 @@ for_window [app_id="org.twosheds.iwgtk"] floating enable
 for_window [app_id="librewolf" title="Library"] floating enable
 for_window [class="^steam$"] floating enable, move container to workspace number 9
 for_window [title="^Krita$"] floating disable
-for_window [class="modorganizer.exe"] floating disable
 
 
 ### Compositor configuration

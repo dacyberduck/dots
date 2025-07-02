@@ -30,12 +30,11 @@
 )
 
 (defwidget _power-profile []
-   (eventbox
+   (box
       :class "profile"
-      :onhoverlost "${EWW_CMD} poll __profile"
       (button
          :class "${__profile}"
-         :onclick "powerprofilesctl set ${__profile == 'performance' ? 'balanced' : __profile == 'balanced' ? 'power-saver' : 'performance'}; ${EWW_CMD} poll __profile"
+         :onclick "/home/duck/.config/eww/scripts/power-profile change; ${EWW_CMD} poll __profile"
          :onrightclick "${EWW_CMD} poll __profile;"
          :tooltip "Profile: ${__profile}"
          "${__profile == 'performance' ? '󱠇' : __profile == 'balanced' ? '󱤅' : '󰥱' }"
