@@ -180,7 +180,8 @@ Shift+a = antialiasing prev
 r = reload
 i = info
 Shift+Delete = exec rm -f "%"; skip_file
-Ctrl+s = exec /home/duck/.config/swayimg/handler -save "%"
+Ctrl+s = exec /home/duck/Scripts/swayimg-action-handler -save "%"
+Ctrl+c = exec sh -c 'wl-copy < "%"'
 Escape = exit
 q = exit
 # Mouse related

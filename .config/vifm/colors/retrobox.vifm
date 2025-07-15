@@ -1,0 +1,205 @@
+" vim: filetype=vifm :
+
+" This is based on vim's retrobox color scheme which is similar to gruvbox
+"
+" This file last updated: 26 February, 2024
+
+hi clear
+
+hi JobLine       cterm=bold                    ctermfg=234      ctermbg=142
+
+hi SuggestBox    cterm=bold                    ctermfg=187      ctermbg=237
+
+hi StatusLine    cterm=bold,reverse            ctermfg=239      ctermbg=187
+hi WildMenu      cterm=bold,reverse            ctermfg=109      ctermbg=237
+
+hi Border        cterm=none                    ctermfg=236      ctermbg=234
+
+hi CmdLine       cterm=none                    ctermfg=default  ctermbg=default
+hi ErrorMsg      cterm=bold                    ctermfg=234      ctermbg=009
+
+hi Win           cterm=none                    ctermfg=187      ctermbg=234
+hi OtherWin      cterm=none                    ctermfg=default  ctermbg=default
+hi AuxWin        cterm=none                    ctermfg=default  ctermbg=default
+hi OddLine                                     ctermfg=default  ctermbg=default
+
+hi Directory     cterm=bold                    ctermfg=121      ctermbg=default
+hi Link          cterm=bold                    ctermfg=229      ctermbg=default
+hi BrokenLink    cterm=bold                    ctermfg=209      ctermbg=default
+hi HardLink      cterm=bold                    ctermfg=221      ctermbg=default
+hi Socket        cterm=bold,reverse            ctermfg=182      ctermbg=default
+hi Device        cterm=bold,reverse            ctermfg=204      ctermbg=default
+hi Fifo          cterm=bold,reverse            ctermfg=045      ctermbg=default
+hi Executable    cterm=bold                    ctermfg=119      ctermbg=default
+hi CmpMismatch   cterm=bold,reverse            ctermfg=009      ctermbg=default
+hi CmpUnmatched  cterm=bold,reverse            ctermfg=100      ctermbg=default
+hi CmpBlank                                    ctermfg=default  ctermbg=default
+
+hi Selected      cterm=bold,reverse            ctermfg=109      ctermbg=default
+hi CurrLine      cterm=bold                    ctermfg=default  ctermbg=237
+hi OtherLine     cterm=none                    ctermfg=default  ctermbg=235
+hi LineNr                                      ctermfg=243      ctermbg=default
+
+hi TopLine       cterm=reverse                 ctermfg=237      ctermbg=102
+hi ToplineSel    cterm=bold,reverse            ctermfg=239      ctermbg=187
+
+hi Tabline       cterm=none                    ctermfg=102      ctermbg=237
+hi TabLineSel    cterm=bold                    ctermfg=230      ctermbg=234
+
+" build system files
+highlight {Makefile,Makefile.am,Makefile.in,Makefile.win,*.mak,*.mk,*.m4,*.ac,
+          \configure,CMakeLists.txt,*.cmake,*.pro,*.pri,*.sln,meson.build,
+          \meson_options.txt}
+        \ cterm=none ctermfg=121 ctermbg=default
+" archives
+highlight {*.7z,*.ace,*.arj,*.bz2,*.cpio,*.deb,*.dz,*.gz,*.jar,*.lzh,*.lzma,
+          \*.rar,*.rpm,*.rz,*.tar,*.taz,*.tb2,*.tbz,*.tbz2,*.tgz,*.tlz,*.trz,
+          \*.txz,*.tz,*.tz2,*.tzst,*.xz,*.z,*.zip,*.zoo,*.apk,*.gzip,*.lz,
+          \*.zst,*.zstd}
+        \ cterm=none ctermfg=215 ctermbg=default
+" configuration and other readable textual formats
+highlight {*.css,*.less,*.scss,*.markdown,*.md,*.mkd,*.org,*.pandoc,*.pdc,*.tex,
+          \*.txt,*.xml,*.log,*.rss,*.xul,*.json,*.yaml,*.yml,*.csv,*.plist,
+          \*.ini,*.cfg,*.rc,*.conf,*.spec,*.qrc,*.description,*.list,*.log.old,
+          \*.log.1,*.log.2,*.log.3,*.log.4,*.log.5,*.log.6,*.log.7,*.log.8,
+          \syslog,syslog.1}
+        \ cterm=none ctermfg=217 ctermbg=default
+" still text files, but keeping this unoptimizable glob separately
+highlight {*[^0-9].[1-9]}
+        \ cterm=none ctermfg=217 ctermbg=default
+" documents and text-based formats that need special handling
+highlight {*.doc,*.docx,*.xls,*.xlsm,*.xlsx,*.mobi,*.rtf,*.ppt,*.pptx,*.pdf,
+          \*.epub,*.fb2,*.djvu,*.djv,*.htm,*.html,*.shtml,*.xhtml,*.desktop,
+          \*.odg,*.odt,*.ods}
+        \ cterm=none ctermfg=218 ctermbg=default
+" audio
+highlight {*.aac,*.ac3,*.anx,*.ape,*.asf,*.au,*.axa,*.cue,*.flac,*.m2a,*.m4a,
+          \*.mid,*.midi,*.mka,*.mp3,*.mpc,*.mpga,*.oga,*.ogg,*.ogx,*.ra,*.ram,
+          \*.spx,*.wav,*.wma,*.opus}
+        \ cterm=none ctermfg=79 ctermbg=default
+" multimedia
+highlight {*.avi,*.axv,*.divx,*.flv,*.m2v,*.m4v,*.mp4,*.m4p,*.mp4v,*.mpeg,*.mpg,
+          \*.mkv,*.mov,*.nuv,*.ogv,*.qt,*.rm,*.ts,*.vob,*.webm,*.wmv,*.xvid,
+          \*.unknown_video}
+        \ cterm=none ctermfg=49 ctermbg=default
+" images
+highlight {*.bmp,*.gif,*.jpeg,*.jpg,*.ico,*.png,*.ppm,*.svg,*.svgz,*.tga,*.tif,
+          \*.tiff,*.xbm,*.xcf,*.xpm,*.xspf,*.xwd,*.ai,*.pbm,*.pgm,*.webp}
+        \ cterm=none ctermfg=117 ctermbg=default
+" executables
+highlight {*.sh,*.bash,*.zsh,*.bat,*.btm,*.cmd,*.com,*.dll,*.exe,*.run,*.msu,
+          \*.msi,*.fish,*.AppImage}
+        \ cterm=none ctermfg=77 ctermbg=default
+" source code
+highlight {*.patch,*.diff,*.py,*.cpp,*.hpp,*.c,*.h,*.cpp,*.hpp,*.cc,*.hh,*.ld,
+          \*.hs,*.php,*.lua,*.vim,*.vifm,*.asm,*.s,*.java,*.cxx,*.c++,*.go,
+          \*.pl,*.pm,*.t,*.cs,*.asp,*.dart,*.js,*.rb,*.scala,*.ts,*.coffee,
+          \*.ml,*.mli,*.rs,*.sql,*.qml,vifmrc,vimrc,.vimrc,*.flex,*.ypp,*.S}
+        \ cterm=none ctermfg=193 ctermbg=default
+" software documentation
+highlight {COPYRIGHT,COPYING*,BUGS,ChangeLog*,FAQ,INSTALL*,LICENCE,LICENSE,NEWS,
+          \README,README.*,AUTHORS,TODO,THANKS}
+        \ cterm=none ctermfg=187 ctermbg=default
+" vim: filetype=vifm :
+
+" This is based on vim's retrobox color scheme which is similar to gruvbox
+"
+" This file last updated: 26 February, 2024
+"
+
+hi clear
+
+hi JobLine       cterm=bold                    ctermfg=234      ctermbg=142
+
+hi SuggestBox    cterm=bold                    ctermfg=187      ctermbg=237
+
+hi StatusLine    cterm=bold,reverse            ctermfg=239      ctermbg=187
+hi WildMenu      cterm=bold,reverse            ctermfg=109      ctermbg=237
+
+hi Border        cterm=none                    ctermfg=236      ctermbg=234
+
+hi CmdLine       cterm=none                    ctermfg=default  ctermbg=default
+hi ErrorMsg      cterm=bold                    ctermfg=234      ctermbg=009
+
+hi Win           cterm=none                    ctermfg=187      ctermbg=234
+hi OtherWin      cterm=none                    ctermfg=default  ctermbg=default
+hi AuxWin        cterm=none                    ctermfg=default  ctermbg=default
+hi OddLine                                     ctermfg=default  ctermbg=default
+
+hi Directory     cterm=bold                    ctermfg=121      ctermbg=default
+hi Link          cterm=bold                    ctermfg=229      ctermbg=default
+hi BrokenLink    cterm=bold                    ctermfg=209      ctermbg=default
+hi HardLink      cterm=bold                    ctermfg=221      ctermbg=default
+hi Socket        cterm=bold,reverse            ctermfg=182      ctermbg=default
+hi Device        cterm=bold,reverse            ctermfg=204      ctermbg=default
+hi Fifo          cterm=bold,reverse            ctermfg=045      ctermbg=default
+hi Executable    cterm=bold                    ctermfg=119      ctermbg=default
+hi CmpMismatch   cterm=bold,reverse            ctermfg=009      ctermbg=default
+hi CmpUnmatched  cterm=bold,reverse            ctermfg=100      ctermbg=default
+hi CmpBlank                                    ctermfg=default  ctermbg=default
+
+hi Selected      cterm=bold,reverse            ctermfg=109      ctermbg=default
+hi CurrLine      cterm=bold                    ctermfg=default  ctermbg=237
+hi OtherLine     cterm=none                    ctermfg=default  ctermbg=235
+hi LineNr                                      ctermfg=243      ctermbg=default
+
+hi TopLine       cterm=reverse                 ctermfg=237      ctermbg=102
+hi ToplineSel    cterm=bold,reverse            ctermfg=239      ctermbg=187
+
+hi Tabline       cterm=none                    ctermfg=102      ctermbg=237
+hi TabLineSel    cterm=bold                    ctermfg=230      ctermbg=234
+
+" build system files
+highlight {Makefile,Makefile.am,Makefile.in,Makefile.win,*.mak,*.mk,*.m4,*.ac,
+          \configure,CMakeLists.txt,*.cmake,*.pro,*.pri,*.sln,meson.build,
+          \meson_options.txt}
+        \ cterm=none ctermfg=121 ctermbg=default
+" archives
+highlight {*.7z,*.ace,*.arj,*.bz2,*.cpio,*.deb,*.dz,*.gz,*.jar,*.lzh,*.lzma,
+          \*.rar,*.rpm,*.rz,*.tar,*.taz,*.tb2,*.tbz,*.tbz2,*.tgz,*.tlz,*.trz,
+          \*.txz,*.tz,*.tz2,*.tzst,*.xz,*.z,*.zip,*.zoo,*.apk,*.gzip,*.lz,
+          \*.zst,*.zstd}
+        \ cterm=none ctermfg=215 ctermbg=default
+" configuration and other readable textual formats
+highlight {*.css,*.less,*.scss,*.markdown,*.md,*.mkd,*.org,*.pandoc,*.pdc,*.tex,
+          \*.txt,*.xml,*.log,*.rss,*.xul,*.json,*.yaml,*.yml,*.csv,*.plist,
+          \*.ini,*.cfg,*.rc,*.conf,*.spec,*.qrc,*.description,*.list,*.log.old,
+          \*.log.1,*.log.2,*.log.3,*.log.4,*.log.5,*.log.6,*.log.7,*.log.8,
+          \syslog,syslog.1}
+        \ cterm=none ctermfg=217 ctermbg=default
+" still text files, but keeping this unoptimizable glob separately
+highlight {*[^0-9].[1-9]}
+        \ cterm=none ctermfg=217 ctermbg=default
+" documents and text-based formats that need special handling
+highlight {*.doc,*.docx,*.xls,*.xlsm,*.xlsx,*.mobi,*.rtf,*.ppt,*.pptx,*.pdf,
+          \*.epub,*.fb2,*.djvu,*.djv,*.htm,*.html,*.shtml,*.xhtml,*.desktop,
+          \*.odg,*.odt,*.ods}
+        \ cterm=none ctermfg=218 ctermbg=default
+" audio
+highlight {*.aac,*.ac3,*.anx,*.ape,*.asf,*.au,*.axa,*.cue,*.flac,*.m2a,*.m4a,
+          \*.mid,*.midi,*.mka,*.mp3,*.mpc,*.mpga,*.oga,*.ogg,*.ogx,*.ra,*.ram,
+          \*.spx,*.wav,*.wma,*.opus}
+        \ cterm=none ctermfg=79 ctermbg=default
+" multimedia
+highlight {*.avi,*.axv,*.divx,*.flv,*.m2v,*.m4v,*.mp4,*.m4p,*.mp4v,*.mpeg,*.mpg,
+          \*.mkv,*.mov,*.nuv,*.ogv,*.qt,*.rm,*.ts,*.vob,*.webm,*.wmv,*.xvid,
+          \*.unknown_video}
+        \ cterm=none ctermfg=49 ctermbg=default
+" images
+highlight {*.bmp,*.gif,*.jpeg,*.jpg,*.ico,*.png,*.ppm,*.svg,*.svgz,*.tga,*.tif,
+          \*.tiff,*.xbm,*.xcf,*.xpm,*.xspf,*.xwd,*.ai,*.pbm,*.pgm,*.webp}
+        \ cterm=none ctermfg=117 ctermbg=default
+" executables
+highlight {*.sh,*.bash,*.zsh,*.bat,*.btm,*.cmd,*.com,*.dll,*.exe,*.run,*.msu,
+          \*.msi,*.fish,*.AppImage}
+        \ cterm=none ctermfg=77 ctermbg=default
+" source code
+highlight {*.patch,*.diff,*.py,*.cpp,*.hpp,*.c,*.h,*.cpp,*.hpp,*.cc,*.hh,*.ld,
+          \*.hs,*.php,*.lua,*.vim,*.vifm,*.asm,*.s,*.java,*.cxx,*.c++,*.go,
+          \*.pl,*.pm,*.t,*.cs,*.asp,*.dart,*.js,*.rb,*.scala,*.ts,*.coffee,
+          \*.ml,*.mli,*.rs,*.sql,*.qml,vifmrc,vimrc,.vimrc,*.flex,*.ypp,*.S}
+        \ cterm=none ctermfg=193 ctermbg=default
+" software documentation
+highlight {COPYRIGHT,COPYING*,BUGS,ChangeLog*,FAQ,INSTALL*,LICENCE,LICENSE,NEWS,
+          \README,README.*,AUTHORS,TODO,THANKS}
+        \ cterm=none ctermfg=187 ctermbg=default

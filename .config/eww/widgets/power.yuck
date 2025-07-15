@@ -2,7 +2,7 @@
 (defvar  __rev_power false)
 (defpoll __profile      :interval "999999s" 'powerprofilesctl get')
 (defpoll __battery_info :interval "999999s" 'acpi')
-(defpoll __threshold_on :interval "999999s" '/home/duck/.config/eww/scripts/charging_threshold -get')
+(defpoll __threshold_on :interval "999999s" '~/Scripts/eww/charging_threshold -get')
 
 (defwidget _battery []
    (eventbox
@@ -22,7 +22,7 @@
 
 (defwidget _charging_threshold []
    (button
-      :onclick "doas /home/duck/.config/eww/scripts/charging_threshold -toggle; ${EWW_CMD} poll __threshold_on"
+      :onclick "doas ~/Scripts/eww/charging_threshold -toggle; ${EWW_CMD} poll __threshold_on"
       :class {__threshold_on == '1' ? 'enabled' : 'disabled'}
       :tooltip "Charging Threshold: 60% [${__threshold_on == '1' ? 'ON' : 'OFF'}]"
       '󱈑'
@@ -34,7 +34,7 @@
       :class "profile"
       (button
          :class "${__profile}"
-         :onclick "/home/duck/.config/eww/scripts/power-profile change; ${EWW_CMD} poll __profile"
+         :onclick "~/Scripts/eww/power-profile change; ${EWW_CMD} poll __profile"
          :onrightclick "${EWW_CMD} poll __profile;"
          :tooltip "Profile: ${__profile}"
          "${__profile == 'performance' ? '󱠇' : __profile == 'balanced' ? '󱤅' : '󰥱' }"

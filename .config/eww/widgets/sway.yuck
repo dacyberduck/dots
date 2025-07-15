@@ -1,5 +1,5 @@
 ; vim: et sts=3 sw=3:
-(deflisten __swsp  :initial "${[1]}" "./scripts/sway_workspaces")
+(deflisten __swsp  :initial "${[1]}" "~/Scripts/eww/sway_workspaces")
 (deflisten __smode "swaymsg -t subscribe '[\"mode\"]' --monitor")
 
 (defwidget _swayWorkspaces []

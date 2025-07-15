@@ -10,5 +10,7 @@ if [[ $1 == -save ]]; then
 		echo "Error: no image file given"
 		exit 1
 	fi
-	mv "${2}" ~/Pictures/Screenshots/screenshot-$(date '+%y%m%d_%H%M%S').png
+	ipath="${HOME}/Pictures/Screenshots/screenshot-$(date '+%y%m%d_%H%M%S').png"
+	mv "${2}" "${ipath}"
+	notify-send "Swayimg" "Image saved to ${ipath}"
 fi

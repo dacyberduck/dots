@@ -1,8 +1,8 @@
 ; vim: set et sts=3 sw=3:
 
 (defvar    __rev_network false)
-(deflisten __bt  "./scripts/bluetooth")
-(deflisten __net "./scripts/network")
+(deflisten __bt  "~/Scripts/eww/bluetooth")
+(deflisten __net "~/Scripts/eww/network")
 
 (defwidget _connectivity []
    (box

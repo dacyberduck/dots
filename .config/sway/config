@@ -34,7 +34,6 @@ for_window [class = "(?i)pinentry"] floating enable
 for_window [title="Picture-in-Picture"] floating enable, border none, sticky on
 for_window [title = "Administrator privileges required"] floating enable
 # Application Specific override
-# <<< wps-office
 for_window [class="et" instance="et"] floating disable
 for_window [class="wpp" instance="wpp"] floating disable
 for_window [class="wps" instance="wps"] floating disable
@@ -45,7 +44,6 @@ for_window [class="wpp" instance="wpp" title="wpp"] floating enable
 for_window [class="wps" instance="wps" title="wps"] floating enable
 for_window [class="pdf" instance="pdf" title="pdf"] floating enable
 for_window [class="prometheus" instance="prometheus" title="prometheus"] floating enable
-# >>>
 for_window [app_id="mpv"] floating enable
 for_window [app_id="qalculate-gtk"] floating enable
 for_window [app_id="^blueman-*"] floating enable
@@ -53,6 +51,7 @@ for_window [app_id="org.twosheds.iwgtk"] floating enable
 for_window [app_id="librewolf" title="Library"] floating enable
 for_window [class="^steam$"] floating enable, move container to workspace number 9
 for_window [title="^Krita$"] floating disable
+for_window [class="bethini.exe"] floating enable
 
 
 ### Compositor configuration
@@ -77,20 +76,11 @@ set $term footclient
 #set $menu tofi-drun --horizontal true --anchor top --width 1366 --height 20 | xargs swaymsg exec --
 set $menu tofi-drun --horizontal true --anchor top --width 1366 --height 20 --drun-launch true
 
-### Idle configuration
-exec swayidle -w \
-         lock 'swaylock -f -c 1c1c1c -e' \
-         before-sleep 'loginctl lock-session' \
-         timeout 60  'xbacklight -store; xbacklight -steps 300 -set 10' resume 'xbacklight -steps 300 -restore' \
-         timeout 300 'loginctl lock-session' resume 'echo "session locked"' \
-         timeout 600 'swaymsg "output * power off"' resume 'swaymsg "output * power on"' \
-         timeout 1800 'systemctl suspend-then-hibernate'
-
 ### Key bindings
 bindsym $mod+Return exec $term
 bindsym $mod+Shift+q kill
 bindsym $mod+d exec $menu
-bindsym --no-repeat $mod+Tab exec ~/.config/sway/sway-window-switcher.py -t all
+bindsym --no-repeat $mod+Tab exec ~/Scripts/sway/window-switcher.py -t all
 floating_modifier $mod normal
 bindsym $mod+Shift+c reload
 bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -B 'Yes, exit sway' 'swaymsg exit'
@@ -204,7 +194,7 @@ bindsym --locked XF86MonBrightnessUp exec xbacklight -inc 5
 bindsym --locked XF86AudioPlay exec playerctl play-pause
 bindsym --locked XF86AudioNext exec playerctl next
 bindsym --locked XF86AudioPrev exec playerctl previous
-bindsym --no-repeat Print exec pgrep slurp && pkill slurp || (grim -g "$(slurp)" /tmp/screenshot.png && wl-copy -t image/png < /tmp/screenshot.png && swayimg /tmp/screenshot.png)
+bindsym --no-repeat Print exec pgrep slurp && pkill slurp || (grim -g "$(slurp)" /tmp/screenshot.png && swayimg /tmp/screenshot.png)
 
 # gestures
 bindgesture swipe:3:up focus up
@@ -218,6 +208,15 @@ bindgesture swipe:4:down focus child
 bindgesture hold:3 splitt
 bindgesture hold:4 split none
 
+### Idle configuration
+exec swayidle -w \
+         lock 'swaylock -f -c 1c1c1c -e' \
+         before-sleep 'loginctl lock-session' \
+         timeout 60  'xbacklight -store; xbacklight -steps 300 -set 10' resume 'xbacklight -steps 300 -restore' \
+         timeout 300 'loginctl lock-session' resume 'echo "session locked"' \
+         timeout 600 'swaymsg "output * power off"' resume 'swaymsg "output * power on"' \
+         timeout 1800 'systemctl suspend-then-hibernate'
+
 ### startup applications
 exec --no-startup-id foot --server
 exec --no-startup-id swaync
@@ -226,8 +225,9 @@ exec --no-startup-id gammastep -b 1.0:0.75 -l 22.56:88.33 -t 6500:3600
 exec_always --no-startup-id eww --restart open statusbar
 exec --no-startup-id dbus-update-activation-environment --systemd --all
 exec --no-startup-id /usr/libexec/polkit-gnome-authentication-agent-1
-# sway scripts
-exec --no-startup-id /home/duck/.config/sway/dynamic-titlebar.sh
+# scripts
+exec --no-startup-id ~/Scripts/sway/dynamic-titlebar.sh
+exec --no-startup-id ~/Scripts/vifm-freedesktop-service.py
 
 ### include other configs
 include /etc/sway/config.d/*
