@@ -28,8 +28,7 @@ cmd="/usr/bin/vifm"
 termcmd="/usr/bin/foot --app-id floating"
 
 if [ "$save" = "1" ]; then
-	# /usr/bin/touch $path
-	set -- --choose-files "$out" -c "only" -c "map <esc> :cquit<cr>" -c "set statusline='Save file'" --select "$path" >"$path"
+	set -- --choose-files "$out" -c "only" -c "map <esc> :cquit<cr>" -c "set statusline='Save file'" --select "$path" > "$path"
 elif [ "$directory" = "1" ]; then
 	set -- --choose-dir "$out" -c "only" -c "map <esc> :cquit<cr>" -c "set statusline='Select director'"
 elif [ "$multiple" = "1" ]; then
