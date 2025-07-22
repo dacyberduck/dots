@@ -1,0 +1,346 @@
+vim9script
+#######################################################################
+# __   _____ __  __ ___  ___
+# \ \ / /_ _|  \/  | _ \/ __|
+#  \ V / | || |\/| |   / (__
+#   \_/ |___|_|  |_|_|_\\___|
+#
+#######################################################################
+# <<< options/settings
+set viminfofile=$XDG_CONFIG_HOME/vim/viminfo
+set nobackup
+set swapfile directory=$XDG_CACHE_HOME/vim/swapdir//
+set undofile undolevels=1000 undodir=$XDG_CACHE_HOME/vim/undodir//
+set viewdir=$XDG_CACHE_HOME/vim/viewdir//
+#######################################################################
+&t_SI = "\<Esc>[6 q"
+&t_SR = "\<Esc>[4 q"
+&t_EI = "\<Esc>[2 q"
+&t_TI = "\<Esc>[>4;2m"
+&t_TE = "\<Esc>[>4;m"
+&t_8f = "\e[38;2;%lu;%lu;%lum"
+&t_8b = "\e[48;2;%lu;%lu;%lum"
+set history=1000
+set nocompatible
+set showcmd
+set autoread
+set noconfirm
+set novisualbell noerrorbells
+set modeline
+set mouse=ni mousemodel=popup_setpos
+set path+=**
+set tags+=.tags
+set nospell spelllang=en spellsuggest=best,9
+set dictionary=/usr/share/dict/words
+set encoding=utf-8
+set ttyfast
+set title
+set backspace=indent,eol,start virtualedit=block,insert
+set tabpagemax=50
+set shell=/bin/bash
+set nolangremap
+filetype plugin indent on
+set guifont=Dina\ NF\ 12
+set cursorline nocursorcolumn
+set number norelativenumber
+set nowrap textwidth=80
+set scrolloff=5 sidescrolloff=5
+set formatoptions-=o formatoptions+=n
+set ruler
+set nolist listchars=nbsp:␣,extends:…,trail:·
+set fillchars=vert:│,fold:─
+set foldenable foldmethod=marker foldmarker=<<<,>>> foldlevel=0
+set conceallevel=3
+set wildmenu wildoptions=pum
+set wildignore=*/.git/*,.config/*,.cargo/*,.mozilla/*,.local/*,*/.cache/*,*/Games/*
+set wildignore+=*.exe,*.dll,*.class,*.psd,*.zip,*.rar,*.tar.gz,*.tar.bz2,*.tar.xz
+set wildignore+=*.swp,*.o,*.obj,*.bak,*.pyc,__pycache__,.DS_Store,Thumbs.db
+set wildignore+=*/viminfo,*/vifminfo
+set wildcharm=<C-Z>
+set nrformats-=octal
+set nosplitright splitbelow
+set shortmess-=S shortmess+=cC
+set complete=.,w,b,u,t completeopt=menu,menuone,noselect,noinsert
+set pumheight=10
+set magic hlsearch incsearch
+set ignorecase smartcase
+set smarttab autoindent smartindent
+if &diff
+  set cursorbind scrollbind
+else
+  set nocursorbind noscrollbind
+endif
+# >>>
+#######################################################################
+# <<< commands
+# edit and load vim config
+command! Vconf edit $MYVIMRC
+
+# sort words
+command! -nargs=0 -range Sort :<line1>,<line2>call setline('.', join(sort(split(getline('.'), ' ')), ' '))
+# >>>
+#######################################################################
+# <<< autocommands
+autocmd FileType help,qf,git,lspgfm nnoremap <buffer> q <cmd>close<cr>
+autocmd FileType c,cpp,objc,python setlocal noet ts=4 sts=4 sw=4
+autocmd FileType bash,lua,xml setlocal et sts=2 sw=2
+autocmd FileType gitsendemail setlocal noet ts=4 sts=4 sw=4
+autocmd BufWritePost $MYVIMRC source $MYVIMRC | windo redraw | echomsg "Successfully reloaded $MYVIMRC"
+# >>>
+#######################################################################
+# <<< mappings
+g:mapleader = " "
+xnoremap <silent> < <gv
+xnoremap <silent> > >gv
+nnoremap <silent> <C-L> :nohlsearch<CR><C-L>
+cnoremap <expr> <Left> pumvisible() ? "\<C-Y>" : "\<Left>"
+# >>>
+#######################################################################
+# <<< plugins
+## <<< Vim builtins
+### netrw
+g:netrw_home        = "$XDG_CACHE_HOME/vim/" # move netrw history to cache directory
+g:netrw_banner      = v:false
+g:netrw_bufsettings = "noma nomod nu nobl nowrap ro nornu"
+
+### vim built-in plugins
+packadd cfilter
+packadd comment
+packadd justify
+packadd matchit
+## >>>
+## <<< user plugins
+# simple auto pair plugin
+def SimpleAutoPair(open: string, close: string): string
+  const line = getline('.')
+  const colm = col('.') - 1 # string index starts from 0
+  if line[colm] !~ '\s' && (stridx(line, close, colm) != -1 || colm < col('$') - 1)
+    return open
+  else
+    return open .. close .. "\<left>"
+  endif
+enddef
+inoremap <expr> " <SID>SimpleAutoPair('"', '"')
+inoremap <expr> ' <SID>SimpleAutoPair("'", "'")
+inoremap <expr> ( <SID>SimpleAutoPair("(", ")")
+inoremap <expr> { <SID>SimpleAutoPair("{", "}")
+inoremap <expr> [ <SID>SimpleAutoPair("[", "]")
+
+# simple indent guide
+def g:IndentGuide()
+  const bufnr = bufnr()
+  if getbufvar(bufnr, '&buflisted') && getbufvar(bufnr, '&modifiable')
+    exec 'setlocal listchars=' ..
+      join(filter(split(&listchars, ","), 'v:val !~ "leadmultispace" && v:val !~ "tab"') +
+      ['leadmultispace:│' .. repeat('\ ', &shiftwidth - 1), 'tab:█\ '],
+      ",")
+    setlocal list
+  endif
+enddef
+augroup IndentGuide
+  au!
+  autocmd BufWinEnter * call IndentGuide()
+augroup END
+
+# toggle between qflist & loclist
+def ToggleQuickFixLocList()
+  const tabn = tabpagenr()
+  const qvis = !empty(filter(getwininfo(), $'v:val.tabnr == {tabn} && v:val.quickfix && !v:val.loclist'))
+  const lvis = !empty(filter(getwininfo(), $'v:val.tabnr == {tabn} && v:val.quickfix && v:val.loclist'))
+  const qwin = (qvis) ? map(filter(getwininfo(), $'v:val.tabnr == {tabn} && v:val.quickfix && !v:val.loclist'), 'v:val.winnr')[0] : -1
+  const lwin = (lvis) ? map(filter(getwininfo(), $'v:val.tabnr == {tabn} && v:val.quickfix && v:val.loclist'), 'v:val.winnr')[0] : -1
+  const cwin = winnr()
+  if (qvis) && (lvis)
+    if (cwin == qwin)
+      execute $":{lwin}wincmd q"
+    elseif (cwin == lwin)
+      execute $":{qwin}wincmd q"
+    else
+      execute $":{qwin}wincmd w"
+      execute $":{lwin}wincmd q"
+    endif
+  elseif (qvis)
+    if (cwin == qwin)
+      execute $":{qwin}wincmd q"
+      silent! lopen
+    else
+      execute $":{qwin}wincmd w"
+    endif
+  elseif (lvis)
+    if (cwin == lwin)
+      execute $":{lwin}wincmd q"
+      silent! copen
+    else
+      execute $":{lwin}wincmd w"
+    endif
+  else
+    silent! copen
+  endif
+enddef
+nnoremap <silent> <leader>l :call <SID>ToggleQuickFixLocList()<CR>
+
+# wayland system clipboard
+# shamelessly copied from vim-wayland-clipboard plugin
+def WaylandYank()
+  if v:event['regname'] == '+'
+    silent call job_start(['wl-copy', '--', getreg(v:event['regname'])], {
+          \   "in_io": "null", "out_io": "null", "err_io": "null",
+          \   "stoponexit": "",
+          \ })
+  endif
+enddef
+augroup WaylandYank
+  au!
+  autocmd TextYankPost * call WaylandYank()
+augroup END
+# remap paste commands to first pull in clipboard contents with wl-paste
+var prepaste = "silent let @\"=substitute(system('wl-paste --no-newline'), \"\\r\", '', 'g')"
+for p in ['p', 'P']
+  execute "nnoremap <silent> \"+" .. p .. " :<C-U>" .. prepaste .. " \\| exec 'normal! ' . v:count1 . '" .. p .. "'<CR>"
+endfor
+for cr in ['<C-R>', '<C-R><C-R>', '<C-R><C-O>', '<C-R><C-P>']
+  execute "inoremap <silent> " .. cr .. "+ <C-O>:<C-U>" .. prepaste .. "<CR>" .. cr .. "\""
+endfor
+
+# easy buffer switching
+def JumpToBuffer(bufnr: number, rev: bool = v:false)
+  if rev
+    exec $":{bufnr == 0 ? 1 : bufnr}bprevious!"
+  else
+    if bufnr == 0
+      bnext!
+    else
+      if bufnr->bufexists()
+        exec $'buffer! {bufnr}'
+      endif
+    endif
+  endif
+enddef
+nnoremap <silent> gb :<C-U>call <SID>JumpToBuffer(v:count)<CR>
+nnoremap <silent> gB :<C-U>call <SID>JumpToBuffer(v:count, v:true)<CR>
+## >>>
+## <<< pack plugins
+### load snippets, so lsp/completion can use them (https://github.com/hrsh7th/vim-vsnip)
+# packadd vim-vsnip
+# packadd vim-vsnip-integ
+# packadd friendly-snippets
+# g:vsnip_snippet_dir = fnamemodify(expand("$MYVIMRC"), ':h') .. '/snippets'
+# 
+# ### auto completion (https://github.com/girishji/vimcomplete)
+packadd vimcomplete
+var vimcomplete_options = {
+  completor: {
+    alwaysOn: true,
+    shuffleEqualPriority: true,
+    postfixClobber: true,
+    noNewlineInCompletionEver: true,
+    triggerWordLen: 3
+  },
+  buffer: {
+    enable: true,
+    priority: 10,
+    urlComplete: true,
+    envComplete: true
+  },
+  # abbrev: {
+  #   enable: true,
+  #   priority: 10
+  # },
+  # lsp: {
+  #   enable: true,
+  #   priority: 11,
+  #   maxCount: 5,
+  #   filetypes: ['c', 'cpp']
+  # },
+  omnifunc: {
+    enable: true,
+    priority: 8,
+    filetypes: ['css', 'python', 'xml', 'javascript', 'typescript']
+  },
+  # vsnip: {
+  #   enable: true,
+  #   priority: 11
+  # },
+  vimscript: {
+    enable: true,
+    priority: 11
+  },
+}
+g:vimcomplete_tab_enable = 1
+g:VimCompleteOptionsSet(vimcomplete_options)
+
+# ### lsp (https://github.com/yegappan/lsp)
+# # language servers
+# var lspservers = [
+#   {
+#     name:     'clangd',
+#     filetype: ['c', 'cpp'],
+#     path:     '/usr/lib/llvm/17/bin/clangd',
+#     args:     ['--background-index', '--clang-tidy'],
+#     inlayHintProvider: '',
+#   },
+# ]
+# 
+# # lsp options
+# var lspoptions = {
+#   autoComplete:             v:false,
+#   autoPopulateDiags:        v:true,
+#   autohighlight:            v:true,
+#   highlightDiagInline:      v:true,
+#   hoverInPreview:           v:true,
+#   noDiagHoverOnLine:        v:false,
+#   noNewlineInCompletion:    v:true,
+#   showDiagInPopup:          v:true,
+#   showInlayHints:           v:true,
+#   showSignature:            v:true,
+#   snippetSupport:           v:true,
+#   vsnipSupport:             v:true,
+#   usePopupInCodeAction:     v:true,
+#   useQuickfixForLocations:  v:false,
+# }
+# 
+# # enable lsp on specific filetypes
+# packadd lsp
+# call LspAddServer(lspservers)
+# call LspOptionsSet(lspoptions)
+# autocmd User LspAttached
+#         \ setlocal keywordprg=:LspHover|
+#         \ setlocal formatexpr=lsp#lsp#FormatExpr()|
+#         \ setlocal tagfunc=lsp#lsp#TagFunc|
+#         \ nmap <silent> <buffer> ]d :LspDiagNext<CR>|
+#         \ nmap <silent> <buffer> [d :LspDiagPrev<CR>|
+#         \ nmap <silent> <buffer> gd :LspGotoDefinition<CR>|
+#         \ nmap <silent> <buffer> gD :LspGotoDeclaration<CR>|
+#         \ nmap <silent> <buffer> gs :LspSymbolSearch<CR>|
+#         \ nmap <silent> <buffer> gS :LspRename<CR>|
+#         \ nmap <silent> <buffer> <leader>gd :LspGotoTypeDef<CR>|
+#         \ nmap <silent> <buffer> <leader>gD :LspGotoImpl<CR>|
+#         \ nmap <silent> <buffer> <leader>lw :LspWorkspaceAddFolder<CR>|
+#         \ nmap <silent> <buffer> <leader>lW :LspWorkspaceRemoveFolder<CR>
+# ## >>>
+# >>>
+#######################################################################
+# <<< statusline
+set laststatus=2
+set statusline=
+set statusline+=%<[%n]\ %f%m%h%w
+set statusline+=%=
+set statusline+=[%l,\ %c%V]
+# >>>
+#######################################################################
+# <<< colorscheme
+if !has('gui_running') && &term =~ '^\%(screen\|tmux\)'
+  &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+  &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+endif
+
+syntax on
+set termguicolors
+set background=dark
+colorscheme retrobox
+hi Comment guifg=#928374 guibg=NONE gui=NONE cterm=italic
+hi SpecialComment guifg=#fb4934 guibg=NONE gui=NONE cterm=italic
+# >>>
+#######################################################################
+defcompile
+# vim: set et sts=2 sw=2:
