@@ -28,15 +28,19 @@ cmd="/usr/bin/vifm"
 termcmd="/usr/bin/foot --app-id floating"
 
 if [ "$save" = "1" ]; then
-	set -- --choose-files "$out" -c "only" -c "map <esc> :cquit<cr>" -c "set statusline='Save file'" --select "$path" > "$path"
+	set -- --choose-files "$out" -1 -c "only" -c "map <esc> :cquit<cr>" -c "set statusline='Save file'" --select "$path" > "$path"
 elif [ "$directory" = "1" ]; then
 	set -- --choose-dir "$out" -c "only" -c "map <esc> :cquit<cr>" -c "set statusline='Select director'"
 elif [ "$multiple" = "1" ]; then
 	set -- --choose-files "$out" -c "only" -c "map <esc> :cquit<cr>" -c "set statusline='Select file(s)'"
 else
-	set -- --choose-files "$out" -c "only" -c "map <esc> :cquit<cr>" -c "set statusline='Select file'"
+	set -- --choose-files -1 "$out" -c "only" -c "map <esc> :cquit<cr>" -c "set statusline='Select file'"
 fi
 $termcmd -- $cmd "$@"
-if [ "$save" = "1" ] && [ ! -s "$out" ]; then
-	/usr/bin/rm -f "$path"
+if [ "$save" = "1" ]; then
+	if [ ! -s "$out" ]; then
+		/usr/bin/rm -f "$path"
+	elif [ -s "$out" ] && [ "$path" != "$out" ] && [ -f "$path" ]; then
+		/usr/bin/rm -f "$path"
+	fi
 fi
