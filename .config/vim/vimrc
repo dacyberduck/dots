@@ -51,7 +51,8 @@ set nolist listchars=nbsp:␣,extends:…,trail:·
 set fillchars=vert:│,fold:─
 set foldenable foldmethod=marker foldmarker=<<<,>>> foldlevel=0
 set conceallevel=3
-set wildmenu wildoptions=pum
+set wildmode=noselect:lastused,full
+set wildmenu wildoptions=pum,fuzzy
 set wildignore=*/.git/*,.config/*,.cargo/*,.mozilla/*,.local/*,*/.cache/*,*/Games/*
 set wildignore+=*.exe,*.dll,*.class,*.psd,*.zip,*.rar,*.tar.gz,*.tar.bz2,*.tar.xz
 set wildignore+=*.swp,*.o,*.obj,*.bak,*.pyc,__pycache__,.DS_Store,Thumbs.db
@@ -60,7 +61,11 @@ set wildcharm=<C-Z>
 set nrformats-=octal
 set nosplitright splitbelow
 set shortmess-=S shortmess+=cC
-set complete=.,w,b,u,t completeopt=menu,menuone,noselect,noinsert
+set completepopup=highlight:Pmenu
+set completeopt=popup,fuzzy
+set autocomplete
+set completefuzzycollect=keyword
+set complete=.^7,w^5,b^5,u^3,t^3,i^3
 set pumheight=10
 set magic hlsearch incsearch
 set ignorecase smartcase
@@ -94,6 +99,7 @@ xnoremap <silent> < <gv
 xnoremap <silent> > >gv
 nnoremap <silent> <C-L> :nohlsearch<CR><C-L>
 cnoremap <expr> <Left> pumvisible() ? "\<C-Y>" : "\<Left>"
+nnoremap <silent><ESC> <ESC>:noh<CR><ESC>
 # >>>
 #######################################################################
 # <<< plugins
@@ -142,43 +148,6 @@ augroup IndentGuide
   autocmd BufWinEnter * call IndentGuide()
 augroup END
 
-# toggle between qflist & loclist
-def ToggleQuickFixLocList()
-  const tabn = tabpagenr()
-  const qvis = !empty(filter(getwininfo(), $'v:val.tabnr == {tabn} && v:val.quickfix && !v:val.loclist'))
-  const lvis = !empty(filter(getwininfo(), $'v:val.tabnr == {tabn} && v:val.quickfix && v:val.loclist'))
-  const qwin = (qvis) ? map(filter(getwininfo(), $'v:val.tabnr == {tabn} && v:val.quickfix && !v:val.loclist'), 'v:val.winnr')[0] : -1
-  const lwin = (lvis) ? map(filter(getwininfo(), $'v:val.tabnr == {tabn} && v:val.quickfix && v:val.loclist'), 'v:val.winnr')[0] : -1
-  const cwin = winnr()
-  if (qvis) && (lvis)
-    if (cwin == qwin)
-      execute $":{lwin}wincmd q"
-    elseif (cwin == lwin)
-      execute $":{qwin}wincmd q"
-    else
-      execute $":{qwin}wincmd w"
-      execute $":{lwin}wincmd q"
-    endif
-  elseif (qvis)
-    if (cwin == qwin)
-      execute $":{qwin}wincmd q"
-      silent! lopen
-    else
-      execute $":{qwin}wincmd w"
-    endif
-  elseif (lvis)
-    if (cwin == lwin)
-      execute $":{lwin}wincmd q"
-      silent! copen
-    else
-      execute $":{lwin}wincmd w"
-    endif
-  else
-    silent! copen
-  endif
-enddef
-nnoremap <silent> <leader>l :call <SID>ToggleQuickFixLocList()<CR>
-
 # wayland system clipboard
 # shamelessly copied from vim-wayland-clipboard plugin
 def WaylandYank()
@@ -218,106 +187,19 @@ def JumpToBuffer(bufnr: number, rev: bool = v:false)
 enddef
 nnoremap <silent> gb :<C-U>call <SID>JumpToBuffer(v:count)<CR>
 nnoremap <silent> gB :<C-U>call <SID>JumpToBuffer(v:count, v:true)<CR>
-## >>>
-## <<< pack plugins
-### load snippets, so lsp/completion can use them (https://github.com/hrsh7th/vim-vsnip)
-# packadd vim-vsnip
-# packadd vim-vsnip-integ
-# packadd friendly-snippets
-# g:vsnip_snippet_dir = fnamemodify(expand("$MYVIMRC"), ':h') .. '/snippets'
-# 
-# ### auto completion (https://github.com/girishji/vimcomplete)
-packadd vimcomplete
-var vimcomplete_options = {
-  completor: {
-    alwaysOn: true,
-    shuffleEqualPriority: true,
-    postfixClobber: true,
-    noNewlineInCompletionEver: true,
-    triggerWordLen: 3
-  },
-  buffer: {
-    enable: true,
-    priority: 10,
-    urlComplete: true,
-    envComplete: true
-  },
-  # abbrev: {
-  #   enable: true,
-  #   priority: 10
-  # },
-  # lsp: {
-  #   enable: true,
-  #   priority: 11,
-  #   maxCount: 5,
-  #   filetypes: ['c', 'cpp']
-  # },
-  omnifunc: {
-    enable: true,
-    priority: 8,
-    filetypes: ['css', 'python', 'xml', 'javascript', 'typescript']
-  },
-  # vsnip: {
-  #   enable: true,
-  #   priority: 11
-  # },
-  vimscript: {
-    enable: true,
-    priority: 11
-  },
-}
-g:vimcomplete_tab_enable = 1
-g:VimCompleteOptionsSet(vimcomplete_options)
 
-# ### lsp (https://github.com/yegappan/lsp)
-# # language servers
-# var lspservers = [
-#   {
-#     name:     'clangd',
-#     filetype: ['c', 'cpp'],
-#     path:     '/usr/lib/llvm/17/bin/clangd',
-#     args:     ['--background-index', '--clang-tidy'],
-#     inlayHintProvider: '',
-#   },
-# ]
-# 
-# # lsp options
-# var lspoptions = {
-#   autoComplete:             v:false,
-#   autoPopulateDiags:        v:true,
-#   autohighlight:            v:true,
-#   highlightDiagInline:      v:true,
-#   hoverInPreview:           v:true,
-#   noDiagHoverOnLine:        v:false,
-#   noNewlineInCompletion:    v:true,
-#   showDiagInPopup:          v:true,
-#   showInlayHints:           v:true,
-#   showSignature:            v:true,
-#   snippetSupport:           v:true,
-#   vsnipSupport:             v:true,
-#   usePopupInCodeAction:     v:true,
-#   useQuickfixForLocations:  v:false,
-# }
-# 
-# # enable lsp on specific filetypes
-# packadd lsp
-# call LspAddServer(lspservers)
-# call LspOptionsSet(lspoptions)
-# autocmd User LspAttached
-#         \ setlocal keywordprg=:LspHover|
-#         \ setlocal formatexpr=lsp#lsp#FormatExpr()|
-#         \ setlocal tagfunc=lsp#lsp#TagFunc|
-#         \ nmap <silent> <buffer> ]d :LspDiagNext<CR>|
-#         \ nmap <silent> <buffer> [d :LspDiagPrev<CR>|
-#         \ nmap <silent> <buffer> gd :LspGotoDefinition<CR>|
-#         \ nmap <silent> <buffer> gD :LspGotoDeclaration<CR>|
-#         \ nmap <silent> <buffer> gs :LspSymbolSearch<CR>|
-#         \ nmap <silent> <buffer> gS :LspRename<CR>|
-#         \ nmap <silent> <buffer> <leader>gd :LspGotoTypeDef<CR>|
-#         \ nmap <silent> <buffer> <leader>gD :LspGotoImpl<CR>|
-#         \ nmap <silent> <buffer> <leader>lw :LspWorkspaceAddFolder<CR>|
-#         \ nmap <silent> <buffer> <leader>lW :LspWorkspaceRemoveFolder<CR>
-# ## >>>
+# cmdline auto completion
+augroup CmdComplete
+  au!
+  autocmd CmdlineChanged : call wildtrigger()
+augroup END
+
+# MRU complete
+def MruComplete(_, _, _): string
+  return v:oldfiles->join("\n")
+enddef
+command! -nargs=+ -complete=custom,MruComplete MRU edit <args>
+## >>>
 # >>>
 #######################################################################
 # <<< statusline
