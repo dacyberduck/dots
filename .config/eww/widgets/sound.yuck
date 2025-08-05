@@ -39,7 +39,7 @@ Artist: ${__plr.artist}
 Album:  ${__plr.album}"
          (label
             :show-truncated true
-            :markup {(__plr.status == 'playing' ? '󰎆 ' : __plr.status == 'paused' ? '󰫔 ' : '') + replace(replace(__plr.title, '[\\s_][\\[\\{\\(|-].*', ''), '\\.[mfwo][plak][34avu][cs]?$', '')}
+            :markup {(__plr.status == 'playing' ? '󰎆 ' : __plr.status == 'paused' ? '󰫔 ' : '') + replace(replace(__plr.title, '[\\s_][\\[\\{\\(|-].*', ''), '\\.[mfwo][plak4][34avu][cs]?$', '')}
          )
       )
    )

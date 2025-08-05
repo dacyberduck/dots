@@ -78,9 +78,6 @@ endif
 # >>>
 #######################################################################
 # <<< commands
-# edit and load vim config
-command! Vconf edit $MYVIMRC
-
 # sort words
 command! -nargs=0 -range Sort :<line1>,<line2>call setline('.', join(sort(split(getline('.'), ' ')), ' '))
 # >>>

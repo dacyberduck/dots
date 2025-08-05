@@ -34,7 +34,7 @@ elif [ "$directory" = "1" ]; then
 elif [ "$multiple" = "1" ]; then
 	set -- --choose-files "$out" -c "only" -c "map <esc> :cquit<cr>" -c "set statusline='Select file(s)'"
 else
-	set -- --choose-files -1 "$out" -c "only" -c "map <esc> :cquit<cr>" -c "set statusline='Select file'"
+	set -- --choose-files "$out" -1 -c "only" -c "map <esc> :cquit<cr>" -c "set statusline='Select file'"
 fi
 $termcmd -- $cmd "$@"
 if [ "$save" = "1" ]; then

@@ -208,6 +208,17 @@ bindgesture swipe:4:down focus child
 bindgesture hold:3 splitt
 bindgesture hold:4 split none
 
+### startup applications
+exec --no-startup-id foot --server
+exec --no-startup-id swaync
+exec --no-startup-id gammastep -b 1.0:0.75 -l 22.56:88.33 -t 6500:3600
+exec_always --no-startup-id eww --restart open statusbar
+exec --no-startup-id dbus-update-activation-environment --systemd --all
+exec --no-startup-id /usr/libexec/polkit-gnome-authentication-agent-1
+# scripts
+exec --no-startup-id ~/Scripts/sway/dynamic-titlebar.sh
+exec --no-startup-id ~/Scripts/vifm-freedesktop-service.py
+
 ### Idle configuration
 exec swayidle -w \
          lock 'swaylock -f -c 1c1c1c -e' \
@@ -217,17 +228,7 @@ exec swayidle -w \
          timeout 600 'swaymsg "output * power off"' resume 'swaymsg "output * power on"' \
          timeout 1800 'systemctl suspend-then-hibernate'
 
-### startup applications
-exec --no-startup-id foot --server
-exec --no-startup-id swaync
 exec --no-startup-id sway-audio-idle-inhibit
-exec --no-startup-id gammastep -b 1.0:0.75 -l 22.56:88.33 -t 6500:3600
-exec_always --no-startup-id eww --restart open statusbar
-exec --no-startup-id dbus-update-activation-environment --systemd --all
-exec --no-startup-id /usr/libexec/polkit-gnome-authentication-agent-1
-# scripts
-exec --no-startup-id ~/Scripts/sway/dynamic-titlebar.sh
-exec --no-startup-id ~/Scripts/vifm-freedesktop-service.py
 
 ### include other configs
 include /etc/sway/config.d/*
