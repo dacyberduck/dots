@@ -28,6 +28,8 @@ for_window [class="^steam$"] floating enable, move container to workspace number
 for_window [title="^Krita$"] floating disable
 for_window [class="bethini.exe"] floating enable
 for_window [class="^et$" title="Spreadsheets$"] floating disable
+for_window [class="^wps$" title="Writer$"] floating disable
+for_window [class="^wpp$" title="Presentation$"] floating disable
 
 # Specific override
 for_window [app_id = "xdg-desktop-portal-gtk"] floating enable
