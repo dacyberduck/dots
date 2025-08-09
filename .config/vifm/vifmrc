@@ -1,5 +1,13 @@
 " vim: filetype=vifm et sts=3 sw=3:
 
+" Show nested instance in statusline
+let $VIFM_OPENED = $VIFM_OPENED+1
+if $VIFM_OPENED > 1
+    set statusline="  Warning: You are opening vifm inside vifm!"
+else
+    set statusline="  %z%= %A %g %d %s  %l/%S [%L]"
+endif
+
 " options
 " =========================================================
 set autochpos
@@ -27,7 +35,6 @@ set shortmess=pLMT
 set smartcase
 set sortnumbers
 set sortorder=ascending
-set statusline="  %z%= %A %g %d %s  %l/%S [%L]"
 set suggestoptions=normal,visual,view,otherpane,keys,marks,registers
 set syscalls
 set tablabel=%[(%n)%]%[%[%T{tree}%]%[{%c}%]@%]%p:t
@@ -119,12 +126,12 @@ nnoremap - <C-w>5<
 nnoremap _ <C-w>5>
 
 """"""""""""""""""""""""""
-" Plugins
+" File Openers
 
 """"""""""""""""""""""""""
 filextype {*.bmp,*.jpg,*.jpeg,*.png,*.gif,*.xpm},<image/*>
         \ {View in swayimg}
-        \ swayimg %f,
+        \ swayimg %f %i,
 
 filetype {*.wav,*.mp3,*.flac,*.m4a,*.wma,*.ape,*.ac3,*.og[agx],*.spx,
          \*.opus,*.aac,*.mpga},<audio/*>
@@ -149,15 +156,11 @@ filextype *.dds
         \ {Open using gimp}
         \ gimp %f %i,
 
-""""""""""""""""""""""""""""""""
-" Others
+filextype {*.xlx,*.xlsx,*.csv}
+        \ {Open spreadsheets in WPS spreadsheets}
+        \ et %f %i
 
-""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""
+" File Viewers
 
-" Show nested instance in statusline
-let $VIFM_OPENED = $VIFM_OPENED+1
-if $VIFM_OPENED > 1
-    set statusline="  Warning: You are opening vifm inside vifm!"
-else
-    set statusline="  %z%= %A %g %d %s  %l/%S [%L]"
-endif
+""""""""""""""""""""""""""

@@ -18,40 +18,33 @@ output eDP-1 bg #3c3c3c solid_color
 ### Window rule
 # general rules
 for_window [shell = "xwayland"] floating enable
+for_window [app_id="mpv"] floating enable
+for_window [app_id="qalculate-gtk"] floating enable
+for_window [app_id="^blueman-*"] floating enable
+for_window [app_id="org.twosheds.iwgtk"] floating enable
+for_window [app_id="librewolf" title="Library"] floating enable
+for_window [app_id="librewolf" title="About LibreWolf"] floating enable
+for_window [class="^steam$"] floating enable, move container to workspace number 9
+for_window [title="^Krita$"] floating disable
+for_window [class="bethini.exe"] floating enable
+for_window [class="^et$" title="Spreadsheets$"] floating disable
+
+# Specific override
 for_window [app_id = "xdg-desktop-portal-gtk"] floating enable
 for_window [title="(?:Open|Save) (?:File|Folder|As)"] floating enable, resize set 800 600
 for_window [window_type = "menu"] floating enable
 for_window [window_role = "pop-up"] floating enable
 for_window [window_role = "bubble"] floating enable
 for_window [window_role = "dialog"] floating enable
+for_window [window_type = "dialog"] floating enable
 for_window [window_role = "About"] floating enable
 for_window [window_role = "task_dialog"] floating enable
-for_window [window_role = "__scratchpad__"] border normal 1
 for_window [window_role="Preferences"] floating enable
 for_window [app_id = "floating"] floating enable
 for_window [app_id = "floating_update"] floating enable, resize set width 1000 height 600
 for_window [class = "(?i)pinentry"] floating enable
 for_window [title="Picture-in-Picture"] floating enable, border none, sticky on
 for_window [title = "Administrator privileges required"] floating enable
-# Application Specific override
-for_window [class="et" instance="et"] floating disable
-for_window [class="wpp" instance="wpp"] floating disable
-for_window [class="wps" instance="wps"] floating disable
-for_window [class="pdf" instance="pdf"] floating disable
-for_window [class="prometheus" instance="prometheus"] floating disable
-for_window [class="et" instance="et" title="et"] floating enable
-for_window [class="wpp" instance="wpp" title="wpp"] floating enable
-for_window [class="wps" instance="wps" title="wps"] floating enable
-for_window [class="pdf" instance="pdf" title="pdf"] floating enable
-for_window [class="prometheus" instance="prometheus" title="prometheus"] floating enable
-for_window [app_id="mpv"] floating enable
-for_window [app_id="qalculate-gtk"] floating enable
-for_window [app_id="^blueman-*"] floating enable
-for_window [app_id="org.twosheds.iwgtk"] floating enable
-for_window [app_id="librewolf" title="Library"] floating enable
-for_window [class="^steam$"] floating enable, move container to workspace number 9
-for_window [title="^Krita$"] floating disable
-for_window [class="bethini.exe"] floating enable
 
 
 ### Compositor configuration

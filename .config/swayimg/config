@@ -19,9 +19,9 @@
 # Mode at startup (viewer/gallery)
 mode = viewer
 # Window position (parent or absolute coordinates, e.g. 100,200)
-position = parent
+position = auto
 # Window size (fullscreen/parent/image, or absolute size, e.g. 800,600)
-size = parent
+size = image
 # Use window decoration (yes/no)
 decoration = no
 # Action performed by SIGUSR1 signal (same format as for key bindings)
@@ -41,18 +41,10 @@ window = #1c1c1c88
 transparency = grid
 # Default image scale (optimal/fit/width/height/fill/real)
 scale = optimal
-# Keep absolute zoom across images (yes/no)
-keep_zoom = no
 # Initial image position
 position = center
-# Fix position of the image on the window surface (yes/no)
-fixed = yes
 # Anti-aliasing mode (none/box/bilinear/bicubic/mks13)
 antialiasing = mks13
-# Run slideshow at startup (yes/no)
-slideshow = no
-# Slideshow image display time (seconds)
-slideshow_time = 3
 # Number of previously viewed images to store in cache
 history = 1
 # Number of preloaded images (read ahead)
@@ -89,8 +81,6 @@ shadow = #000000ff
 [list]
 # Default order (none/alpha/reverse/random)
 order = alpha
-# Looping list of images (yes/no)
-loop = yes
 # Read directories recursively (yes/no)
 recursive = no
 # Open all files in the directory of the specified file (yes/no)
@@ -141,49 +131,41 @@ bottom_right = name,status
 ################################################################################
 [keys.viewer]
 F1 = help
-Home = first_file
-End = last_file
-Prior = prev_file
-Next = next_file
-Space = next_file
-Shift+r = rand_file
-Shift+d = prev_dir
-d = next_dir
-Shift+o = prev_frame
-o = next_frame
-c = skip_file
-Shift+s = slideshow
-s = animation
-f = fullscreen
-Return = mode
-Left = step_left 10
-Right = step_right 10
+q = exit
+Escape = exit
 Up = step_up 10
 Down = step_down 10
-Equal = zoom +10
-Plus = zoom +10
+Left = step_left 10
+Right = step_right 10
+h = step_left 10
+j = step_down 10
+k = step_up 10
+l = step_right 10
+n = next_file
+p = prev_file
 Minus = zoom -10
-w = zoom width
-Shift+w = zoom height
-z = zoom fit
-Shift+z = zoom fill
-0 = zoom real
+Equal = zoom +10
 BackSpace = zoom optimal
-Alt+s = scale
-Alt+z = keep_zoom
+Shift+Underscore = zoom width
+Shift+Plus = zoom height
 bracketleft = rotate_left
 bracketright = rotate_right
+d = next_dir
+Shift+d = prev_dir
+o = next_frame
+Shift+o = prev_frame
 m = flip_vertical
 Shift+m = flip_horizontal
-a = antialiasing next
-Shift+a = antialiasing prev
 r = reload
+Shift+r = rand_file
+Space = next_file
+Return = mode gallery
+f = fullscreen
 i = info
+s = animation
 Shift+Delete = exec rm -f "%"; skip_file
-Ctrl+s = exec /home/duck/Scripts/swayimg-action-handler -save "%"
 Ctrl+c = exec sh -c 'wl-copy < "%"'
-Escape = exit
-q = exit
+Ctrl+s = exec /home/duck/Scripts/swayimg-action-handler -save "%"
 # Mouse related
 ScrollLeft = step_right 5
 ScrollRight = step_left 5
@@ -211,9 +193,7 @@ Prior = page_up
 Next = page_down
 c = skip_file
 f = fullscreen
-Return = mode
-a = antialiasing next
-Shift+a = antialiasing prev
+Return = mode viewer
 r = reload
 i = info
 Shift+Delete = exec rm -f "%"; skip_file
