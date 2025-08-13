@@ -35,6 +35,7 @@ set dictionary=/usr/share/dict/words
 set encoding=utf-8
 set ttyfast
 set title
+set ttimeoutlen=0
 set backspace=indent,eol,start virtualedit=block,insert
 set tabpagemax=50
 set shell=/bin/bash

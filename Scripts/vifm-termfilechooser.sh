@@ -28,13 +28,13 @@ cmd="/usr/bin/vifm"
 termcmd="/usr/bin/foot --app-id floating"
 
 if [ "$save" = "1" ]; then
-	set -- --choose-files "$out" -1 -c "only" -c "map <esc> :cquit<cr>" -c "set statusline='Save file'" --select "$path" > "$path"
+	set -- --choose-files "$out" -1 -c "only" -c "map <esc> :cquit<cr>" -c "set statusline=' Save file as >'" --select "$path" > "$path"
 elif [ "$directory" = "1" ]; then
-	set -- --choose-dir "$out" -c "only" -c "map <esc> :cquit<cr>" -c "set statusline='Select director'"
+	set -- --choose-dir "$out" -c "only" -c "map <esc> :cquit<cr>" -c "set statusline=' Select directory >'"
 elif [ "$multiple" = "1" ]; then
-	set -- --choose-files "$out" -c "only" -c "map <esc> :cquit<cr>" -c "set statusline='Select file(s)'"
+	set -- --choose-files "$out" -c "only" -c "map <esc> :cquit<cr>" -c "set statusline=' Select file(s) >'"
 else
-	set -- --choose-files "$out" -1 -c "only" -c "map <esc> :cquit<cr>" -c "set statusline='Select file'"
+	set -- --choose-files "$out" -1 -c "only" -c "map <esc> :cquit<cr>" -c "set statusline=' Select file >'"
 fi
 $termcmd -- $cmd "$@"
 if [ "$save" = "1" ]; then
