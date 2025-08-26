@@ -42,6 +42,7 @@ export XKB_DEFAULT_LAYOUT=us
 export WINEPREFIX="${HOME}/Wine/default"
 #export WINEDLLOVERRIDES="winemenubuilder.exe=d"
 export DXVK_FRAME_RATE=30
+export DXVK_CONFIG_FILE="${XDG_CONFIG_HOME}/dxvk.conf"
 export MOZ_ENABLE_WAYLAND=1
 export HISTFILE="${HOME}/.bash_history"
 export HISTSIZE=1000

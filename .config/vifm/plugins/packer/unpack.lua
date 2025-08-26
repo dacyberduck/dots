@@ -6,7 +6,7 @@ local function get_common_unpack_prefix(archive, format) -- <<<
       -- this is slow in comparison to 7z. noticably slow
       -- when large archives or archives with lots of files
       cmd = string.format("tar --force-local -tf %s", vifm.escape(archive))
-   elseif format == 'zip' or format == 'rar' or format == '7z' then
+   elseif format == 'zip' or format == 'rar' or format == '7z' or format == 'xz' then
       cmd = string.format("7z -ba l %s | awk %s",
                           vifm.escape(archive),
                           vifm.escape('{($3 ~ /^D/) ? $0=$0"/" : $0; print substr($0,54) }'))
@@ -131,7 +131,7 @@ local function unpack_archive(archive, target, onexit) -- <<<
          vifm.sb.error("Error: unknown compression format '"..cmp.."'")
          return
       end
-   elseif ext == 'zip' or ext == 'rar' or ext == '7z' or ext == 'lz4' then
+   elseif ext == 'zip' or ext == 'rar' or ext == '7z' or ext == 'lz4' or ext == 'xz' then
       cmd = string.format("cd %s && 7z -bd x %s", eoutdir, efpath)
    end
 
