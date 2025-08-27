@@ -5,14 +5,15 @@ input "type:keyboard" {
 }
 
 input "type:touchpad" {
-    dwt enabled
     tap enabled
     natural_scroll enabled
     middle_emulation enabled
+    accel_profile adaptive
+    click_method clickfinger
 }
 
 ### Output configuration
-output eDP-1 resolution 1366x768@60Hz adaptive_sync off
+output eDP-1 resolution 1366x768@60Hz adaptive_sync on
 output eDP-1 bg #3c3c3c solid_color
 
 ### Window rule
@@ -75,7 +76,6 @@ set $menu tofi-drun --horizontal true --anchor top --width 1366 --height 20 --dr
 bindsym $mod+Return exec $term
 bindsym $mod+Shift+q kill
 bindsym $mod+d exec $menu
-bindsym --no-repeat $mod+Tab exec ~/Scripts/sway/window-switcher.py -t all
 floating_modifier $mod normal
 bindsym $mod+Shift+c reload
 bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -B 'Yes, exit sway' 'swaymsg exit'
@@ -124,8 +124,10 @@ bindsym $mod+Shift+7 move container to workspace number 7
 bindsym $mod+Shift+8 move container to workspace number 8
 bindsym $mod+Shift+9 move container to workspace number 9
 
-# workspace back forth
-bindsym Mod1+tab workspace back_and_forth
+# window & workspace back forth
+bindsym --no-repeat $mod+Tab exec ~/Scripts/sway/sway-alttab.py next
+bindsym --no-repeat $mod+Shift+Tab exec ~/Scripts/sway/sway-alttab.py prev
+bindsym --no-repeat Mod1+tab workspace back_and_forth
 
 # mark/unmark
 bindsym $mod+m exec swaymsg "mark --toggle $(: | tofi --require-match=false --horizontal=true --height=20 --anchor=top --width=100% --prompt-text='mark: ')"
@@ -192,14 +194,14 @@ bindsym --locked XF86AudioPrev exec playerctl previous
 bindsym --no-repeat Print exec pgrep slurp && pkill slurp || (grim -g "$(slurp)" /tmp/screenshot.png && swayimg /tmp/screenshot.png)
 
 # gestures
-bindgesture swipe:3:up focus up
-bindgesture swipe:3:down focus down
-bindgesture swipe:3:left focus left
-bindgesture swipe:3:right focus right
-bindgesture swipe:4:right workspace next
-bindgesture swipe:4:left workspace prev
-bindgesture swipe:4:up focus parent
-bindgesture swipe:4:down focus child
+bindgesture swipe:4:up focus up
+bindgesture swipe:4:down focus down
+bindgesture swipe:4:left focus left
+bindgesture swipe:4:right focus right
+bindgesture swipe:3:right workspace next
+bindgesture swipe:3:left workspace prev
+bindgesture swipe:3:up focus parent
+bindgesture swipe:3:down focus child
 bindgesture hold:3 splitt
 bindgesture hold:4 split none
 
