@@ -160,6 +160,10 @@ filextype {*.xlx,*.xlsx,*.csv}
         \ {Open spreadsheets in WPS spreadsheets}
         \ et %f %i
 
+filextype {*.exe,*.msi}
+        \ {Run windows executable in default wineprefix}
+        \ wine %f %i
+
 """"""""""""""""""""""""""
 " File Viewers
 

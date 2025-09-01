@@ -4,7 +4,7 @@
 
 (defwidget _swayWorkspaces []
    (box
-      :class "sway_workspaces"
+      :class "workspaces"
       :orientation "h"
       :space-evenly false
       (box

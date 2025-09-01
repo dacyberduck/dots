@@ -63,9 +63,9 @@ if shopt -q login_shell; then
     [[ -f ~/.bashrc ]] && source ~/.bashrc
     if [ -z "${WAYLAND_DISPLAY}" ] && [ "${XDG_VTNR}" -eq 1 ]; then
         export XDG_SESSION_TYPE=wayland
-        export XDG_SESSION_DESKTOP=sway
-        export XDG_CURRENT_DESKTOP=sway
-        dbus-run-session sway --unsupported-gpu
+        export XDG_SESSION_DESKTOP=niri
+        export XDG_CURRENT_DESKTOP=niri
+        dbus-run-session niri
     fi
 else
     exit 1 # Somehow this is a non-bash or non-login shell.

@@ -1,0 +1,250 @@
+// Input device configuration.
+input {
+    // xkeyboard settings.
+    keyboard {
+        xkb {
+            layout "us"
+        }
+        numlock
+    }
+
+    // libinput settings.
+    touchpad {
+        tap
+        natural-scroll
+        accel-profile "adaptive"
+        tap-button-map "left-right-middle"
+        click-method "clickfinger"
+        middle-emulation
+    }
+
+    // disable-power-key-handling
+    // warp-mouse-to-focus
+    focus-follows-mouse max-scroll-amount="0%"
+    // workspace-auto-back-and-forth
+
+    mod-key "Super"
+    // mod-key-nested "Alt"
+}
+
+// Output Display Configuration
+output "eDP-1" {
+    mode "1366x768@60"
+    scale 1
+    transform "normal"
+    position x=0 y=0
+    focus-at-startup
+}
+
+// Layout Configuration
+layout {
+    gaps 16
+
+    center-focused-column "never"
+    always-center-single-column
+
+    // default-column-display "tabbed"
+    tab-indicator {
+        hide-when-single-tab
+    }
+
+    preset-column-widths {
+        proportion 0.33333
+        proportion 0.5
+        proportion 0.66667
+    }
+
+    preset-window-heights {
+        proportion 0.33333
+        proportion 0.5
+        proportion 0.66667
+        proportion 1.0
+    }
+
+    default-column-width { proportion 0.5; }
+
+    focus-ring {
+        width 2
+    }
+}
+
+// XCursor Theme Configuration
+cursor {
+    xcursor-theme "Adwaita"
+    xcursor-size 16
+}
+
+// Niri Overview Configuration
+overview {
+    zoom 0.5
+}
+
+// Niri Hotkey Overlay
+hotkey-overlay {
+    skip-at-startup
+    // hide-not-bound
+}
+
+// Niri Gestures
+gestures {
+    hot-corners {
+        off
+    }
+}
+
+// Environmental Variables
+environment {
+    DXVK_FRAME_RATE "30"
+}
+
+// disable client-side decorations if possible
+prefer-no-csd
+
+// path to screenshots
+// screenshot-path "~/Pictures/Screenshots/Screenshot-%Y-%m-%d %H-%M-%S.png"
+screenshot-path null
+
+// spawn processes at startup.
+spawn-sh-at-startup "foot --server"
+spawn-sh-at-startup "eww --restart open statusbar"
+spawn-at-startup "swaync"
+spawn-sh-at-startup "gammastep -b 1.0:0.75 -l 22.56:88.33 -t 6500:3600"
+spawn-at-startup "sway-audio-idle-inhibit"
+spawn-sh-at-startup "dbus-update-activation-environment --systemd --all"
+spawn-at-startup "/usr/libexec/polkit-gnome-authentication-agent-1"
+spawn-sh-at-startup "swayidle -w lock 'swaylock -f -c 1c1c1c -e' before-sleep 'loginctl lock-session' timeout 60  'xbacklight -store; xbacklight -steps 300 -set 10' resume 'xbacklight -steps 300 -restore' timeout 300 'loginctl lock-session' resume 'echo unlocked' timeout 600 'niri msg output eDP-1 off' resume 'niri msg output eDP-1 on' timeout 1800 'systemctl suspend-then-hibernate' resume 'woke up'"
+
+// Window Rules
+window-rule {
+    match app-id="^mpv$"
+    match app-id="^swayimg$"
+    match app-id="^qalculate-gtk$"
+    match app-id="^blueman-*"
+    match app-id="^org.twosheds.iwgtk$"
+    match app-id="^librewolf$" title="Library"
+    match app-id="^librewolf$" title="About LibreWolf"
+    match app-id="^bethini.exe$"
+    match app-id="^et$"
+    match app-id="^wps$"
+    match app-id="^wpp$"
+    match app-id="^floating$"
+    match app-id="^floating_update$"
+    match app-id="(?i)pinentry"
+    match app-id="^xdg-desktop-portal-gtk$"
+    match app-id="^xdg-desktop-portal-gnome$"
+    match title="(?:Open|Save) (?:File|Folder|As)"
+    match title="^Picture-in-Picture$"
+    match title="Administrator privileges required"
+    open-floating true
+}
+
+// Keybindings
+binds {
+    Mod+Return repeat=false { spawn "foot"; }
+    Mod+D repeat=false { spawn-sh "tofi-drun --horizontal true --anchor top --width 1366 --height 20 --drun-launch true"; }
+    Super+L repeat=false { spawn-sh "loginctl lock-session && niri msg action power-off-monitors"; }
+
+    XF86AudioRaiseVolume  allow-when-locked=true { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1+"; }
+    XF86AudioLowerVolume  allow-when-locked=true { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1-"; }
+    XF86AudioMute         allow-when-locked=true { spawn-sh "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"; }
+    XF86AudioMicMute      allow-when-locked=true { spawn-sh "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"; }
+    XF86MonBrightnessDown allow-when-locked=true { spawn-sh "xbacklight -dec 5"; }
+    XF86MonBrightnessUp   allow-when-locked=true { spawn-sh "xbacklight -inc 5"; }
+    XF86AudioPlay         allow-when-locked=true { spawn-sh "playerctl play-pause"; }
+    XF86AudioNext         allow-when-locked=true { spawn-sh "playerctl next"; }
+    XF86AudioPrev         allow-when-locked=true { spawn-sh "playerctl previous"; }
+
+    Mod+O repeat=false { toggle-overview; }
+
+    Mod+Q { close-window; }
+
+    Mod+Left        { focus-column-left; }
+    Mod+Down        { focus-window-or-workspace-down; }
+    Mod+Up          { focus-window-or-workspace-up; }
+    Mod+Right       { focus-column-right; }
+    Mod+Shift+Left  { move-column-left; }
+    Mod+Shift+Down  { move-window-down-or-to-workspace-down; }
+    Mod+Shift+Up    { move-window-up-or-to-workspace-up; }
+    Mod+Shift+Right { move-column-right; }
+    Mod+Home        { focus-column-first; }
+    Mod+End         { focus-column-last; }
+    Mod+Shift+Home  { move-column-to-first; }
+    Mod+Shift+End   { move-column-to-last; }
+
+    Mod+WheelScrollDown            cooldown-ms=150 { focus-workspace-down; }
+    Mod+WheelScrollUp              cooldown-ms=150 { focus-workspace-up; }
+    Mod+Shift+WheelScrollDown      cooldown-ms=150 { move-column-to-workspace-down; }
+    Mod+Shift+WheelScrollUp        cooldown-ms=150 { move-column-to-workspace-up; }
+    Mod+Ctrl+WheelScrollDown       cooldown-ms=150 { focus-column-right; }
+    Mod+Ctrl+WheelScrollUp         cooldown-ms=150 { focus-column-left; }
+    Mod+Ctrl+Shift+WheelScrollDown cooldown-ms=150 { move-column-right; }
+    Mod+Ctrl+Shift+WheelScrollUp   cooldown-ms=150 { move-column-left; }
+
+    Mod+1 { focus-workspace 1; }
+    Mod+2 { focus-workspace 2; }
+    Mod+3 { focus-workspace 3; }
+    Mod+4 { focus-workspace 4; }
+    Mod+5 { focus-workspace 5; }
+    Mod+6 { focus-workspace 6; }
+    Mod+7 { focus-workspace 7; }
+    Mod+8 { focus-workspace 8; }
+    Mod+9 { focus-workspace 9; }
+    Mod+Shift+1 { move-column-to-workspace 1; }
+    Mod+Shift+2 { move-column-to-workspace 2; }
+    Mod+Shift+3 { move-column-to-workspace 3; }
+    Mod+Shift+4 { move-column-to-workspace 4; }
+    Mod+Shift+5 { move-column-to-workspace 5; }
+    Mod+Shift+6 { move-column-to-workspace 6; }
+    Mod+Shift+7 { move-column-to-workspace 7; }
+    Mod+Shift+8 { move-column-to-workspace 8; }
+    Mod+Shift+9 { move-column-to-workspace 9; }
+
+    // Mod+Tab { focus-workspace-previous; }
+    Mod+Tab { focus-window-previous; }
+
+    Mod+BracketLeft        { consume-or-expel-window-left; }
+    Mod+BracketRight       { consume-or-expel-window-right; }
+    Mod+Shift+BracketLeft  { consume-window-into-column; }
+    Mod+Shift+BracketRight { expel-window-from-column; }
+
+    Mod+R       { switch-preset-column-width; }
+    Mod+Shift+R { switch-preset-window-height; }
+    Mod+Ctrl+R  { reset-window-height; }
+
+    Mod+F       { maximize-column; }
+    Mod+Shift+F { fullscreen-window; }
+    Mod+Ctrl+F  { expand-column-to-available-width; }
+
+    Mod+C { center-column; }
+
+    // Center all fully visible columns on screen.
+    Mod+Ctrl+C { center-visible-columns; }
+
+    Mod+Minus { set-column-width "-10%"; }
+    Mod+Equal { set-column-width "+10%"; }
+
+    // Finer height adjustments when in column with other windows.
+    Mod+Shift+Minus { set-window-height "-10%"; }
+    Mod+Shift+Equal { set-window-height "+10%"; }
+
+    // Move the focused window between the floating and the tiling layout.
+    Mod+Space       { toggle-window-floating; }
+    Mod+Shift+Space { switch-focus-between-floating-and-tiling; }
+
+    // Toggle tabbed column display mode.
+    Mod+W { toggle-column-tabbed-display; }
+
+    Print      { screenshot; }
+    Ctrl+Print { screenshot-screen; }
+    Alt+Print  { screenshot-window; }
+
+    // The allow-inhibiting=false property can be applied to other binds as well,
+    // which ensures niri always processes them, even when an inhibitor is active.
+    Mod+Escape allow-inhibiting=false { toggle-keyboard-shortcuts-inhibit; }
+
+    // The quit action will show a confirmation dialog to avoid accidental exits.
+    Mod+Shift+E     { quit; }
+    Ctrl+Alt+Delete { quit; }
+}
+
+// vim: set et sts=4 sw=4:
