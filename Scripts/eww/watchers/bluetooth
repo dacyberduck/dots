@@ -1,10 +1,17 @@
 #!/bin/bash
 
+# watcher for:
+#   bluetooth state
+#   known bluetooth device
+#
+# requirement:
+#   dbus, bluez
+
 function print_bluetooth_info() {
   local powered connected device
   powered="$(busctl get-property org.bluez /org/bluez/hci0 org.bluez.Adapter1 Powered 2>/dev/null | awk '{print $2}')"
   connected='false'
-  device="$(bluetoothctl info | grep Name | awk -F 'Name: ' '{print $2}'| xargs)"
+  device="$(bluetoothctl info | grep Name | awk -F 'Name: ' '{print $2}')"
   if [[ x${device}x != xx ]]; then
     connected='true'
   fi
@@ -12,7 +19,7 @@ function print_bluetooth_info() {
 }
 
 print_bluetooth_info
-dbus-monitor --system "type='signal',path='/org/bluez/hci0',interface='org.freedesktop.DBus.Properties',member='PropertiesChanged'" "type='signal',path='/org/bluez/hci0/dev_A4_05_6E_59_43_04',interface='org.freedesktop.DBus.Properties',member='PropertiesChanged'" 2>/dev/null |
+dbus-monitor --system "type='signal',path_namespace='/org/bluez/hci0',interface='org.freedesktop.DBus.Properties',member='PropertiesChanged'" 2>/dev/null |
   while read -r event; do
     print_bluetooth_info
   done

@@ -1,8 +1,8 @@
 ; vim: set et sts=3 sw=3:
 
 (defvar    __rev_network false)
-(deflisten __bt  "~/Scripts/eww/bluetooth")
-(deflisten __net "~/Scripts/eww/network")
+(deflisten __bt  "~/Scripts/eww/watchers/bluetooth")
+(deflisten __net "~/Scripts/eww/watchers/network")
 
 (defwidget _connectivity []
    (box
@@ -27,7 +27,7 @@
       :onclick '(pgrep blueman-manager >/dev/null 2>&1) && (pkill -9 blueman-manager) || (blueman-manager >/dev/null 2>&1 &)'
       :class "${__bt.powered ? 'enabled' : 'disabled'}"
       :tooltip "${__bt.connected ? 'Connected: ${__bt.device}' : __bt.powered ? 'Bluetooth: ON' : 'Bluetooth: OFF'}"
-      "${__bt.connected ? '󰂰' : __bt.powered ? '󰂯' : '󰂲' }"
+      "${__bt.connected ? '󰂱' : __bt.powered ? '󰂯' : '󰂲' }"
    )
 )
 

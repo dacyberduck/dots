@@ -1,7 +1,7 @@
 ; vim: set et sts=3 sw=3:
 (defvar    __rev_sound false)
-(deflisten __vol '~/Scripts/eww/volume')
-(deflisten __plr '~/Scripts/eww/player')
+(deflisten __vol '~/Scripts/eww/watchers/volume')
+(deflisten __plr '~/Scripts/eww/watchers/mpris')
 
 (defwidget _volume []
    (eventbox

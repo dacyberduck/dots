@@ -1,6 +1,26 @@
 ; vim: et sts=3 sw=3:
-(deflisten __swsp  :initial "${[1]}" "~/Scripts/eww/sway_workspaces")
+(deflisten __nwsp "~/Scripts/eww/watchers/niri-workspaces")
+(deflisten __swsp  :initial "${[1]}" "~/Scripts/eww/watchers/sway-workspaces")
 (deflisten __smode "swaymsg -t subscribe '[\"mode\"]' --monitor")
+
+(defwidget _niriWorkspaces []
+   (box
+      :class "workspaces"
+      :orientation "h"
+      :space-evenly false
+      (box
+         :orientation "h"
+         :space-evenly false
+         (for entry in __nwsp
+            (button
+               :onclick "niri msg action focus-workspace ${entry.idx}"
+               :class {entry.is_focused ? "focused" : entry.is_urgent ? "urgent" : "normal" }
+               "${entry.idx}"
+            )
+         )
+      )
+   )
+)
 
 (defwidget _swayWorkspaces []
    (box

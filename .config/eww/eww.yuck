@@ -1,13 +1,12 @@
 ; vim: set et sts=3 sw=3:
 
-(include './widgets/sway.yuck')
-(include './widgets/niri.yuck')
 (include './widgets/tray.yuck')
 (include './widgets/clock.yuck')
 (include './widgets/power.yuck')
 (include './widgets/sound.yuck')
 (include './widgets/network.yuck')
 (include './widgets/backlight.yuck')
+(include './widgets/workspaces.yuck')
 (include './widgets/notification.yuck')
 
 (defvar __rev1 false)
@@ -22,8 +21,6 @@
          :space-evenly false
          :halign "start"
          :spacing 6
-         ; (_swayWorkspaces)
-         ; (_swayMode)
          (_niriWorkspaces)
       )
       (box
