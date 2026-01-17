@@ -14,6 +14,7 @@ if [[ $- != *i* ]] ; then
 	return
 fi
 
+
 # Put your fun stuff here.
 shopt -s autocd
 complete -cf doas

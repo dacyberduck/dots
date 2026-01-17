@@ -9,9 +9,9 @@ vim9script
 # <<< options/settings
 set viminfofile=$XDG_CONFIG_HOME/vim/viminfo
 set nobackup
-set swapfile directory=$XDG_CACHE_HOME/vim/swapdir//
-set undofile undolevels=1000 undodir=$XDG_CACHE_HOME/vim/undodir//
-set viewdir=$XDG_CACHE_HOME/vim/viewdir//
+set swapfile directory=$XDG_CACHE_HOME/
+set undofile undolevels=1000 undodir=$XDG_CACHE_HOME/
+set viewdir=$XDG_CACHE_HOME/
 #######################################################################
 &t_SI = "\<Esc>[6 q"
 &t_SR = "\<Esc>[4 q"
@@ -103,7 +103,7 @@ nnoremap <silent><ESC> <ESC>:noh<CR><ESC>
 # <<< plugins
 ## <<< Vim builtins
 ### netrw
-g:netrw_home        = "$XDG_CACHE_HOME/vim/" # move netrw history to cache directory
+g:netrw_home        = "$XDG_CACHE_HOME/" # move netrw history to cache directory
 g:netrw_banner      = v:false
 g:netrw_bufsettings = "noma nomod nu nobl nowrap ro nornu"
 
