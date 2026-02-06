@@ -78,6 +78,28 @@ else
 endif
 # >>>
 #######################################################################
+# <<< statusline
+set laststatus=2
+set statusline=
+set statusline+=%<[%n]\ %f%m%h%w
+set statusline+=%=
+set statusline+=[%l,\ %c%V]
+# >>>
+#######################################################################
+# <<< colorscheme
+if !has('gui_running') && &term =~ '^\%(screen\|tmux\)'
+  &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+  &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+endif
+
+syntax on
+set termguicolors
+set background=dark
+colorscheme retrobox
+hi Comment guifg=#928374 guibg=NONE gui=NONE cterm=italic
+hi SpecialComment guifg=#fb4934 guibg=NONE gui=NONE cterm=italic
+# >>>
+#######################################################################
 # <<< commands
 # sort words
 command! -nargs=0 -range Sort :<line1>,<line2>call setline('.', join(sort(split(getline('.'), ' ')), ' '))
@@ -85,7 +107,7 @@ command! -nargs=0 -range Sort :<line1>,<line2>call setline('.', join(sort(split(
 #######################################################################
 # <<< autocommands
 autocmd FileType help,qf,git,lspgfm nnoremap <buffer> q <cmd>close<cr>
-autocmd FileType c,cpp,objc,python setlocal noet ts=4 sts=4 sw=4
+autocmd FileType c,cpp,objc,python setlocal et ts=4 sts=4 sw=4
 autocmd FileType bash,lua,xml setlocal et sts=2 sw=2
 autocmd FileType gitsendemail setlocal noet ts=4 sts=4 sw=4
 autocmd BufWritePost $MYVIMRC source $MYVIMRC | windo redraw | echomsg "Successfully reloaded $MYVIMRC"
@@ -101,7 +123,6 @@ nnoremap <silent><ESC> <ESC>:noh<CR><ESC>
 # >>>
 #######################################################################
 # <<< plugins
-## <<< Vim builtins
 ### netrw
 g:netrw_home        = "$XDG_CACHE_HOME/" # move netrw history to cache directory
 g:netrw_banner      = v:false
@@ -112,9 +133,9 @@ packadd cfilter
 packadd comment
 packadd justify
 packadd matchit
-## >>>
-## <<< user plugins
-# simple auto pair plugin
+
+### User plugins
+## <<< simple auto pair plugin
 def SimpleAutoPair(open: string, close: string): string
   const line = getline('.')
   const colm = col('.') - 1 # string index starts from 0
@@ -129,8 +150,8 @@ inoremap <expr> ' <SID>SimpleAutoPair("'", "'")
 inoremap <expr> ( <SID>SimpleAutoPair("(", ")")
 inoremap <expr> { <SID>SimpleAutoPair("{", "}")
 inoremap <expr> [ <SID>SimpleAutoPair("[", "]")
-
-# simple indent guide
+## >>>
+## <<< simple indent guide
 def g:IndentGuide()
   const bufnr = bufnr()
   if getbufvar(bufnr, '&buflisted') && getbufvar(bufnr, '&modifiable')
@@ -145,8 +166,8 @@ augroup IndentGuide
   au!
   autocmd BufWinEnter * call IndentGuide()
 augroup END
-
-# wayland system clipboard
+## >>>
+## <<< wayland system clipboard
 # shamelessly copied from vim-wayland-clipboard plugin
 def WaylandYank()
   if v:event['regname'] == '+'
@@ -168,8 +189,8 @@ endfor
 for cr in ['<C-R>', '<C-R><C-R>', '<C-R><C-O>', '<C-R><C-P>']
   execute "inoremap <silent> " .. cr .. "+ <C-O>:<C-U>" .. prepaste .. "<CR>" .. cr .. "\""
 endfor
-
-# easy buffer switching
+## >>>
+## <<< easy buffer switching
 def JumpToBuffer(bufnr: number, rev: bool = v:false)
   if rev
     exec $":{bufnr == 0 ? 1 : bufnr}bprevious!"
@@ -185,8 +206,8 @@ def JumpToBuffer(bufnr: number, rev: bool = v:false)
 enddef
 nnoremap <silent> gb :<C-U>call <SID>JumpToBuffer(v:count)<CR>
 nnoremap <silent> gB :<C-U>call <SID>JumpToBuffer(v:count, v:true)<CR>
-
-# cmdline auto completion
+## >>>
+## <<< cmdline auto completion
 augroup CmdComplete
   au!
   autocmd CmdlineChanged : call wildtrigger()
@@ -195,8 +216,8 @@ cnoremap <Up> <C-U><Up>
 cnoremap <Down> <C-U><Down>
 cnoremap <C-p> <C-U><C-p>
 cnoremap <C-n> <C-U><C-n>
-
-# MRU complete
+## >>>
+## <<< MRU complete
 def MruComplete(_, _, _): string
   return v:oldfiles->join("\n")
 enddef
@@ -235,28 +256,33 @@ def ScratchTerm(...args: list<any>): void
 enddef
 command! -nargs=* -complete=shellcmd ScratchTerm ScratchTerm(<q-args>)
 ## >>>
-# >>>
-#######################################################################
-# <<< statusline
-set laststatus=2
-set statusline=
-set statusline+=%<[%n]\ %f%m%h%w
-set statusline+=%=
-set statusline+=[%l,\ %c%V]
-# >>>
-#######################################################################
-# <<< colorscheme
-if !has('gui_running') && &term =~ '^\%(screen\|tmux\)'
-  &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-  &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
-endif
+### Pack plugins
+## <<< LSP (https://github.com/yegappan/lsp)
+packadd lsp
 
-syntax on
-set termguicolors
-set background=dark
-colorscheme retrobox
-hi Comment guifg=#928374 guibg=NONE gui=NONE cterm=italic
-hi SpecialComment guifg=#fb4934 guibg=NONE gui=NONE cterm=italic
+# server configuration
+call LspAddServer([
+  {
+    name: 'clangd',
+    filetype: ['c', 'cpp'],
+    path: '/usr/lib/llvm/21/bin/clangd',
+    args: ['--background-index', '--clang-tidy']
+  }
+])
+
+# Lsp options
+call LspOptionsSet({
+  noNewlineInCompletion: v:true,
+})
+
+# Lsp related bindings and stuff
+augroup lsp_attched
+  autocmd USER LspAttached nnoremap gd :LspPeekReferences<CR>
+  autocmd USER LspAttached nnoremap gs :LspDocumentSymbol<CR>
+  autocmd USER LspAttached nnoremap [d :LspDiag prevWrap<CR>
+  autocmd USER LspAttached nnoremap ]d :LspDiag nextWrap<CR>
+augroup end
+## >>>
 # >>>
 #######################################################################
 defcompile

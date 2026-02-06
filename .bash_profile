@@ -27,5 +27,5 @@ export HISTCONTROL='ignoreboth:erasedups'
 export TERMCMD="footclient"
 export TERMINAL="footclient"
 export EDITOR="vim"
-export BROWSER="firefox"
+export BROWSER="waterfox"
 export PAGER="less"
