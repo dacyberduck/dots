@@ -1,3 +1,5 @@
+// vim: set et sts=4 sw=4:
+
 // Input device configuration.
 input {
     // xkeyboard settings.
@@ -60,12 +62,6 @@ layout {
     focus-ring {
         width 2
     }
-}
-
-// XCursor Theme Configuration
-cursor {
-    xcursor-theme "Adwaita"
-    xcursor-size 16
 }
 
 // Niri Hotkey Overlay
@@ -210,4 +206,9 @@ binds {
     Mod+Shift+E     { quit; }
 }
 
-// vim: set et sts=4 sw=4:
+include "dms/cursor.kdl"
+include "dms/binds.kdl"
+
+include "dms/outputs.kdl"
+
+include "dms/windowrules.kdl"
