@@ -2,6 +2,7 @@ vim9script
 # lion.vim - A Vim plugin for text alignment operators
 # Maintainer:   Tom McDonald <http://github.com/tommcdo>
 # Version:      1.0
+# Vim9 Port:    cyberduck <https://github.com/dacyberduck>
 
 if exists("g:loaded_vim_lion_plugin")
   finish
@@ -161,8 +162,8 @@ enddef
 
 # Match the position of a character in a line after accounting for artificial width set by tabs
 def MatchPos(mode: string, lline: string, char: string, scount: number, line_number: number, start: number, end: number): list<number>
-  var pattern = ''
-  var line = ''
+  var pattern  = ''
+  var line     = ''
   var real_pos = -1
   var virtual_pos = -1
   if strlen(char) == 1
