@@ -1,18 +1,18 @@
 vim9script
-#######################################################################
+################################################################################
 # __   _____ __  __ ___  ___
 # \ \ / /_ _|  \/  | _ \/ __|
 #  \ V / | || |\/| |   / (__
 #   \_/ |___|_|  |_|_|_\\___|
 #
-#######################################################################
+################################################################################
 # <<< options/settings
 set viminfofile=$XDG_CONFIG_HOME/vim/viminfo
 set nobackup
 set swapfile directory=$XDG_CACHE_HOME/
 set undofile undolevels=1000 undodir=$XDG_CACHE_HOME/
 set viewdir=$XDG_CACHE_HOME/
-#######################################################################
+################################################################################
 &t_SI = "\<Esc>[6 q"
 &t_SR = "\<Esc>[4 q"
 &t_EI = "\<Esc>[2 q"
@@ -41,12 +41,12 @@ set tabpagemax=50
 set shell=/bin/bash
 set nolangremap
 filetype plugin indent on
-set guifont=Dina\ NF\ 12
+set guifont=Fira\ Code\ 9
 set cursorline nocursorcolumn
 set number norelativenumber
-set nowrap textwidth=80
+set nowrap wrapmargin=0 textwidth=0 colorcolumn=81
 set scrolloff=5 sidescrolloff=5
-set formatoptions-=o formatoptions+=n
+set formatoptions-=ot formatoptions+=n
 set ruler
 set nolist listchars=nbsp:␣,extends:…,trail:·
 set fillchars=vert:│,fold:─
@@ -54,10 +54,10 @@ set foldenable foldmethod=marker foldmarker=<<<,>>> foldlevel=0
 set conceallevel=3
 set wildmode=noselect:lastused,full
 set wildmenu wildoptions=pum
-set wildignore=*/.git/*,.config/*,.cargo/*,.mozilla/*,.local/*,*/.cache/*,*/Games/*
-set wildignore+=*.exe,*.dll,*.class,*.psd,*.zip,*.rar,*.tar.gz,*.tar.bz2,*.tar.xz
-set wildignore+=*.swp,*.o,*.obj,*.bak,*.pyc,__pycache__,.DS_Store,Thumbs.db
-set wildignore+=*/viminfo,*/vifminfo
+set wildignore=*/.git/*,.config/*,.cargo/*,.mozilla/*,.local/*,*/.cache/*
+set wildignore+=*/Games/*,*.exe,*.dll,*.class,*.psd,*.zip,*.rar,*.tar.gz
+set wildignore+=*.tar.bz2,*.tar.xz,*.swp,*.o,*.obj,*.bak,*.pyc,__pycache__
+set wildignore+=.DS_Store,Thumbs.db,*/viminfo,*/vifminfo
 set wildcharm=<C-Z>
 set nrformats-=octal
 set nosplitright splitbelow
@@ -77,7 +77,7 @@ else
   set nocursorbind noscrollbind
 endif
 # >>>
-#######################################################################
+################################################################################
 # <<< statusline
 set laststatus=2
 set statusline=
@@ -85,7 +85,7 @@ set statusline+=%<[%n]\ %f%m%h%w
 set statusline+=%=
 set statusline+=[%l,\ %c%V]
 # >>>
-#######################################################################
+################################################################################
 # <<< colorscheme
 if !has('gui_running') && &term =~ '^\%(screen\|tmux\)'
   &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
@@ -98,21 +98,27 @@ set background=dark
 colorscheme retrobox
 hi Comment guifg=#928374 guibg=NONE gui=NONE cterm=italic
 hi SpecialComment guifg=#fb4934 guibg=NONE gui=NONE cterm=italic
+highlight ColorColumn ctermbg=magenta
 # >>>
-#######################################################################
+################################################################################
 # <<< commands
 # sort words
-command! -nargs=0 -range Sort :<line1>,<line2>call setline('.', join(sort(split(getline('.'), ' ')), ' '))
+command! -nargs=0 -range Sort :<line1>,<line2>call setline('.',
+      \ join(sort(split(getline('.'), ' ')), ' '))
+# open quickfixlist after grep
+command! -nargs=+ -complete=file Grep execute 'silent grep! <args>' | cwindow
+      \| redraw!
 # >>>
-#######################################################################
+################################################################################
 # <<< autocommands
 autocmd FileType help,qf,git,lspgfm nnoremap <buffer> q <cmd>close<cr>
 autocmd FileType c,cpp,objc,python setlocal et ts=4 sts=4 sw=4
 autocmd FileType bash,lua,xml setlocal et sts=2 sw=2
 autocmd FileType gitsendemail setlocal noet ts=4 sts=4 sw=4
-autocmd BufWritePost $MYVIMRC source $MYVIMRC | windo redraw | echomsg "Successfully reloaded $MYVIMRC"
+autocmd BufWritePost $MYVIMRC source $MYVIMRC | windo redraw
+      \| echomsg "Successfully reloaded $MYVIMRC"
 # >>>
-#######################################################################
+################################################################################
 # <<< mappings
 g:mapleader = " "
 xnoremap <silent> < <gv
@@ -120,8 +126,10 @@ xnoremap <silent> > >gv
 nnoremap <silent> <C-L> :nohlsearch<CR><C-L>
 cnoremap <expr> <Left> pumvisible() ? "\<C-Y>" : "\<Left>"
 nnoremap <silent><ESC> <ESC>:noh<CR><ESC>
+nnoremap <silent> ]q :cnext<CR>
+nnoremap <silent> [q :cprev<CR>
 # >>>
-#######################################################################
+################################################################################
 # <<< plugins
 ### netrw
 g:netrw_home        = "$XDG_CACHE_HOME/" # move netrw history to cache directory
@@ -139,7 +147,8 @@ packadd matchit
 def SimpleAutoPair(open: string, close: string): string
   const line = getline('.')
   const colm = col('.') - 1 # string index starts from 0
-  if line[colm] !~ '\s' && (stridx(line, close, colm) != -1 || colm < col('$') - 1)
+  if line[colm] !~ '\s' && (stridx(line, close, colm) != -1 ||
+          colm < col('$') - 1)
     return open
   else
     return open .. close .. "\<left>"
@@ -156,9 +165,10 @@ def g:IndentGuide()
   const bufnr = bufnr()
   if getbufvar(bufnr, '&buflisted') && getbufvar(bufnr, '&modifiable')
     exec 'setlocal listchars=' ..
-      join(filter(split(&listchars, ","), 'v:val !~ "leadmultispace" && v:val !~ "tab"') +
-      ['leadmultispace:│' .. repeat('\ ', &shiftwidth - 1), 'tab:█\ '],
-      ",")
+            join(filter(split(&listchars, ","),
+            'v:val !~ "leadmultispace" && v:val !~ "tab"') +
+            ['leadmultispace:│' .. repeat('\ ', &shiftwidth - 1), 'tab:█\ '],
+            ",")
     setlocal list
   endif
 enddef
@@ -182,12 +192,15 @@ augroup WaylandYank
   autocmd TextYankPost * call WaylandYank()
 augroup END
 # remap paste commands to first pull in clipboard contents with wl-paste
-var prepaste = "silent let @\"=substitute(system('wl-paste --no-newline'), \"\\r\", '', 'g')"
+var prepaste = "silent let @\"=substitute(system('wl-paste --no-newline'),
+      \\"\\r\", '', 'g')"
 for p in ['p', 'P']
-  execute "nnoremap <silent> \"+" .. p .. " :<C-U>" .. prepaste .. " \\| exec 'normal! ' . v:count1 . '" .. p .. "'<CR>"
+  execute "nnoremap <silent> \"+" .. p .. " :<C-U>" .. prepaste ..
+            " \\| exec 'normal! ' . v:count1 . '" .. p .. "'<CR>"
 endfor
 for cr in ['<C-R>', '<C-R><C-R>', '<C-R><C-O>', '<C-R><C-P>']
-  execute "inoremap <silent> " .. cr .. "+ <C-O>:<C-U>" .. prepaste .. "<CR>" .. cr .. "\""
+  execute "inoremap <silent> " .. cr .. "+ <C-O>:<C-U>" .. prepaste ..
+            "<CR>" .. cr .. "\""
 endfor
 ## >>>
 ## <<< easy buffer switching
@@ -222,8 +235,8 @@ def MruComplete(_, _, _): string
   return v:oldfiles->join("\n")
 enddef
 command! -nargs=+ -complete=custom,MruComplete MRU edit <args>
-
-# Scratch term: opens terminal and runs command received as arguments
+## >>>
+## <<< ScratchTerm: opens terminal and runs command received as arguments
 # USAGE Example:
 #   :ScratchTerm make %<
 #   :ScratchTerm bash -c %:p
@@ -238,7 +251,8 @@ def ScratchTerm(...args: list<any>): void
   endfor
   # scratch term not exists
   if scratch_bufnr == -1
-    term_start('bash', {'term_name': termbufname, 'term_finish': 'close', 'term_rows': 15})
+    term_start('bash', {'term_name': termbufname, 'term_finish': 'close',
+            'term_rows': 15})
     if len(cmd) > 0
       sleep 100m
       term_sendkeys(bufnr(), cmd .. "\<CR>")
@@ -284,6 +298,6 @@ augroup lsp_attched
 augroup end
 ## >>>
 # >>>
-#######################################################################
+################################################################################
 defcompile
 # vim: set et sts=2 sw=2:
