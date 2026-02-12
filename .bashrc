@@ -20,6 +20,11 @@ shopt -s autocd
 complete -cf doas
 complete -F _command doas
 
+export GPG_TTY=`tty`
+export SSH_AUTH_SOCK=`gpgconf --list-dirs agent-ssh-socket`
+gpgconf --launch gpg-agent
+gpg-connect-agent /bye 1>&- 2>&-
+
 # alias
 alias ls='ls -hF --color=auto'
 alias la='ls -AhF --color=auto'
