@@ -60,7 +60,7 @@ layout {
     default-column-width { }
 
     focus-ring {
-        width 2
+        width 1
     }
 }
 
@@ -84,7 +84,7 @@ xwayland-satellite {
 };
 
 // path to screenshots
-screenshot-path "~/Pictures/Screenshots/Screenshot_%Y%m%d_%H%M%S.png"
+screenshot-path "~/Pictures/Screenshots/Screenshot-%Y%m%d%H%M%S.png"
 
 // spawn processes at startup.
 spawn-sh-at-startup "foot --server"
@@ -198,9 +198,8 @@ binds {
     // Toggle tabbed column display mode.
     Mod+W { toggle-column-tabbed-display; }
 
-    Print      { screenshot; }
-    Mod+Print { screenshot-screen; }
-    Mod+Shift+Print  { screenshot-window; }
+    Print      { spawn-sh "dms screenshot --no-file --no-clipboard --stdout | swayimg -"; }
+    Mod+Print  { spawn-sh "dms screenshot full"; }
 
     // The quit action will show a confirmation dialog to avoid accidental exits.
     Mod+Shift+E     { quit; }
