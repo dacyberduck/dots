@@ -41,3 +41,5 @@ export def repeat#wrap(command: string, count_arg: any = -1): string
     repeat#set(command, count_arg)
     return command
 enddef
+
+defcompile

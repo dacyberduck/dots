@@ -217,4 +217,5 @@ def MaybeCompdb()
   Done(root)
 enddef
 
+defcompile
 # vim: set et sts=2 sw=2:

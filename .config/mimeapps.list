@@ -1,0 +1,74 @@
+[Default Applications]
+# --- Text/Code formats ---
+text/plain=editor.desktop
+text/markdown=editor.desktop
+application/x-zerosize=editor.desktop
+text/x-python=editor.desktop
+text/x-csrc=editor.desktop
+text/x-chdr=editor.desktop
+text/x-java=editor.desktop
+text/x-shellscript=editor.desktop
+text/x-perl=editor.desktop
+text/x-ruby=editor.desktop
+application/javascript=editor.desktop
+application/json=editor.desktop
+application/xml=editor.desktop
+text/html=editor.desktop
+text/css=editor.desktop
+text/x-tex=editor.desktop
+application/x-yaml=editor.desktop
+text/x-makefile=editor.desktop
+application/x-php=editor.desktop
+text/x-log=editor.desktop
+application/x-desktop=editor.desktop
+# --- Document formats ---
+application/pdf=waterfox.desktop;
+application/vnd.openxmlformats-officedocument.wordprocessingml.document=onlyoffice-desktopeditors.desktop
+application/msword=onlyoffice-desktopeditors.desktop
+application/vnd.oasis.opendocument.text=onlyoffice-desktopeditors.desktop
+application/vnd.openxmlformats-officedocument.spreadsheetml.sheet=onlyoffice-desktopeditors.desktop
+application/vnd.ms-excel=onlyoffice-desktopeditors.desktop
+application/vnd.oasis.opendocument.spreadsheet=onlyoffice-desktopeditors.desktop
+text/csv=onlyoffice-desktopeditors.desktop
+application/vnd.openxmlformats-officedocument.presentationml.presentation=onlyoffice-desktopeditors.desktop
+application/vnd.ms-powerpoint=onlyoffice-desktopeditors.desktop
+application/vnd.oasis.opendocument.presentation=onlyoffice-desktopeditors.desktop
+# --- Image Formats ---
+image/jpeg=swayimg.desktop
+image/jpg=swayimg.desktop
+image/png=swayimg.desktop
+image/gif=swayimg.desktop
+image/webp=swayimg.desktop
+image/bmp=swayimg.desktop
+image/tiff=swayimg.desktop
+image/svg+xml=swayimg.desktop
+# --- Video Formats ---
+video/mp4=mpv.desktop
+video/mpeg=mpv.desktop
+video/ogg=mpv.desktop
+video/webm=mpv.desktop
+video/x-msvideo=mpv.desktop
+video/quicktime=mpv.desktop
+video/x-matroska=mpv.desktop
+video/x-flv=mpv.desktop
+# --- Audio Formats ---
+audio/mpeg=mpv.desktop
+audio/mp4=mpv.desktop
+audio/ogg=mpv.desktop
+audio/flac=mpv.desktop
+audio/x-wav=mpv.desktop
+audio/aac=mpv.desktop
+[Default Applications]
+# --- Web Browser ---
+application/xhtml+xml=waterfox.desktop
+x-scheme-handler/http=waterfox.desktop
+x-scheme-handler/https=waterfox.desktop
+x-scheme-handler/about=waterfox.desktop
+x-scheme-handler/unknown=waterfox.desktop
+# --- File Manager ---
+inode/directory=org.gnome.Nautilus.desktop
+application/x-gnome-saved-search=org.gnome.Nautilus.desktop
+[Default Applications]
+# --- BitTorrent Client ---
+application/x-bittorrent=org.qbittorrent.qBittorrent.desktop
+x-scheme-handler/magnet=org.qbittorrent.qBittorrent.desktop

@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=Swayimg
+GenericName=Image Viewer
+Comment=Lightweight image viewer for Wayland
+Exec=swayimg %F
+Icon=image-viewer
+Terminal=false
+Type=Application
+Categories=Graphics;Viewer;
+MimeType=image/jpeg;image/jpg;image/png;image/gif;image/webp;image/bmp;image/tiff;image/svg+xml;
