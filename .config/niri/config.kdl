@@ -198,8 +198,8 @@ binds {
     // Toggle tabbed column display mode.
     Mod+W { toggle-column-tabbed-display; }
 
-    Print      { spawn-sh "dms screenshot --no-file --no-clipboard --stdout | swayimg -"; }
-    Mod+Print  { spawn-sh "dms screenshot full"; }
+    Print      { spawn-sh "dms screenshot --no-clipboard --no-file --stdout | swayimg -"; }
+    Mod+Print  { spawn-sh "dms screenshot full --no-clipboard --no-file --stdout | swayimg -"; }
 
     // The quit action will show a confirmation dialog to avoid accidental exits.
     Mod+Shift+E     { quit; }

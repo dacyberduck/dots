@@ -1,0 +1,13 @@
+headerbar {
+    min-height: 26px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    margin: 0px;
+}
+
+headerbar .title,
+headerbar .subtitle,
+window.ssd headerbar.titlebar label {
+    font-size: 10pt; /* Adjust size as needed */
+    padding: 0;
+}

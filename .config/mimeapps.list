@@ -22,7 +22,7 @@ application/x-php=editor.desktop
 text/x-log=editor.desktop
 application/x-desktop=editor.desktop
 # --- Document formats ---
-application/pdf=waterfox.desktop;
+application/pdf=firefox-bin.desktop;
 application/vnd.openxmlformats-officedocument.wordprocessingml.document=onlyoffice-desktopeditors.desktop
 application/msword=onlyoffice-desktopeditors.desktop
 application/vnd.oasis.opendocument.text=onlyoffice-desktopeditors.desktop
@@ -52,19 +52,19 @@ video/quicktime=mpv.desktop
 video/x-matroska=mpv.desktop
 video/x-flv=mpv.desktop
 # --- Audio Formats ---
-audio/mpeg=mpv.desktop
-audio/mp4=mpv.desktop
-audio/ogg=mpv.desktop
-audio/flac=mpv.desktop
-audio/x-wav=mpv.desktop
-audio/aac=mpv.desktop
+audio/mpeg=mpv-audio.desktop
+audio/mp4=mpv-audio.desktop
+audio/ogg=mpv-audio.desktop
+audio/flac=mpv-audio.desktop
+audio/x-wav=mpv-audio.desktop
+audio/aac=mpv-audio.desktop
 [Default Applications]
 # --- Web Browser ---
-application/xhtml+xml=waterfox.desktop
-x-scheme-handler/http=waterfox.desktop
-x-scheme-handler/https=waterfox.desktop
-x-scheme-handler/about=waterfox.desktop
-x-scheme-handler/unknown=waterfox.desktop
+application/xhtml+xml=firefox-bin.desktop
+x-scheme-handler/http=firefox-bin.desktop
+x-scheme-handler/https=firefox-bin.desktop
+x-scheme-handler/about=firefox-bin.desktop
+x-scheme-handler/unknown=firefox-bin.desktop
 # --- File Manager ---
 inode/directory=org.gnome.Nautilus.desktop
 application/x-gnome-saved-search=org.gnome.Nautilus.desktop
