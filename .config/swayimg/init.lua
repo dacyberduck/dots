@@ -1,28 +1,36 @@
--- default mode
-swayimg.set_mode("viewer")
+swayimg.set_window_size(854, 480)
 swayimg.enable_decoration(false)
 swayimg.imagelist.set_order("alpha")
-swayimg.text.set_foreground(0xffff0000)
+swayimg.text.set_foreground(0xffffff00)
 swayimg.text.set_overall_timer(1000)
+swayimg.text.set_size(16)
 
 -- Viewer mode settings
 swayimg.viewer.set_default_scale("optimal")
-swayimg.viewer.set_window_background("auto")
-swayimg.viewer.set_image_background(0x1c1c1c88)
+swayimg.viewer.set_window_background(0x441c1c1c)
+swayimg.viewer.set_image_background(0x441c1c1c)
 swayimg.viewer.set_text_tl({
   "File: {name}",
-  "Type: {format}",
-  "Size: {sizehr}",
 })
 swayimg.viewer.set_text_tr({
    "{list.index}/{list.total}"
 })
-
+swayimg.viewer.set_text_bl({
+   "Type: {format} [{sizehr}]",
+})
+swayimg.viewer.set_text_br({
+   "Scale: {scale}"
+})
 swayimg.viewer.on_key("Escape", function()
    swayimg.exit()
 end)
 swayimg.viewer.on_key("q", function()
    swayimg.exit()
+end)
+swayimg.viewer.on_key("Ctrl-y", function()
+   local path = swayimg.viewer.current_image().path
+   os.execute("dms clipboard copy " .. path)
+   os.execute("dms notify swayimg 'image path copied to clipboard' --timeout 3 --icon " .. path)
 end)
 swayimg.viewer.on_key("Ctrl-c", function()
    local file = swayimg.viewer.current_image().path
@@ -79,6 +87,15 @@ swayimg.slideshow.on_key("Escape", function()
 end)
 swayimg.slideshow.on_key("q", function()
    swayimg.exit()
+end)
+
+--  mode
+swayimg.on_initialized(function()
+   if swayimg.imagelist.size() > 1 then
+      swayimg.set_mode("gallery")
+   else
+      swayimg.set_mode("viewer") -- default mode
+   end
 end)
 
 -- vim: set et sts=3 sw=3:

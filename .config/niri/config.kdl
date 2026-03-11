@@ -16,196 +16,21 @@ input {
         natural-scroll
     }
 
-    // disable-power-key-handling
-    // warp-mouse-to-focus
     focus-follows-mouse max-scroll-amount="50%"
-    // workspace-auto-back-and-forth
 }
 
-// Output Display Configuration
-output "eDP-1" {
-    mode "1366x768@60"
-    scale 1
-    transform "normal"
-    position x=0 y=0
-    focus-at-startup
-}
-
-// Layout Configuration
-layout {
-    gaps 16
-
-    center-focused-column "never"
-    always-center-single-column
-
-    // default-column-display "tabbed"
-    tab-indicator {
-        hide-when-single-tab
-    }
-
-    preset-column-widths {
-        proportion 0.33333
-        proportion 0.5
-        proportion 0.66667
-        proportion 1.0
-    }
-
-    preset-window-heights {
-        proportion 0.33333
-        proportion 0.5
-        proportion 0.66667
-        proportion 1.0
-    }
-
-    default-column-width { }
-
-    focus-ring {
-        width 1
-    }
-}
-
-// Niri Hotkey Overlay
+// disable hot-key overlay on niri start
 hotkey-overlay {
     skip-at-startup
-    // hide-not-bound
+    hide-not-bound
 }
 
-// Niri Gestures
-gestures {
-    hot-corners {
-        off
-    }
-}
-
-// Xwayland support
-xwayland-satellite {
-    on
-    path "/usr/bin/xwayland-satellite";
-};
-
-// path to screenshots
-screenshot-path "~/Pictures/Screenshots/Screenshot-%Y%m%d%H%M%S.png"
-
-// spawn processes at startup.
-spawn-sh-at-startup "foot --server"
-
-// Window Rules
-window-rule {
-    clip-to-geometry true
-    tiled-state true
-    draw-border-with-background false
-}
-
-window-rule {
-    match app-id="^mpv$"
-    match app-id="^swayimg$"
-    match app-id="^qalculate-gtk$"
-    match app-id="^waterfox-default$" title="Library"
-    match app-id="^waterfox-default$" title="About Waterfox"
-    match app-id="^bethini.exe$"
-    match app-id="^game.exe$"
-    match app-id="^steam_app_*"
-    match app-id="^floating$"
-    match app-id="^floating_update$"
-    match app-id="(?i)pinentry"
-    match app-id="^xdg-desktop-portal-gtk$"
-    match app-id="^xdg-desktop-portal-gnome$"
-    match title="(?:Open|Save) (?:File|Folder|As)"
-    match title="^Picture-in-Picture$"
-    match title="Administrator privileges required"
-    open-floating true
-}
-
-// Keybindings
-binds {
-    Mod+Return repeat=false { spawn "footclient"; }
-    Mod+Space repeat=false { spawn-sh "dms ipc spotlight toggle"; }
-    Mod+L repeat=false { spawn-sh "loginctl lock-session && niri msg action power-off-monitors"; }
-    Mod+P repeat=false { spawn-sh "dms ipc notepad toggle"; }
-
-    XF86AudioRaiseVolume  allow-when-locked=true { spawn-sh "dms ipc audio increment 5"; }
-    XF86AudioLowerVolume  allow-when-locked=true { spawn-sh "dms ipc audio decrement 5"; }
-    XF86AudioMute         allow-when-locked=true { spawn-sh "dms ipc audio mute"; }
-    XF86AudioMicMute      allow-when-locked=true { spawn-sh "dms ipc audio micmute"; }
-    XF86MonBrightnessDown allow-when-locked=true { spawn-sh "dms ipc brightness decrement 5 backlight:intel_backlight"; }
-    XF86MonBrightnessUp   allow-when-locked=true { spawn-sh "dms ipc brightness increment 5 backlight:intel_backlight"; }
-    XF86AudioPlay         allow-when-locked=true { spawn-sh "dms ipc mpris playPause"; }
-    XF86AudioNext         allow-when-locked=true { spawn-sh "dms ipc mpris next"; }
-    XF86AudioPrev         allow-when-locked=true { spawn-sh "dms ipc mpris previous"; }
-
-    Mod+O repeat=false { toggle-overview; }
-
-    Mod+Q { close-window; }
-
-    Mod+Left        { focus-column-left; }
-    Mod+Down        { focus-window-down; }
-    Mod+Up          { focus-window-up; }
-    Mod+Right       { focus-column-right; }
-    Mod+Shift+Left  { move-column-left; }
-    Mod+Shift+Down  { move-window-down-or-to-workspace-down; }
-    Mod+Shift+Up    { move-window-up-or-to-workspace-up; }
-    Mod+Shift+Right { move-column-right; }
-
-    Mod+1 { focus-workspace 1; }
-    Mod+2 { focus-workspace 2; }
-    Mod+3 { focus-workspace 3; }
-    Mod+4 { focus-workspace 4; }
-    Mod+5 { focus-workspace 5; }
-    Mod+6 { focus-workspace 6; }
-    Mod+7 { focus-workspace 7; }
-    Mod+8 { focus-workspace 8; }
-    Mod+9 { focus-workspace 9; }
-    Mod+Shift+1 { move-column-to-workspace 1; }
-    Mod+Shift+2 { move-column-to-workspace 2; }
-    Mod+Shift+3 { move-column-to-workspace 3; }
-    Mod+Shift+4 { move-column-to-workspace 4; }
-    Mod+Shift+5 { move-column-to-workspace 5; }
-    Mod+Shift+6 { move-column-to-workspace 6; }
-    Mod+Shift+7 { move-column-to-workspace 7; }
-    Mod+Shift+8 { move-column-to-workspace 8; }
-    Mod+Shift+9 { move-column-to-workspace 9; }
-
-    Alt+Tab { focus-workspace-previous; }
-
-    Mod+BracketLeft        { consume-or-expel-window-left; }
-    Mod+BracketRight       { consume-or-expel-window-right; }
-    Mod+Shift+BracketLeft  { consume-window-into-column; }
-    Mod+Shift+BracketRight { expel-window-from-column; }
-
-    Mod+R       { switch-preset-column-width; }
-    Mod+Shift+R { switch-preset-window-height; }
-    Mod+Ctrl+R  { reset-window-height; }
-
-    Mod+F       { expand-column-to-available-width; }
-    Mod+Shift+F { fullscreen-window; }
-
-    Mod+C { center-column; }
-
-    // Center all fully visible columns on screen.
-    Mod+Ctrl+C { center-visible-columns; }
-
-    Mod+Minus { set-column-width "-10%"; }
-    Mod+Equal { set-column-width "+10%"; }
-
-    // Finer height adjustments when in column with other windows.
-    Mod+Shift+Minus { set-window-height "-10%"; }
-    Mod+Shift+Equal { set-window-height "+10%"; }
-
-    // Move the focused window between the floating and the tiling layout.
-    Mod+T       { toggle-window-floating; }
-    Mod+Shift+T { switch-focus-between-floating-and-tiling; }
-
-    // Toggle tabbed column display mode.
-    Mod+W { toggle-column-tabbed-display; }
-
-    Print      { spawn-sh "dms screenshot --no-clipboard --no-file --stdout | swayimg -"; }
-    Mod+Print  { spawn-sh "dms screenshot full --no-clipboard --no-file --stdout | swayimg -"; }
-
-    // The quit action will show a confirmation dialog to avoid accidental exits.
-    Mod+Shift+E     { quit; }
-}
-
-include "dms/cursor.kdl"
+// include dms generated config
+include "dms/alttab.kdl"
 include "dms/binds.kdl"
+include "dms/colors.kdl"
+include "dms/cursor.kdl"
+include "dms/layout.kdl"
 include "dms/outputs.kdl"
 include "dms/windowrules.kdl"
+include "dms/wpblur.kdl"

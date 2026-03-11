@@ -124,6 +124,3 @@ nnoremap <silent> <bs>  :if paneisat('left')   | execute '!tmux select-pane -L %
 """ resize window
 nnoremap - <C-w>5<
 nnoremap _ <C-w>5>
-
-
-filetype * xdg-open %f %i

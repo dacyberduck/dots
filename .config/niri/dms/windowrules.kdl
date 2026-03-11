@@ -1,2 +1,50 @@
 // DMS Window Rules - Managed by DankMaterialShell
 // Do not edit manually - changes may be overwritten
+
+// @id=wr_1773043788989835020 @name=mpv
+window-rule {
+    match app-id="^mpv$"
+    open-floating true
+}
+
+// @id=wr_1773043971152628915 @name=firefox-bin
+window-rule {
+    match app-id="^firefox-bin$" title="About Mozilla Firefox"
+    open-floating true
+}
+
+// @id=wr_1773198302224862610 @name=firefox-bin
+window-rule {
+    match app-id="^firefox-bin$" title="Library"
+    open-floating true
+}
+
+// @id=wr_1773197870490593250 @name=polkit
+window-rule {
+    match title="Administrator privileges required"
+    open-floating true
+}
+
+// @id=wr_1773197906561641335 @name=swayimg
+window-rule {
+    match app-id="^swayimg$"
+    open-floating true
+}
+
+// @id=wr_1773197955712606389 @name=pinentry
+window-rule {
+    match app-id="(?i)pinentry"
+    open-floating true
+}
+
+// @id=wr_1773197826848370301 @name=File Open/Save
+window-rule {
+    match title="(?:Open|Save) (?:File|Folder|As)"
+    open-floating true
+}
+
+// @id=wr_1773198389181502076 @name=Picture-in-picture
+window-rule {
+    match title="^Picture-in-Picture$"
+    open-floating true
+}

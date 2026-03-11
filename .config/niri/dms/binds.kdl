@@ -1,0 +1,54 @@
+binds {
+    Print { spawn "dms" "screenshot" "--no-clipboard" "--no-file" "--stdout" "|" "swayimg" "-"; }
+    Super+Print { spawn "dms" "screenshot" "full" "--no-clipboard" "--no-file" "--stdout" "|" "swayimg" "-"; }
+    Super+p repeat=false hotkey-overlay-title="Toggle launcher" { spawn "dms" "ipc" "spotlight" "toggle"; }
+    XF86AudioLowerVolume allow-when-locked=true { spawn "dms" "ipc" "audio" "decrement" "5"; }
+    XF86AudioMicMute allow-when-locked=true { spawn "dms" "ipc" "audio" "micmute"; }
+    XF86AudioMute allow-when-locked=true { spawn "dms" "ipc" "audio" "mute"; }
+    XF86AudioNext allow-when-locked=true { spawn "dms" "ipc" "mpris" "next"; }
+    XF86AudioPlay repeat=false allow-when-locked=true { spawn "dms ipc mpris playPause"; }
+    XF86AudioPrev allow-when-locked=true { spawn "dms" "ipc" "mpris" "previous"; }
+    XF86AudioRaiseVolume allow-when-locked=true { spawn "dms" "ipc" "audio" "increment" "5"; }
+    XF86MonBrightnessDown allow-when-locked=true { spawn "dms" "ipc" "brightness" "decrement" "5" "backlight:intel_backlight"; }
+    XF86MonBrightnessUp allow-when-locked=true { spawn "dms" "ipc" "brightness" "increment" "5" "backlight:intel_backlight"; }
+    Alt+Tab { focus-workspace-previous; }
+    Super+1 { focus-workspace 1; }
+    Super+2 { focus-workspace 2; }
+    Super+3 { focus-workspace 3; }
+    Super+4 { focus-workspace 4; }
+    Super+5 { focus-workspace 5; }
+    Super+6 { focus-workspace 6; }
+    Super+7 { focus-workspace 7; }
+    Super+8 { focus-workspace 8; }
+    Super+9 { focus-workspace 9; }
+    Super+Shift+1 { move-column-to-workspace 1; }
+    Super+Shift+2 { move-column-to-workspace 2; }
+    Super+Shift+3 { move-column-to-workspace 3; }
+    Super+Shift+4 { move-column-to-workspace 4; }
+    Super+Shift+5 { move-column-to-workspace 5; }
+    Super+Shift+6 { move-column-to-workspace 6; }
+    Super+Shift+7 { move-column-to-workspace 7; }
+    Super+Shift+8 { move-column-to-workspace 8; }
+    Super+Shift+9 { move-column-to-workspace 9; }
+    Super+BracketLeft { consume-or-expel-window-left; }
+    Super+BracketRight { consume-or-expel-window-right; }
+    Super+C { center-column; }
+    Super+Ctrl+r { reset-window-height; }
+    Super+Equal { set-column-width "+10%"; }
+    Super+F { expand-column-to-available-width; }
+    Super+Minus { set-column-width "-10%"; }
+    Super+Q { close-window; }
+    Super+Shift+BracketLeft { consume-window-into-column; }
+    Super+Shift+BracketRight { expel-window-from-column; }
+    Super+Shift+Equal { set-window-height "+10%"; }
+    Super+Shift+F { fullscreen-window; }
+    Super+Shift+Minus { set-window-height "-10%"; }
+    Super+Shift+Space { switch-focus-between-floating-and-tiling; }
+    Super+Shift+r { switch-preset-window-height; }
+    Super+Space { toggle-window-floating; }
+    Super+W { toggle-column-tabbed-display; }
+    Super+r { switch-preset-column-width; }
+    Super+l repeat=false hotkey-overlay-title="Lock session" { spawn "loginctl" "lock-session" "&&" "niri" "msg" "action" "power-off-monitors"; }
+    Super+Shift+E { quit; }
+    Super+return repeat=false hotkey-overlay-title="Spawn terminal" { spawn "footclient"; }
+}
