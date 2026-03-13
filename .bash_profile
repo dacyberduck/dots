@@ -25,9 +25,10 @@ export HISTFILE="${HOME}/.bash_history"
 export HISTSIZE=1000
 export HISTCONTROL='ignoreboth:erasedups'
 export QT_QPA_PLATFORMTHEME="gtk3"
+export QT_QPA_PLATFORMTHEME_QT6="gtk3"
 
 export TERMCMD="foot"
 export TERMINAL="foot"
 export EDITOR="vim"
-export BROWSER="waterfox"
+export BROWSER="firefox"
 export PAGER="less"

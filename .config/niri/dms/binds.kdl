@@ -1,16 +1,4 @@
 binds {
-    Print { spawn "dms" "screenshot" "--no-clipboard" "--no-file" "--stdout" "|" "swayimg" "-"; }
-    Super+Print { spawn "dms" "screenshot" "full" "--no-clipboard" "--no-file" "--stdout" "|" "swayimg" "-"; }
-    Super+p repeat=false hotkey-overlay-title="Toggle launcher" { spawn "dms" "ipc" "spotlight" "toggle"; }
-    XF86AudioLowerVolume allow-when-locked=true { spawn "dms" "ipc" "audio" "decrement" "5"; }
-    XF86AudioMicMute allow-when-locked=true { spawn "dms" "ipc" "audio" "micmute"; }
-    XF86AudioMute allow-when-locked=true { spawn "dms" "ipc" "audio" "mute"; }
-    XF86AudioNext allow-when-locked=true { spawn "dms" "ipc" "mpris" "next"; }
-    XF86AudioPlay repeat=false allow-when-locked=true { spawn "dms ipc mpris playPause"; }
-    XF86AudioPrev allow-when-locked=true { spawn "dms" "ipc" "mpris" "previous"; }
-    XF86AudioRaiseVolume allow-when-locked=true { spawn "dms" "ipc" "audio" "increment" "5"; }
-    XF86MonBrightnessDown allow-when-locked=true { spawn "dms" "ipc" "brightness" "decrement" "5" "backlight:intel_backlight"; }
-    XF86MonBrightnessUp allow-when-locked=true { spawn "dms" "ipc" "brightness" "increment" "5" "backlight:intel_backlight"; }
     Alt+Tab { focus-workspace-previous; }
     Super+1 { focus-workspace 1; }
     Super+2 { focus-workspace 2; }
@@ -32,6 +20,14 @@ binds {
     Super+Shift+9 { move-column-to-workspace 9; }
     Super+BracketLeft { consume-or-expel-window-left; }
     Super+BracketRight { consume-or-expel-window-right; }
+    Super+Left { focus-column-left; }
+    Super+Right { focus-column-right; }
+    Super+Up { focus-window-up; }
+    Super+Down { focus-window-down; }
+    Super+Shift+Left { move-column-left; }
+    Super+Shift+Right { move-column-right; }
+    Super+Shift+Up { move-window-up; }
+    Super+Shift+Down { move-window-down; }
     Super+C { center-column; }
     Super+Ctrl+r { reset-window-height; }
     Super+Equal { set-column-width "+10%"; }
@@ -43,12 +39,10 @@ binds {
     Super+Shift+Equal { set-window-height "+10%"; }
     Super+Shift+F { fullscreen-window; }
     Super+Shift+Minus { set-window-height "-10%"; }
-    Super+Shift+Space { switch-focus-between-floating-and-tiling; }
+    Super+Shift+T repeat=false { switch-focus-between-floating-and-tiling; }
     Super+Shift+r { switch-preset-window-height; }
-    Super+Space { toggle-window-floating; }
+    Super+T repeat=false { toggle-window-floating; }
     Super+W { toggle-column-tabbed-display; }
     Super+r { switch-preset-column-width; }
-    Super+l repeat=false hotkey-overlay-title="Lock session" { spawn "loginctl" "lock-session" "&&" "niri" "msg" "action" "power-off-monitors"; }
     Super+Shift+E { quit; }
-    Super+return repeat=false hotkey-overlay-title="Spawn terminal" { spawn "footclient"; }
 }

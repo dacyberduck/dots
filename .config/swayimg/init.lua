@@ -2,7 +2,7 @@ swayimg.set_window_size(854, 480)
 swayimg.enable_decoration(false)
 swayimg.imagelist.set_order("alpha")
 swayimg.text.set_foreground(0xffffff00)
-swayimg.text.set_overall_timer(1000)
+swayimg.text.set_timer(1000)
 swayimg.text.set_size(16)
 
 -- Viewer mode settings

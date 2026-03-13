@@ -25,6 +25,28 @@ hotkey-overlay {
     hide-not-bound
 }
 
+environment {
+  QT_QPA_PLATFORMTHEME "gtk3"
+  QT_QPA_PLATFORMTHEME_QT6 "gtk3"
+}
+
+binds {
+    Print { spawn-sh "dms screenshot --no-clipboard --no-file --stdout | swayimg -"; }
+    Super+Print { spawn-sh "dms screenshot full --no-clipboard --no-file --stdout | swayimg -"; }
+    Super+space repeat=false hotkey-overlay-title="Toggle launcher" { spawn-sh "dms ipc spotlight toggle"; }
+    Super+l repeat=false hotkey-overlay-title="Lock session" { spawn-sh "loginctl lock-session"; }
+    Super+return repeat=false hotkey-overlay-title="spawn-sh terminal" { spawn-sh "footclient"; }
+    XF86AudioLowerVolume allow-when-locked=true { spawn-sh "dms ipc audio decrement 5"; }
+    XF86AudioMicMute allow-when-locked=true { spawn-sh "dms ipc audio micmute"; }
+    XF86AudioMute allow-when-locked=true { spawn-sh "dms ipc audio mute"; }
+    XF86AudioNext allow-when-locked=true { spawn-sh "dms ipc mpris next"; }
+    XF86AudioPlay repeat=false allow-when-locked=true { spawn-sh "dms ipc mpris playPause"; }
+    XF86AudioPrev allow-when-locked=true { spawn-sh "dms ipc mpris previous"; }
+    XF86AudioRaiseVolume allow-when-locked=true { spawn-sh "dms ipc audio increment 5"; }
+    XF86MonBrightnessDown allow-when-locked=true { spawn-sh "dms ipc brightness decrement 5 backlight:intel_backlight"; }
+    XF86MonBrightnessUp allow-when-locked=true { spawn-sh "dms ipc brightness increment 5 backlight:intel_backlight"; }
+}
+
 // include dms generated config
 include "dms/alttab.kdl"
 include "dms/binds.kdl"
