@@ -484,11 +484,13 @@
         }
       ],
       "centerWidgets": [
-        "music",
-        "clock",
-        "weather"
+        "clock"
       ],
       "rightWidgets": [
+        {
+          "id": "music",
+          "enabled": true
+        },
         {
           "id": "systemTray",
           "enabled": true

@@ -297,9 +297,6 @@ augroup lsp_attched
   autocmd USER LspAttached nnoremap ]d :LspDiag nextWrap<CR>
 augroup end
 ## >>>
-## Clrzr (https://github.com/BourgeoisBear/clrzr) <<<
-packadd clrzr
-## >>>
 # >>>
 ################################################################################
 defcompile

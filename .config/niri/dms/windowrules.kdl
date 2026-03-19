@@ -13,7 +13,7 @@ window-rule {
     open-floating true
 }
 
-// @id=wr_1773198302224862610 @name=firefox-bin
+// @id=wr_1773764927176598473 @name=firefox-bin
 window-rule {
     match app-id="^firefox-bin$" title="Library"
     open-floating true
@@ -46,5 +46,17 @@ window-rule {
 // @id=wr_1773198389181502076 @name=Picture-in-picture
 window-rule {
     match title="^Picture-in-Picture$"
+    open-floating true
+}
+
+// @id=wr_1773660372415123288 @name=steam_app_0
+window-rule {
+    match app-id="^steam_app_0$"
+    open-floating true
+}
+
+// @id=wr_1773846975102673784 @name=org.qbittorrent.qBittorrent
+window-rule {
+    match app-id="^org.qbittorrent.qBittorrent$" title="Magnet link"
     open-floating true
 }
