@@ -42,6 +42,7 @@ set shell=/bin/bash
 set nolangremap
 filetype plugin indent on
 set guifont=Fira\ Code\ 9
+set guioptions-=T guioptions+=k
 set cursorline nocursorcolumn
 set number norelativenumber
 set nowrap wrapmargin=0 textwidth=0 colorcolumn=81
@@ -177,32 +178,6 @@ augroup IndentGuide
   autocmd BufWinEnter * call IndentGuide()
 augroup END
 ## >>>
-## <<< wayland system clipboard
-# shamelessly copied from vim-wayland-clipboard plugin
-def WaylandYank()
-  if v:event['regname'] == '+'
-    silent call job_start(['wl-copy', '--', getreg(v:event['regname'])], {
-          \   "in_io": "null", "out_io": "null", "err_io": "null",
-          \   "stoponexit": "",
-          \ })
-  endif
-enddef
-augroup WaylandYank
-  au!
-  autocmd TextYankPost * call WaylandYank()
-augroup END
-# remap paste commands to first pull in clipboard contents with wl-paste
-var prepaste = "silent let @\"=substitute(system('wl-paste --no-newline'),
-      \\"\\r\", '', 'g')"
-for p in ['p', 'P']
-  execute "nnoremap <silent> \"+" .. p .. " :<C-U>" .. prepaste ..
-            " \\| exec 'normal! ' . v:count1 . '" .. p .. "'<CR>"
-endfor
-for cr in ['<C-R>', '<C-R><C-R>', '<C-R><C-O>', '<C-R><C-P>']
-  execute "inoremap <silent> " .. cr .. "+ <C-O>:<C-U>" .. prepaste ..
-            "<CR>" .. cr .. "\""
-endfor
-## >>>
 ## <<< easy buffer switching
 def JumpToBuffer(bufnr: number, rev: bool = v:false)
   if rev
@@ -225,10 +200,8 @@ augroup CmdComplete
   au!
   autocmd CmdlineChanged : call wildtrigger()
 augroup END
-cnoremap <Up> <C-U><Up>
-cnoremap <Down> <C-U><Down>
-cnoremap <C-p> <C-U><C-p>
-cnoremap <C-n> <C-U><C-n>
+cnoremap <C-Up> <C-U><Up>
+cnoremap <C-Down> <C-U><Down>
 ## >>>
 ## <<< MRU complete
 def MruComplete(_, _, _): string

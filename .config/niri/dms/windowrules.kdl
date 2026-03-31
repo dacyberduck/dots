@@ -57,6 +57,19 @@ window-rule {
 
 // @id=wr_1773846975102673784 @name=org.qbittorrent.qBittorrent
 window-rule {
-    match app-id="^org.qbittorrent.qBittorrent$" title="Magnet link"
+    match app-id="^org.qbittorrent.qBittorrent$"
     open-floating true
+}
+
+// @id=wr_1774033181990411690 @name=zenity
+window-rule {
+    match app-id="^zenity$"
+    open-floating true
+}
+
+// @id=wr_1774767276167013779 @name=org.qbittorrent.qBittorrent
+window-rule {
+    match app-id="^org.qbittorrent.qBittorrent$" title="^qBittorrent"
+    clip-to-geometry true
+    tiled-state true
 }

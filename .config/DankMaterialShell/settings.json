@@ -6,6 +6,7 @@
     "gruvboxMaterial": "hard"
   },
   "matugenScheme": "scheme-rainbow",
+  "matugenContrast": 0,
   "runUserMatugenTemplates": true,
   "matugenTargetMonitor": "",
   "popupTransparency": 1,
@@ -25,6 +26,7 @@
   "mangoLayoutRadiusOverride": -1,
   "mangoLayoutBorderSize": -1,
   "firstDayOfWeek": -1,
+  "showWeekNumber": false,
   "use24HourClock": true,
   "showSeconds": false,
   "padHours12Hour": false,
@@ -47,10 +49,14 @@
   "m3ElevationCustomColor": "#000000",
   "modalElevationEnabled": true,
   "popoutElevationEnabled": true,
-  "barElevationEnabled": false,
+  "barElevationEnabled": true,
+  "blurEnabled": false,
+  "blurBorderColor": "outline",
+  "blurBorderCustomColor": "#ffffff",
+  "blurBorderOpacity": 1,
   "wallpaperFillMode": "Fill",
   "blurredWallpaperLayer": true,
-  "blurWallpaperOnOverview": false,
+  "blurWallpaperOnOverview": true,
   "showLauncherButton": true,
   "showWorkspaceSwitcher": true,
   "showFocusedWindow": true,
@@ -94,6 +100,18 @@
     {
       "id": "brightnessSlider",
       "enabled": true,
+      "width": 50,
+      "instanceId": "mndzof0043hx4xfbislxvhuyfksq4u",
+      "deviceName": ""
+    },
+    {
+      "id": "audioOutput",
+      "enabled": true,
+      "width": 50
+    },
+    {
+      "id": "audioInput",
+      "enabled": true,
       "width": 50
     },
     {
@@ -107,12 +125,7 @@
       "width": 50
     },
     {
-      "id": "audioOutput",
-      "enabled": true,
-      "width": 50
-    },
-    {
-      "id": "audioInput",
+      "id": "darkMode",
       "enabled": true,
       "width": 50
     },
@@ -122,17 +135,12 @@
       "width": 50
     },
     {
-      "id": "darkMode",
+      "id": "doNotDisturb",
       "enabled": true,
       "width": 50
     },
     {
       "id": "idleInhibitor",
-      "enabled": true,
-      "width": 50
-    },
-    {
-      "id": "doNotDisturb",
       "enabled": true,
       "width": 50
     }
@@ -216,8 +224,10 @@
   "sortAppsAlphabetically": false,
   "appLauncherGridColumns": 4,
   "spotlightCloseNiriOverview": true,
+  "rememberLastQuery": false,
   "spotlightSectionViewModes": {
-    "apps": "list"
+    "apps": "list",
+    "plugin_dmsPass": "list"
   },
   "appDrawerSectionViewModes": {},
   "niriOverviewOverlayEnabled": true,
@@ -273,12 +283,12 @@
   "acLockTimeout": 0,
   "acSuspendTimeout": 0,
   "acSuspendBehavior": 0,
-  "acProfileName": "0",
+  "acProfileName": "1",
   "batteryMonitorTimeout": 300,
   "batteryLockTimeout": 180,
   "batterySuspendTimeout": 1800,
   "batterySuspendBehavior": 2,
-  "batteryProfileName": "1",
+  "batteryProfileName": "0",
   "batteryChargeLimit": 100,
   "lockBeforeSuspend": true,
   "loginctlLockIntegration": true,
@@ -296,13 +306,17 @@
   "qtThemingEnabled": false,
   "syncModeWithPortal": true,
   "terminalsAlwaysDark": false,
+  "muxType": "tmux",
+  "muxUseCustomCommand": false,
+  "muxCustomCommand": "",
+  "muxSessionFilter": "",
   "runDmsMatugenTemplates": true,
   "matugenTemplateGtk": true,
   "matugenTemplateNiri": true,
   "matugenTemplateHyprland": false,
   "matugenTemplateMangowc": false,
   "matugenTemplateQt5ct": false,
-  "matugenTemplateQt6ct": true,
+  "matugenTemplateQt6ct": false,
   "matugenTemplateFirefox": false,
   "matugenTemplatePywalfox": false,
   "matugenTemplateZenBrowser": false,
@@ -319,6 +333,17 @@
   "matugenTemplateVscode": false,
   "matugenTemplateEmacs": false,
   "matugenTemplateZed": false,
+  "matugenTemplateNeovimSettings": {
+    "dark": {
+      "baseTheme": "github_dark",
+      "harmony": 0.5
+    },
+    "light": {
+      "baseTheme": "github_light",
+      "harmony": 0.5
+    }
+  },
+  "matugenTemplateNeovimSetBackground": true,
   "showDock": false,
   "dockAutoHide": false,
   "dockSmartAutoHide": false,
@@ -418,8 +443,12 @@
   "updaterCustomCommand": "",
   "updaterTerminalAdditionalParams": "",
   "displayNameMode": "system",
-  "screenPreferences": {},
-  "showOnLastDisplay": {},
+  "screenPreferences": {
+    "dock": []
+  },
+  "showOnLastDisplay": {
+    "dock": false
+  },
   "niriOutputSettings": {
     "eDP-1": {
       "layout": {
@@ -488,15 +517,15 @@
       ],
       "rightWidgets": [
         {
-          "id": "music",
-          "enabled": true
-        },
-        {
           "id": "systemTray",
           "enabled": true
         },
         {
           "id": "clipboard",
+          "enabled": true
+        },
+        {
+          "id": "colorPicker",
           "enabled": true
         },
         {
@@ -637,5 +666,5 @@
   "clipboardEnterToPaste": false,
   "launcherPluginVisibility": {},
   "launcherPluginOrder": [],
-  "configVersion": 6
+  "configVersion": 5
 }
