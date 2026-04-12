@@ -113,7 +113,7 @@ command! -nargs=+ -complete=file Grep execute 'silent grep! <args>' | cwindow
 ################################################################################
 # <<< autocommands
 autocmd FileType help,qf,git,lspgfm nnoremap <buffer> q <cmd>close<cr>
-autocmd FileType c,cpp,objc,python setlocal et ts=4 sts=4 sw=4
+autocmd FileType c,cpp,objc,python,qml setlocal et ts=4 sts=4 sw=4
 autocmd FileType bash,lua,xml setlocal et sts=2 sw=2
 autocmd FileType gitsendemail setlocal noet ts=4 sts=4 sw=4
 autocmd BufWritePost $MYVIMRC source $MYVIMRC | windo redraw
@@ -254,6 +254,12 @@ call LspAddServer([
     filetype: ['c', 'cpp'],
     path: '/usr/lib/llvm/21/bin/clangd',
     args: ['--background-index', '--clang-tidy']
+  },
+  {
+    name: 'qmlls',
+    filetype: ['qml', 'qmljs'],
+    path: '/usr/bin/qmlls6',
+    args: ['-I', '/usr/lib64/qt6/qml/Quickshell']
   }
 ])
 

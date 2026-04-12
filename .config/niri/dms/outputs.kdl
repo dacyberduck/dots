@@ -9,7 +9,7 @@ output "eDP-1" {
         off
     }
     layout {
-        gaps 16
+        gaps 8
         preset-column-widths {
             proportion 0.3333
             proportion 0.5

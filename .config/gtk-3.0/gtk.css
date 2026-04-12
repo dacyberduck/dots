@@ -19,13 +19,13 @@ notebook tab {
     margin-left: 2px;
     min-height: 20px;
     padding: 2px 4px;
-    border-radius: 4;
+    border-radius: 4px;
     background-image: none;
     background-color: #282828;
     color: #ebdbb2
 }
 notebook tab:checked {
-    background-color: ##32312c;
+    background-color: #32312c;
     color: #ffffff;
     font-weight: bold;
 }

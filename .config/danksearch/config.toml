@@ -11,7 +11,7 @@ max_depth = 3
 
 [[index_paths]]
   path = "/home/duck"
-  max_depth = 4
+  max_depth = 3
   exclude_hidden = true
   exclude_dirs = ["node_modules", "bower_components", ".npm", ".yarn",
   "site-packages", "__pycache__", ".venv", "venv", ".tox", ".pytest_cache",

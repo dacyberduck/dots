@@ -2,12 +2,10 @@
   "currentThemeName": "custom",
   "currentThemeCategory": "registry",
   "customThemeFile": "/home/duck/.config/DankMaterialShell/themes/retrobox/theme.json",
-  "registryThemeVariants": {
-    "gruvboxMaterial": "hard"
-  },
-  "matugenScheme": "scheme-rainbow",
+  "registryThemeVariants": {},
+  "matugenScheme": "scheme-tonal-spot",
   "matugenContrast": 0,
-  "runUserMatugenTemplates": true,
+  "runUserMatugenTemplates": false,
   "matugenTargetMonitor": "",
   "popupTransparency": 1,
   "dockTransparency": 1,
@@ -55,7 +53,7 @@
   "blurBorderCustomColor": "#ffffff",
   "blurBorderOpacity": 1,
   "wallpaperFillMode": "Fill",
-  "blurredWallpaperLayer": true,
+  "blurredWallpaperLayer": false,
   "blurWallpaperOnOverview": true,
   "showLauncherButton": true,
   "showWorkspaceSwitcher": true,
@@ -100,18 +98,6 @@
     {
       "id": "brightnessSlider",
       "enabled": true,
-      "width": 50,
-      "instanceId": "mndzof0043hx4xfbislxvhuyfksq4u",
-      "deviceName": ""
-    },
-    {
-      "id": "audioOutput",
-      "enabled": true,
-      "width": 50
-    },
-    {
-      "id": "audioInput",
-      "enabled": true,
       "width": 50
     },
     {
@@ -125,12 +111,22 @@
       "width": 50
     },
     {
-      "id": "darkMode",
+      "id": "audioOutput",
+      "enabled": true,
+      "width": 50
+    },
+    {
+      "id": "audioInput",
       "enabled": true,
       "width": 50
     },
     {
       "id": "nightMode",
+      "enabled": true,
+      "width": 50
+    },
+    {
+      "id": "darkMode",
       "enabled": true,
       "width": 50
     },
@@ -209,26 +205,12 @@
   "browserPickerViewMode": "grid",
   "browserUsageHistory": {},
   "appPickerViewMode": "grid",
-  "filePickerUsageHistory": {
-    "onlyoffice-desktopeditors": {
-      "count": 1,
-      "lastUsed": 1773041929835,
-      "name": "ONLYOFFICE"
-    },
-    "org.gnome.Nautilus": {
-      "count": 1,
-      "lastUsed": 1773429619954,
-      "name": "Files"
-    }
-  },
+  "filePickerUsageHistory": {},
   "sortAppsAlphabetically": false,
   "appLauncherGridColumns": 4,
   "spotlightCloseNiriOverview": true,
   "rememberLastQuery": false,
-  "spotlightSectionViewModes": {
-    "apps": "list",
-    "plugin_dmsPass": "list"
-  },
+  "spotlightSectionViewModes": {},
   "appDrawerSectionViewModes": {},
   "niriOverviewOverlayEnabled": true,
   "dankLauncherV2Size": "compact",
@@ -239,8 +221,8 @@
   "dankLauncherV2UnloadOnClose": false,
   "useAutoLocation": false,
   "weatherEnabled": true,
-  "networkPreference": "auto",
-  "iconTheme": "System Default",
+  "networkPreference": "wifi",
+  "iconTheme": "Adwaita",
   "cursorSettings": {
     "theme": "System Default",
     "size": 24,
@@ -283,12 +265,12 @@
   "acLockTimeout": 0,
   "acSuspendTimeout": 0,
   "acSuspendBehavior": 0,
-  "acProfileName": "1",
+  "acProfileName": "",
   "batteryMonitorTimeout": 300,
   "batteryLockTimeout": 180,
   "batterySuspendTimeout": 1800,
   "batterySuspendBehavior": 2,
-  "batteryProfileName": "0",
+  "batteryProfileName": "",
   "batteryChargeLimit": 100,
   "lockBeforeSuspend": true,
   "loginctlLockIntegration": true,
@@ -310,29 +292,29 @@
   "muxUseCustomCommand": false,
   "muxCustomCommand": "",
   "muxSessionFilter": "",
-  "runDmsMatugenTemplates": true,
+  "runDmsMatugenTemplates": false,
   "matugenTemplateGtk": true,
   "matugenTemplateNiri": true,
-  "matugenTemplateHyprland": false,
-  "matugenTemplateMangowc": false,
-  "matugenTemplateQt5ct": false,
-  "matugenTemplateQt6ct": false,
-  "matugenTemplateFirefox": false,
-  "matugenTemplatePywalfox": false,
-  "matugenTemplateZenBrowser": false,
-  "matugenTemplateVesktop": false,
-  "matugenTemplateEquibop": false,
-  "matugenTemplateGhostty": false,
-  "matugenTemplateKitty": false,
-  "matugenTemplateFoot": false,
-  "matugenTemplateAlacritty": false,
+  "matugenTemplateHyprland": true,
+  "matugenTemplateMangowc": true,
+  "matugenTemplateQt5ct": true,
+  "matugenTemplateQt6ct": true,
+  "matugenTemplateFirefox": true,
+  "matugenTemplatePywalfox": true,
+  "matugenTemplateZenBrowser": true,
+  "matugenTemplateVesktop": true,
+  "matugenTemplateEquibop": true,
+  "matugenTemplateGhostty": true,
+  "matugenTemplateKitty": true,
+  "matugenTemplateFoot": true,
+  "matugenTemplateAlacritty": true,
   "matugenTemplateNeovim": false,
-  "matugenTemplateWezterm": false,
+  "matugenTemplateWezterm": true,
   "matugenTemplateDgop": true,
   "matugenTemplateKcolorscheme": true,
-  "matugenTemplateVscode": false,
-  "matugenTemplateEmacs": false,
-  "matugenTemplateZed": false,
+  "matugenTemplateVscode": true,
+  "matugenTemplateEmacs": true,
+  "matugenTemplateZed": true,
   "matugenTemplateNeovimSettings": {
     "dark": {
       "baseTheme": "github_dark",
@@ -382,7 +364,7 @@
   "lockScreenShowProfileImage": true,
   "lockScreenShowPasswordField": true,
   "lockScreenShowMediaPlayer": true,
-  "lockScreenPowerOffMonitorsOnLock": true,
+  "lockScreenPowerOffMonitorsOnLock": false,
   "lockAtStartup": false,
   "enableFprint": false,
   "maxFprintTries": 15,
@@ -443,15 +425,15 @@
   "updaterCustomCommand": "",
   "updaterTerminalAdditionalParams": "",
   "displayNameMode": "system",
-  "screenPreferences": {
-    "dock": []
-  },
-  "showOnLastDisplay": {
-    "dock": false
-  },
+  "screenPreferences": {},
+  "showOnLastDisplay": {},
   "niriOutputSettings": {
     "eDP-1": {
+      "hotCorners": {
+        "off": true
+      },
       "layout": {
+        "gaps": 16,
         "presetColumnWidths": [
           {
             "type": "proportion",
@@ -469,11 +451,7 @@
             "type": "proportion",
             "value": 1
           }
-        ],
-        "gaps": 16
-      },
-      "hotCorners": {
-        "off": true
+        ]
       },
       "focusAtStartup": true
     }
@@ -495,24 +473,12 @@
       ],
       "showOnLastDisplay": true,
       "leftWidgets": [
-        {
-          "id": "launcherButton",
-          "enabled": true
-        },
-        {
-          "id": "workspaceSwitcher",
-          "enabled": true
-        },
-        {
-          "id": "appsDock",
-          "enabled": true
-        },
-        {
-          "id": "focusedWindow",
-          "enabled": true
-        }
+        "launcherButton",
+        "workspaceSwitcher",
+        "focusedWindow"
       ],
       "centerWidgets": [
+        "music",
         "clock"
       ],
       "rightWidgets": [
@@ -582,7 +548,7 @@
       "scrollYBehavior": "workspace",
       "shadowIntensity": 0,
       "shadowOpacity": 60,
-      "shadowColorMode": "text",
+      "shadowColorMode": "default",
       "shadowCustomColor": "#000000",
       "clickThrough": false
     }
