@@ -27,6 +27,10 @@ export HISTCONTROL='ignoreboth:erasedups'
 export QT_QPA_PLATFORMTHEME="gtk3"
 export QT_QPA_PLATFORMTHEME_QT6="gtk3"
 
+# umu-launcher defaults
+export WINEPREFIX="${HOME}/Games/umu-launcher/prefix/default"
+export PROTONPATH="${HOME}/Games/umu-launcher/proton/default"
+
 export TERMCMD="foot"
 export TERMINAL="foot"
 export EDITOR="vim"

@@ -178,6 +178,32 @@ augroup IndentGuide
   autocmd BufWinEnter * call IndentGuide()
 augroup END
 ## >>>
+## <<< wayland system clipboard
+# shamelessly copied from vim-wayland-clipboard plugin
+def WaylandYank()
+  if v:event['regname'] == '+'
+    silent call job_start(['wl-copy', '--', getreg(v:event['regname'])], {
+          \   "in_io": "null", "out_io": "null", "err_io": "null",
+          \   "stoponexit": "",
+          \ })
+  endif
+enddef
+augroup WaylandYank
+  au!
+  autocmd TextYankPost * call WaylandYank()
+augroup END
+# remap paste commands to first pull in clipboard contents with wl-paste
+var prepaste = "silent let @\"=substitute(system('wl-paste --no-newline'),
+      \\"\\r\", '', 'g')"
+for p in ['p', 'P']
+  execute "nnoremap <silent> \"+" .. p .. " :<C-U>" .. prepaste ..
+            " \\| exec 'normal! ' . v:count1 . '" .. p .. "'<CR>"
+endfor
+for cr in ['<C-R>', '<C-R><C-R>', '<C-R><C-O>', '<C-R><C-P>']
+  execute "inoremap <silent> " .. cr .. "+ <C-O>:<C-U>" .. prepaste ..
+            "<CR>" .. cr .. "\""
+endfor
+## >>>
 ## <<< easy buffer switching
 def JumpToBuffer(bufnr: number, rev: bool = v:false)
   if rev
@@ -254,12 +280,6 @@ call LspAddServer([
     filetype: ['c', 'cpp'],
     path: '/usr/lib/llvm/21/bin/clangd',
     args: ['--background-index', '--clang-tidy']
-  },
-  {
-    name: 'qmlls',
-    filetype: ['qml', 'qmljs'],
-    path: '/usr/bin/qmlls6',
-    args: ['-I', '/usr/lib64/qt6/qml/Quickshell']
   }
 ])
 
