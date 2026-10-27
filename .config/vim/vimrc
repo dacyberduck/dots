@@ -110,14 +110,22 @@ command! -nargs=0 -range Sort :<line1>,<line2>call setline('.',
 # open quickfixlist after grep
 command! -nargs=+ -complete=file Grep execute 'silent grep! <args>' | cwindow
       \| redraw!
+# MRU complete
+def MruComplete(_, _, _): list<string>
+  return v:oldfiles
+enddef
+command! -nargs=+ -complete=customlist,MruComplete MRU edit <args>
 # >>>
 ################################################################################
 # <<< autocommands
+autocmd CmdlineChanged : call wildtrigger()
 autocmd FileType help,qf,git,lspgfm nnoremap <buffer> q <cmd>close<cr>
-autocmd FileType c,cpp,cs,objc,python,qml setlocal et ts=4 sts=4 sw=4
-autocmd FileType bash,lua setlocal et sts=2 sw=2
-autocmd FileType xml,csproj setlocal noet ts=8 sts=8 sw=8
+autocmd FileType c,cpp,cs,objc,csproj,python,qml setlocal et ts=4 sts=4 sw=4
+autocmd FileType bash,lua setlocal et sts=3 sw=3
+autocmd FileType xml setlocal noet ts=8 sts=8 sw=8
 autocmd FileType gitsendemail setlocal noet ts=4 sts=4 sw=4
+autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$")
+      \| execute "normal! g`\"" | endif
 autocmd BufWritePost $MYVIMRC source $MYVIMRC | windo redraw
       \| echomsg "Successfully reloaded $MYVIMRC"
 # >>>
@@ -131,6 +139,13 @@ cnoremap <expr> <Left> pumvisible() ? "\<C-Y>" : "\<Left>"
 nnoremap <silent><ESC> <ESC>:noh<CR><ESC>
 nnoremap <silent> ]q :cnext<CR>
 nnoremap <silent> [q :cprev<CR>
+nnoremap <silent><expr> gb ":\<C-U>" .. (v:count == 0 ? "bnext!\<CR>" :
+      \ (bufexists(v:count) ? $"buffer! {v:count}\<CR>" :
+      \ $"echoerr 'Buffer {v:count} does not exist'\<CR>"))
+nnoremap <silent><expr> gB ":\<C-U>" .. (v:count == 0 ? "bprevious!\<CR>" :
+      \ $"{v:count}bprevious!\<CR>")
+cnoremap <C-Up> <C-U><Up>
+cnoremap <C-Down> <C-U><Down>
 # >>>
 ################################################################################
 # <<< plugins
@@ -144,134 +159,6 @@ packadd cfilter
 packadd comment
 packadd justify
 packadd matchit
-
-### User plugins
-## <<< simple auto pair plugin
-def SimpleAutoPair(open: string, close: string): string
-  const line = getline('.')
-  const colm = col('.') - 1 # string index starts from 0
-  if line[colm] !~ '\s' && (stridx(line, close, colm) != -1 ||
-          colm < col('$') - 1)
-    return open
-  else
-    return open .. close .. "\<left>"
-  endif
-enddef
-inoremap <expr> " <SID>SimpleAutoPair('"', '"')
-inoremap <expr> ' <SID>SimpleAutoPair("'", "'")
-inoremap <expr> ( <SID>SimpleAutoPair("(", ")")
-inoremap <expr> { <SID>SimpleAutoPair("{", "}")
-inoremap <expr> [ <SID>SimpleAutoPair("[", "]")
-## >>>
-## <<< simple indent guide
-def g:IndentGuide()
-  const bufnr = bufnr()
-  if getbufvar(bufnr, '&buflisted') && getbufvar(bufnr, '&modifiable')
-    exec 'setlocal listchars=' ..
-            join(filter(split(&listchars, ","),
-            'v:val !~ "leadmultispace" && v:val !~ "tab"') +
-            ['leadmultispace:│' .. repeat('\ ', &shiftwidth - 1), 'tab:█\ '],
-            ",")
-    setlocal list
-  endif
-enddef
-augroup IndentGuide
-  au!
-  autocmd BufWinEnter * call IndentGuide()
-augroup END
-## >>>
-## <<< easy buffer switching
-def JumpToBuffer(bufnr: number, rev: bool = v:false)
-  if rev
-    exec $":{bufnr == 0 ? 1 : bufnr}bprevious!"
-  else
-    if bufnr == 0
-      bnext!
-    else
-      if bufnr->bufexists()
-        exec $'buffer! {bufnr}'
-      endif
-    endif
-  endif
-enddef
-nnoremap <silent> gb :<C-U>call <SID>JumpToBuffer(v:count)<CR>
-nnoremap <silent> gB :<C-U>call <SID>JumpToBuffer(v:count, v:true)<CR>
-## >>>
-## <<< cmdline auto completion
-augroup CmdComplete
-  au!
-  autocmd CmdlineChanged : call wildtrigger()
-augroup END
-cnoremap <C-Up> <C-U><Up>
-cnoremap <C-Down> <C-U><Down>
-## >>>
-## <<< MRU complete
-def MruComplete(_, _, _): string
-  return v:oldfiles->join("\n")
-enddef
-command! -nargs=+ -complete=custom,MruComplete MRU edit <args>
-## >>>
-## <<< ScratchTerm: opens terminal and runs command received as arguments
-# USAGE Example:
-#   :ScratchTerm make %<
-#   :ScratchTerm bash -c %:p
-def ScratchTerm(...args: list<any>): void
-  const termbufname = "__SCRATCH_TERM__"
-  var scratch_bufnr = -1
-  var cmd = args->join()->expandcmd()
-  for buf in tabpagebuflist()
-    if buf->bufname() == termbufname
-      scratch_bufnr = buf
-    endif
-  endfor
-  # scratch term not exists
-  if scratch_bufnr == -1
-    term_start('bash', {'term_name': termbufname, 'term_finish': 'close',
-            'term_rows': 15})
-    if len(cmd) > 0
-      sleep 100m
-      term_sendkeys(bufnr(), cmd .. "\<CR>")
-      wincmd p
-    endif
-  else
-    # delete scratch term if it is focused
-    if win_getid() == bufwinid(scratch_bufnr)
-      execute "silent bdelete! " .. scratch_bufnr
-    # focus on scratch term if not focused
-    else
-      scratch_bufnr->bufwinid()->win_gotoid()
-    endif
-  endif
-enddef
-command! -nargs=* -complete=shellcmd ScratchTerm ScratchTerm(<q-args>)
-## >>>
-### Pack plugins
-## <<< LSP (https://github.com/yegappan/lsp)
-packadd lsp
-
-# server configuration
-call LspAddServer([
-  {
-    name: 'clangd',
-    filetype: ['c', 'cpp'],
-    path: '/usr/bin/clangd',
-    args: ['--background-index', '--clang-tidy']
-  }
-])
-
-# Lsp options
-call LspOptionsSet({
-  noNewlineInCompletion: v:true,
-})
-
-# Lsp related bindings and stuff
-augroup lsp_attched
-  autocmd USER LspAttached nnoremap gd :LspPeekReferences<CR>
-  autocmd USER LspAttached nnoremap gs :LspDocumentSymbol<CR>
-  autocmd USER LspAttached nnoremap [d :LspDiag prevWrap<CR>
-  autocmd USER LspAttached nnoremap ]d :LspDiag nextWrap<CR>
-augroup end
-## >>>
 # >>>
 ################################################################################
 defcompile
