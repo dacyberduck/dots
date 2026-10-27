@@ -1,18 +1,20 @@
 swayimg.set_window_size(854, 480)
-swayimg.enable_decoration(false)
-swayimg.imagelist.set_order("alpha")
-swayimg.text.set_foreground(0xffffff00)
-swayimg.text.set_timeout(1000)
-swayimg.text.set_size(16)
+swayimg.decoration = false
+swayimg.imagelist.order = "none"
+swayimg.text.color = 0xffffff00
+swayimg.text.timeout = 1000
+swayimg.text.size = 16
 
 -- Viewer mode settings
-swayimg.viewer.set_default_scale("optimal")
+swayimg.viewer.default_scale = "optimal"
 swayimg.viewer.set_window_background(0x441c1c1c)
 swayimg.viewer.set_image_background(0x441c1c1c)
-swayimg.viewer.set_text("topleft", { "File: {name}" })
-swayimg.viewer.set_text("topright", { "{list.index}/{list.total}" })
-swayimg.viewer.set_text("bottomleft", { "Type: {format} [{sizehr}]" })
-swayimg.viewer.set_text("bottomright", { "Scale: {scale}" })
+swayimg.viewer.text = {
+   topleft = { "File: {name}" },
+   topright = { "{list.index}/{list.total}" },
+   bottomleft = { "Type: {format} [{sizehr}]" },
+   bottomright = { "Scale: {scale}" }
+}
 swayimg.viewer.on_key("Escape", function()
    swayimg.exit()
 end)
@@ -56,10 +58,10 @@ swayimg.viewer.on_key("Shift+Delete", function()
 end)
 
 -- Gallery mode
-swayimg.gallery.set_thumb_size(200)
-swayimg.gallery.limit_cache(100)
-swayimg.gallery.set_window_color(0x202020ff)
-swayimg.gallery.set_selected_color(0x484848ff)
+swayimg.gallery.thumb_size = 200
+swayimg.gallery.cache = 100
+swayimg.gallery.window_color = 0x202020ff
+swayimg.gallery.selected_color = 0x484848ff
 swayimg.gallery.on_key("Delete", function()
    os.execute("gio trash " .. swayimg.gallery.get_image().path)
 end)
@@ -83,10 +85,10 @@ end)
 
 --  mode
 swayimg.on_initialized(function()
-   if swayimg.imagelist.size() > 1 then
-      swayimg.set_mode("gallery")
+   if swayimg.imagelist.size > 1 then
+      swayimg.mode = "gallery"
    else
-      swayimg.set_mode("viewer") -- default mode
+      swayimg.mode = "viewer" -- default mode
    end
 end)
 

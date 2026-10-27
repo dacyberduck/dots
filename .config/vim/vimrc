@@ -36,6 +36,7 @@ set encoding=utf-8
 set ttyfast
 set title
 set ttimeoutlen=0
+set clipboard=unnamedplus
 set backspace=indent,eol,start virtualedit=block,insert
 set tabpagemax=50
 set shell=/bin/bash
@@ -113,8 +114,9 @@ command! -nargs=+ -complete=file Grep execute 'silent grep! <args>' | cwindow
 ################################################################################
 # <<< autocommands
 autocmd FileType help,qf,git,lspgfm nnoremap <buffer> q <cmd>close<cr>
-autocmd FileType c,cpp,objc,python,qml setlocal et ts=4 sts=4 sw=4
-autocmd FileType bash,lua,xml setlocal et sts=2 sw=2
+autocmd FileType c,cpp,cs,objc,python,qml setlocal et ts=4 sts=4 sw=4
+autocmd FileType bash,lua setlocal et sts=2 sw=2
+autocmd FileType xml,csproj setlocal noet ts=8 sts=8 sw=8
 autocmd FileType gitsendemail setlocal noet ts=4 sts=4 sw=4
 autocmd BufWritePost $MYVIMRC source $MYVIMRC | windo redraw
       \| echomsg "Successfully reloaded $MYVIMRC"
@@ -177,32 +179,6 @@ augroup IndentGuide
   au!
   autocmd BufWinEnter * call IndentGuide()
 augroup END
-## >>>
-## <<< wayland system clipboard
-# shamelessly copied from vim-wayland-clipboard plugin
-def WaylandYank()
-  if v:event['regname'] == '+'
-    silent call job_start(['wl-copy', '--', getreg(v:event['regname'])], {
-          \   "in_io": "null", "out_io": "null", "err_io": "null",
-          \   "stoponexit": "",
-          \ })
-  endif
-enddef
-augroup WaylandYank
-  au!
-  autocmd TextYankPost * call WaylandYank()
-augroup END
-# remap paste commands to first pull in clipboard contents with wl-paste
-var prepaste = "silent let @\"=substitute(system('wl-paste --no-newline'),
-      \\"\\r\", '', 'g')"
-for p in ['p', 'P']
-  execute "nnoremap <silent> \"+" .. p .. " :<C-U>" .. prepaste ..
-            " \\| exec 'normal! ' . v:count1 . '" .. p .. "'<CR>"
-endfor
-for cr in ['<C-R>', '<C-R><C-R>', '<C-R><C-O>', '<C-R><C-P>']
-  execute "inoremap <silent> " .. cr .. "+ <C-O>:<C-U>" .. prepaste ..
-            "<CR>" .. cr .. "\""
-endfor
 ## >>>
 ## <<< easy buffer switching
 def JumpToBuffer(bufnr: number, rev: bool = v:false)
@@ -278,7 +254,7 @@ call LspAddServer([
   {
     name: 'clangd',
     filetype: ['c', 'cpp'],
-    path: '/usr/lib/llvm/21/bin/clangd',
+    path: '/usr/bin/clangd',
     args: ['--background-index', '--clang-tidy']
   }
 ])

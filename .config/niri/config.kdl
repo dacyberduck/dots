@@ -1,5 +1,16 @@
 // vim: set et sts=4 sw=4:
 
+// Output device confguration
+output "eDP-1" {
+    mode "1366x768@60.003"
+    scale 1
+    position x=0 y=0
+    focus-at-startup
+    hot-corners {
+        off
+    }
+}
+
 // Input device configuration.
 input {
     // xkeyboard settings.
@@ -16,7 +27,7 @@ input {
         natural-scroll
     }
 
-    focus-follows-mouse max-scroll-amount="50%"
+    focus-follows-mouse max-scroll-amount="0%"
 }
 
 // disable hot-key overlay on niri start
@@ -25,34 +36,58 @@ hotkey-overlay {
     hide-not-bound
 }
 
+// window switcher
+recent-windows {
+    highlight {
+        corner-radius 0
+        active-color   "#458588"
+        urgent-color   "#cc241d"
+    }
+}
+
+// layout
+layout {
+    gaps 4
+
+    background-color "transparent"
+
+    focus-ring {
+        width 0
+    }
+
+    border {
+        width 1
+        active-color   "#83a598"
+        inactive-color "#3c3c3c"
+        urgent-color   "#cc241d"
+    }
+
+    shadow {
+        color "#00000070"
+    }
+
+    tab-indicator {
+        active-color   "#83a598"
+        inactive-color "#ebdbb2"
+        urgent-color   "#cc241d"
+    }
+
+    insert-hint {
+        color "#83a59880"
+    }
+
+    preset-column-widths {
+        proportion 0.3333
+        proportion 0.5
+        proportion 0.6667
+        proportion 1.0
+    }
+}
+
+// envvars
 environment {
-  QT_QPA_PLATFORMTHEME "gtk3"
-  QT_QPA_PLATFORMTHEME_QT6 "gtk3"
 }
 
-binds {
-    Print { spawn-sh "dms screenshot --no-clipboard --no-file --stdout | swayimg -"; }
-    Super+Print { spawn-sh "dms screenshot full --no-clipboard --no-file --stdout | swayimg -"; }
-    Super+space repeat=false hotkey-overlay-title="Toggle launcher" { spawn-sh "dms ipc spotlight toggle"; }
-    Super+l repeat=false hotkey-overlay-title="Lock session" { spawn-sh "loginctl lock-session"; }
-    Super+return repeat=false hotkey-overlay-title="spawn-sh terminal" { spawn-sh "footclient"; }
-    XF86AudioLowerVolume allow-when-locked=true { spawn-sh "dms ipc audio decrement 5"; }
-    XF86AudioMicMute allow-when-locked=true { spawn-sh "dms ipc audio micmute"; }
-    XF86AudioMute allow-when-locked=true { spawn-sh "dms ipc audio mute"; }
-    XF86AudioNext allow-when-locked=true { spawn-sh "dms ipc mpris next"; }
-    XF86AudioPlay repeat=false allow-when-locked=true { spawn-sh "dms ipc mpris playPause"; }
-    XF86AudioPrev allow-when-locked=true { spawn-sh "dms ipc mpris previous"; }
-    XF86AudioRaiseVolume allow-when-locked=true { spawn-sh "dms ipc audio increment 5"; }
-    XF86MonBrightnessDown allow-when-locked=true { spawn-sh "dms ipc brightness decrement 5 backlight:intel_backlight"; }
-    XF86MonBrightnessUp allow-when-locked=true { spawn-sh "dms ipc brightness increment 5 backlight:intel_backlight"; }
-}
-
-// include dms generated config
-include "dms/alttab.kdl"
-include "dms/binds.kdl"
-include "dms/colors.kdl"
-include "dms/cursor.kdl"
-include "dms/layout.kdl"
-include "dms/outputs.kdl"
-include "dms/windowrules.kdl"
-include "dms/wpblur.kdl"
+include "cfg/autostart.kdl"
+include "cfg/binds.kdl"
+include "cfg/window-rules.kdl"

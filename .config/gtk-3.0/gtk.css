@@ -1,31 +1,3 @@
-@import url("dank-colors.css");
 
-headerbar {
-    min-height: 26px;
-    padding-top: 0px;
-    padding-bottom: 0px;
-    margin: 0px;
-}
 
-headerbar .title,
-headerbar .subtitle,
-window.ssd headerbar.titlebar label {
-    font-size: 10pt; /* Adjust size as needed */
-    padding: 0;
-}
-
-/* Gvim tabline */
-notebook tab {
-    margin-left: 2px;
-    min-height: 20px;
-    padding: 2px 4px;
-    border-radius: 4px;
-    background-image: none;
-    background-color: #282828;
-    color: #ebdbb2
-}
-notebook tab:checked {
-    background-color: #32312c;
-    color: #ffffff;
-    font-weight: bold;
-}
+@import url("noctalia.css");
