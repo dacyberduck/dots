@@ -1,0 +1,68 @@
+window-rule {
+    geometry-corner-radius 0
+    clip-to-geometry true
+    tiled-state true
+    draw-border-with-background false
+}
+
+window-rule {
+    match app-id="^mpv$"
+    open-floating true
+}
+
+window-rule {
+    match app-id="^firefox$" title="About Mozilla Firefox"
+    open-floating true
+}
+
+window-rule {
+    match app-id="^firefox$" title="Library"
+    open-floating true
+}
+
+window-rule {
+    match title="Administrator privileges required"
+    open-floating true
+}
+
+window-rule {
+    match app-id="^swayimg$"
+    open-floating true
+}
+
+window-rule {
+    match app-id="(?i)pinentry"
+    open-floating true
+}
+
+window-rule {
+    match title="(?:Open|Save) (?:File|Folder|As)"
+    open-floating true
+}
+
+window-rule {
+    match title="^Picture-in-Picture$"
+    open-floating true
+}
+
+window-rule {
+    match app-id="^steam_app_0$"
+    open-floating true
+}
+
+window-rule {
+    match app-id="^org.qbittorrent.qBittorrent$"
+    open-floating true
+}
+
+window-rule {
+    match app-id="^zenity$"
+    open-floating true
+}
+
+window-rule {
+    match app-id="^org.qbittorrent.qBittorrent$" title="^qBittorrent"
+    clip-to-geometry true
+    tiled-state true
+}
+

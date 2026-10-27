@@ -1,0 +1,62 @@
+// keybindings
+binds {
+    Super+return repeat=false hotkey-overlay-title="spawn-sh terminal" { spawn-sh "footclient"; }
+    Super+l repeat=false hotkey-overlay-title="Lock session" { spawn-sh "loginctl lock-session"; }
+    Print { spawn-sh "noctalia msg screenshot-annotate"; }
+    Super+space repeat=false hotkey-overlay-title="Toggle launcher" { spawn-sh "noctalia msg panel-toggle launcher"; }
+    XF86AudioLowerVolume allow-when-locked=true { spawn-sh "noctalia msg volume-down 5"; }
+    XF86AudioRaiseVolume allow-when-locked=true { spawn-sh "noctalia msg volume-up 5"; }
+    XF86AudioMute allow-when-locked=true { spawn-sh "noctalia msg volume-mute"; }
+    XF86AudioMicMute allow-when-locked=true { spawn-sh "noctalia msg mic-mute"; }
+    XF86AudioNext allow-when-locked=true { spawn-sh "noctalia msg media next"; }
+    XF86AudioPlay repeat=false allow-when-locked=true { spawn-sh "noctalia msg media toggle"; }
+    XF86AudioPrev allow-when-locked=true { spawn-sh "noctalia msg media previous"; }
+    XF86MonBrightnessDown allow-when-locked=true { spawn-sh "noctalia msg brightness-down eDP-1 5"; }
+    XF86MonBrightnessUp allow-when-locked=true { spawn-sh "noctalia msg brightness-up eDP-1 5"; }
+    Alt+Tab { focus-workspace-previous; }
+    Super+1 { focus-workspace 1; }
+    Super+2 { focus-workspace 2; }
+    Super+3 { focus-workspace 3; }
+    Super+4 { focus-workspace 4; }
+    Super+5 { focus-workspace 5; }
+    Super+6 { focus-workspace 6; }
+    Super+7 { focus-workspace 7; }
+    Super+8 { focus-workspace 8; }
+    Super+9 { focus-workspace 9; }
+    Super+Shift+1 { move-column-to-workspace 1; }
+    Super+Shift+2 { move-column-to-workspace 2; }
+    Super+Shift+3 { move-column-to-workspace 3; }
+    Super+Shift+4 { move-column-to-workspace 4; }
+    Super+Shift+5 { move-column-to-workspace 5; }
+    Super+Shift+6 { move-column-to-workspace 6; }
+    Super+Shift+7 { move-column-to-workspace 7; }
+    Super+Shift+8 { move-column-to-workspace 8; }
+    Super+Shift+9 { move-column-to-workspace 9; }
+    Super+BracketLeft { consume-or-expel-window-left; }
+    Super+BracketRight { consume-or-expel-window-right; }
+    Super+Left { focus-column-left; }
+    Super+Right { focus-column-right; }
+    Super+Up { focus-window-up; }
+    Super+Down { focus-window-down; }
+    Super+Shift+Left { move-column-left; }
+    Super+Shift+Right { move-column-right; }
+    Super+Shift+Up { move-window-up; }
+    Super+Shift+Down { move-window-down; }
+    Super+C { center-column; }
+    Super+Ctrl+r { reset-window-height; }
+    Super+Equal { set-column-width "+10%"; }
+    Super+F { expand-column-to-available-width; }
+    Super+Minus { set-column-width "-10%"; }
+    Super+Q { close-window; }
+    Super+Shift+BracketLeft { consume-window-into-column; }
+    Super+Shift+BracketRight { expel-window-from-column; }
+    Super+Shift+Equal { set-window-height "+10%"; }
+    Super+Shift+F { fullscreen-window; }
+    Super+Shift+Minus { set-window-height "-10%"; }
+    Super+Shift+T repeat=false { switch-focus-between-floating-and-tiling; }
+    Super+Shift+r { switch-preset-window-height; }
+    Super+T repeat=false { toggle-window-floating; }
+    Super+W { toggle-column-tabbed-display; }
+    Super+r { switch-preset-column-width; }
+    Super+Shift+E { quit; }
+}
