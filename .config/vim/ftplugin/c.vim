@@ -6,7 +6,7 @@ packadd lsp
 call LspAddServer([
   {
     name: 'clangd',
-    filetype: ['c', 'cpp'],
+    filetype: ['c'],
     path: '/usr/bin/clangd',
     args: ['--background-index', '--clang-tidy']
   }
